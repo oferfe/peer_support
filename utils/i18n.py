@@ -206,7 +206,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     },
     LANG_HE: {
         # Page / title
-        "page_title": "צ'אטבוט פרסונה",
+        "page_title": "מחקר פרסונות סינתטיות - עמיתים נותני שירות",
         "app_title": "צ'אטבוט פרסונה ולוח הערכה",
 
         # Sidebar
