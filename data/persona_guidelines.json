@@ -1,0 +1,386 @@
+{
+  "papers": [
+    {
+      "id": "1",
+      "paper_citation": "Stratford, A. C., Halpin, M., Phillips, K., Skerritt, F., Beales, A., Cheng, V., Hammond, M., O'Hagan, M., Loreto, C., Tiengtom, K., Kobe, B., Harrington, S., Fisher, D., & Davidson, L.  (2019) . The growth of peer support: An international charter. Journal of Mental Health, 28(6), 627–632 . https://doi.org/10.1080/09638237.2017.1340593",
+      "paper_summary": "OverviewThe document presents an international charter for mental health peer support, developed by a consortium of peer leaders representing six continents. As peer support rapidly expands globally, the charter aims to establish a core set of guiding principles and values to ensure it remains culturally responsive and authentic to its roots.Background and ChallengesModern mental health peer support originated in the 1970s from the ex-patient and psychiatric survivor movements in English-speaking countries. As it is integrated into formal mental health systems worldwide, it faces two primary challenges:Role Integrity: There is a risk that peer support could lose its unique, grassroots essence. When integrated into conventional systems, peer workers sometimes end up performing traditional staff roles (like case management) rather than using their lived experience, leading to a loss of authenticity and the risk of being co-opted by the organizational culture.Cultural Differences: Peer support in the West heavily emphasizes individual choice and self-determination. However, these concepts can clash with the worldviews of more collectivist cultures, where decision-making is often centered around the family or community elders.The International CharterTo address these challenges, the charter outlines the fundamental identity of peer support:DefinitionPeer supporters are individuals who have experienced mental ill health and use their personal recovery journey, alongside training, to mentor others.Their goal is to instill hope, model recovery, and support individuals in building meaningful lives in their communities.Key PrinciplesHuman Rights Focus: Peer support is grounded in a civil rights perspective, empowering individuals as the central agents of their recovery.No Social Control: It champions dignity and social inclusion, avoiding coercive measures or social control functions.Lived Experience: The core credibility of a peer supporter comes from their own history of overcoming adversity, not just from clinical training.Reciprocity: The relationship between a peer supporter and the person they support is non-hierarchical and mutually beneficial.Guiding ValuesThe practice is rooted in Equity, Hope, Trust, Respect, Acceptance and Understanding, and Shared Experiences and Responsibility.Core PracticesPeer workers elicit a person's resilience and talents, support them in taking ownership of their decisions, focus on self-identified quality of life outcomes, and advocate for broader systemic and societal changes.Differentiation from Conventional CareThe document emphasizes that while conventional mental health staff might use similar supportive frameworks, true peer support relies entirely on the peer's lived experience. It values 'practice-based evidence' over purely 'evidence-based practice' and offers practical solutions born from personal survival and recovery rather than textbooks.",
+        "criteria": [
+          {
+            "id": "Cultural Responsiveness",
+            "criterion": "Does the character's background shape their approach to autonomy?",
+            "explanation": "The biography must integrate the character's demographic background (from your survey). If they come from a collectivist culture, their approach to 'self-determination' might involve helping the client navigate decisions with family members or elders, rather than pushing a purely Western, individualistic view of independence.",
+            "citations_from_the_paper": [
+              "A major challenge in the rapid global growth of peer support 'pertains to 'role integrity' and the second to the possible culture-bound nature of peer support'",
+              "Peer leaders who live in more collectivist and family centered cultures find this emphasis to be foreign to their way of thinking.",
+              "In China, for example, adults who have not experienced mental ill health are expected to cede decision-making authority on important matters to family elders.",
+              "Peer support must be 'growing from the bottom up based on existing, indigenous strengths rather than top down in a further extension of the biomedical form of Colonialism plaguing current global mental health efforts'"
+            ]
+          },
+          {
+            "id": "Role Integrity and Systemic Tension",
+            "criterion": "How does the character navigate the 'no-person's land' between grassroots mutual support and the formal clinical system, and what specific challenges do they face in maintaining their authentic, lived-experience approach without being co-opted by traditional professional behaviors?",
+            "explanation": "As peer support is integrated into formal mental health care systems, there is a constant risk that peer workers will simply absorb clinical behaviors, abandon their unique lived-experience perspective, and be swallowed by the established organizational culture.",
+            "citations_from_the_paper": [
+              "With user leadership often being lost within formal professional led structures, peer support might be in danger of losing its essence and soul; its authenticity",
+              "Are the peer staff being 'co-opted' by the organizational culture... losing their unique power and role as they become just the latest person to misunderstand the people they are intended to serve?",
+              "In contrast, peer supporters in the West find themselves in something of a no-person's land, perched uncomfortably on a fence in between peer-operated and mutual support groups on one side and (non-peer) mental health professionals on the other."
+            ]
+          },
+          {
+            "id": "The Paradox of Reciprocity",
+            "criterion": "How does the character navigate the ethical struggle of maintaining true mutuality and non-hierarchical relationships while acting as a paid professional representing an agency?",
+            "explanation": "Historically, peer support was a mutual exchange between two willing participants outside the medical system. Turning this into a formalized, paid position where one party is hired to help another introduces significant ethical and structural complications regarding how true 'mutuality' can be achieved.",
+            "citations_from_the_paper": [
+              "We continue, for example, to grapple with the issue of reciprocity in relationships between peer supporters and the people they support.",
+              "Questions remain about the degree to which peer support can maintain this element of mutuality in the relationship when one person is trained and hired to provide support to another person who has not chosen to enter into the relationship with the intent of giving support back to his or her supporter.",
+              "Mutuality cannot be mandated, and peer supporters who work for mental health agencies represent the agency as well as themselves, leading to further complications regarding such issues as confidentiality and liability."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "paper_citation": "Scott, A. (2011). Authenticity Work: Mutuality and Boundaries in Peer Support. Society and Mental Health, 1(3), 174–185. https://doi.org/10.1177/2156869311431101",
+        "paper_summary": "The article explores how mental health peer supporters navigate the tension between building deep, authentic relationships ('love labour') and operating within the confines of a paid, professional health service[cite: 1]. Based on a study of 14 peer support services in Aotearoa New Zealand, the author argues that peer supporters achieve this balance through 'authenticity work'—a skilled, active effort to clear obstacles to connection and create spaces of emotional safety[cite: 1]. It highlights how strict adherence to traditional clinical boundaries can lead to burnout and failed relationships, advocating instead for 'organised emotional care' where workers manage boundaries through radical honesty, self-care, and mutuality[cite: 1]. This redefines professionalism to make a sustainable degree of 'love labour' possible[cite: 1].",
+        "criteria": [
+          {
+            "id": "The Practice of Authenticity Work",
+            "criterion": "Does the character actively engage in 'authenticity work' to create emotional safety, rather than relying on a clinical mask or assuming connection happens naturally?",
+            "explanation": "The biography should portray a person who engages in deliberate 'authenticity work'. They manage their environment and behaviors to clear obstacles to connection. They must actively avoid coming across as a traditional 'professional', striving instead to present as a real, honest person.",
+            "citations_from_the_paper": [
+              "I suggest we call it by the almost oxymoronic name of authenticity work to indicate that achieving authenticity in the peer support relationship actually requires active and skilled effort. This is directed at clearing the obstacles to the development of genuinely caring relationships and then stepping back from active intervention. [cite: 1]",
+              "Active emotion work is underway, directed not so much at exhorting one's own feelings (Hochschild 1983) or expressing one's own individuality (Fleming 2009) as in creating spaces of emotional safety for peers. [cite: 1]",
+              "You don't want to come across as professional, you want to come across as somebody that can be trusted, that can be a buddy or at least be trusted, just somebody to get on with, you know. [cite: 1]"
+            ]
+          },
+          {
+            "id": "Navigating the Liminal Boundary Space",
+            "criterion": "How does the character navigate the tension of being a 'friendly professional' through radical honesty and 'organised emotional care' rather than strict clinical boundaries?",
+            "explanation": "The character exists in a 'liminal space' between health provider and peer. Traditional boundaries cause relationships to fail. Instead, they manage boundaries by being honest about their own emotional limits and needs, maintaining safety through openness rather than clinical distance.",
+            "citations_from_the_paper": [
+              "Peer support workers are located in a liminal space (Scott et al. 2011a); they are both health providers and peers of their clients. They are thus faced with meeting a dual set of expectations in the relationship... [cite: 1]",
+              "A common formulation was that peer supporters were 'friendly professionals, not professional friends.' [cite: 1]",
+              "Not being honest, you know, wanting to take responsibility for that person's emotions that might come up without actually taking responsibility for her own. And not giving that person the opportunity to make a decision around whether this is working or not working... And that didn't work. [cite: 1]",
+              "They are operating with a version of 'organised emotional care' (Lopez 2006) that takes self-care as being as important as care for the other. [cite: 1]"
+            ]
+          },
+          {
+            "id": "The Toll of Paid Love Labour",
+            "criterion": "How does the character process the inherent conflict and emotional toll of performing deep, transformative 'love labour' within the constraints of a paid health service?",
+            "explanation": "The biography should reflect the tension of monetizing connection. It should depict frustration with systemic constraints that 'water down' true peer support, and how the character manages burnout by relying on supportive structures and self-care rather than emotional detachment.",
+            "citations_from_the_paper": [
+              "How does one work, for payment, at what Kathleen Lynch might call a form of 'love labour (Lynch 2007), building deep, authentic, transformative relationships? This question takes us to the heart of issues involving boundaries and sustainability within the mental health workplace. [cite: 1]",
+              "Yeah, because it is, you know, no amount of money can pay for that part of yourself that you give. And of your own story that you give when you're working. [cite: 1]",
+              "'Even though it is peer support as in what happens in the house, it's not a true peer model, so it is watered down' (Cathy, peer supporter). It is watered down, largely because building relationships within a paid, occupational context involves limits on the development of friendship and ongoing connection. [cite: 1]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "3",
+        "paper_citation": "Hiltensperger, R., Ryan, G., Adler Ben-Dor, I., Charles, A., Epple, E., Kalha, J., Korde, P., Kotera, Y., Mpango, R., Moran, G., Mueller-Stierlin, A. S., Nixdorf, R., Ramesh, M., Shamba, D., Slade, M., Puschner, B., & Nakku, J. (2024). Implementation of peer support for people with severe mental health conditions in high-, middle- and low-income-countries: a theory of change approach. BMC Health Services Research, 24(480). https://doi.org/10.1186/s12913-024-10990-5",
+        "paper_summary": "Overview: The article details the development of a Theory of Change (ToC) model for the UPSIDES trial, an initiative implementing peer support for individuals with severe mental health conditions across high-, middle-, and low-income countries. Methodology: The research team engaged 134 diverse stakeholders across 17 workshops at six sites in five countries (Germany, Israel, Uganda, Tanzania, and India). Participants created site-specific ToC maps that were integrated into a single cross-site ToC map. Key Findings & The Cross-Site Map: The finalized map outlines three stages of intervention (preparation, implementation, and sustainability) and targets change across individuals, organizations, and the public. The primary impact sought is improved social inclusion and reduced mental health stigma. The process highlighted regional differences: high-income settings focused on the professionalization of peer workers and clinical integration, whereas low- and middle-income settings prioritized community integration and the need for financial reimbursement. Conclusion: By utilizing a participatory approach, the researchers ensured the intervention was culturally appropriate and adaptable to local needs, maintaining the fidelity required for a standardized multi-site trial.",
+        "criteria": [
+          {
+            "id": "Economic Realities",
+            "criterion": "How does the peer worker's financial setup and job scope reflect the economic realities and readiness of their specific resource setting?",
+            "explanation": "The cross-national scope revealed that financial setup is a major factor in implementation success. In lower-income settings, financial reimbursement and economic empowerment were central. In high-income settings, the focus shifted toward professionalization as a recognized employee.",
+            "citations_from_the_paper": [
+              "Further, the form of reimbursement and its consequences was an important topic for sites in LMIC. [cite: 1]",
+              "The financial situation of PSWs in LMICs might be more critical than that of their colleagues in HICs, most of whom receive at least some sort of social benefits. [cite: 1]",
+              "By comparison, the discussions in HIC revolved more around the PSW's role as an employee and their professionalization. [cite: 1]"
+            ]
+          },
+          {
+            "id": "Confronting Systemic Barriers",
+            "criterion": "How does the character navigate institutional hierarchy and stigma to establish an enabling work environment?",
+            "explanation": "The study focuses heavily on institutional environments, noting that high levels of stigmatization and strong hierarchies present major challenges. A character's willingness to disclose their diagnosis measures their systemic safety and indicates whether they are fighting against institutional stigma.",
+            "citations_from_the_paper": [
+              "Varying levels of stigmatisation of mental health and strength of hierarchy within the mental health system in the different workshop sites were an important challenge when planning the overall conduct of the workshops. [cite: 1]",
+              "Also, regarding the organisation and its respective staff members, critical outcomes to ensure successful implementation at the site need to be achieved, such as organisational readiness to promote an enabling working environment for PSWs in which their expertise is recognised. [cite: 1]",
+              "This will help to foster reduced in-system stigma of mental ill-health and lead to PSWs becoming advocates for mental health awareness in the community. [cite: 1]"
+            ]
+          },
+          {
+            "id": "Macro-Level Resilience",
+            "criterion": "How does the biography reflect the peer worker's ability to adapt their role and maintain safety amidst massive macro-level disruptions or crises?",
+            "explanation": "The UPSIDES project used Theory of Change (ToC) as an adaptable framework, documenting the need to revise maps due to massive changes in the outer setting, such as the COVID-19 pandemic. External crises test the emotional and logistical capacity of peer workers to deliver safe and effective support.",
+            "citations_from_the_paper": [
+              "Revision and reflection were considered crucial to adapt to changes in the outer setting of implementation. [cite: 1]",
+              "Despite these challenges, the study at hand is one of few which has revised and updated some of their site specific maps and the cross-site ToC map over the course of the study to incorporate important contextual changes (i.e., the pandemic) as well as key learnings from the implementation phase into the final map. [cite: 1]",
+              "Further, the site should establish mechanisms to ensure that peer support is safe for both PSWs and SUs. [cite: 1]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "paper_citation": "Davidson, L., Chinman, M., Sells, D., & Rowe, M. (2006). Peer Support Among Adults With Serious Mental Illness: A Report From the Field. Schizophrenia Bulletin, 32(3), 443-450. doi:10.1093/schbul/sbj043",
+        "paper_summary": "Overview: The document defines peer support as a unique form of mental health care and evaluates its effectiveness compared to conventional services[cite: 10]. Background and Challenges: Peer support is founded on the belief that individuals who have overcome adversity can offer valuable support and mentorship[cite: 7, 19]. While individuals with mental illness have long provided informal support, deploying them formally in the mental health system proliferated in the 1990s due to the consumer/survivor movement[cite: 21, 24]. Evidence from Conventional Services: Four randomized controlled trials comparing conventional care provided by peers versus non-peers showed few differences in outcomes[cite: 10, 97]. Three studies found no significant differences, while one found peer-delivered services increased community tenure[cite: 103]. Role and Systemic Tension: Defining someone as a peer simply indicates a personal history of serious mental illness[cite: 39]. True peer support is an asymmetrical relationship where a person in recovery provides designated services to someone not as far along[cite: 54, 55]. Implementing peer roles creates tension regarding standard clinical boundaries, rules of confidentiality, and distinguishing between supportive peer relationships and actual friendships[cite: 124, 125, 129]. Active Ingredients: Research is beginning to identify the unique 'active ingredients' of peer support[cite: 162]. One study showed peer specialists successfully forged stable working alliances early in treatment with 'difficult-to-engage' clients, leading to increased initial contact, though these relationship differences tended to dissolve over time as non-peer providers caught up[cite: 168, 178, 179].",
+        "criteria": [
+          {
+            "id": "Role on the Helping Continuum",
+            "criterion": "Does the biography clearly define the structural reality of the character's job on the continuum of helping relationships?",
+            "explanation": "The character must be placed in a specific role, such as providing conventional services (Role A), leading hybrid support groups (Role B), or engaging in true peer support where lived experience is explicitly utilized (Role C)[cite: 86, 92, 119, 147]. Positioning them correctly dictates whether their unique background measurably impacts clinical outcomes[cite: 110, 111].",
+            "citations_from_the_paper": [
+              "We conceptualize peer support, in contrast, as involving 1 or more persons who have a history of mental illness and who have experienced significant improvements in their psychiatric condition offering services and/or supports to other people with serious mental illness who are considered to be not as far along in their own recovery process. [cite: 54]",
+              "In peer support, as we are defining it, a person in recovery from a serious mental illness is employed to offer services and/or supports to others with mental illnesses. [cite: 147]",
+              "Like B but unlike A, however, it also is clear in this case that the services and supports that the person will provide will utilize explicitly his or her own experiences of recovery. [cite: 150]"
+            ]
+          },
+          {
+            "id": "Friend vs. Professional Boundary Tensions",
+            "criterion": "How does the character navigate the tension of being friendly and relatable without crossing the line into a natural, reciprocal friendship?",
+            "explanation": "Unlike traditional clinical staff, peer supporters often gravitate toward non-office settings like coffee shops[cite: 136]. The narrative should explore the uncomfortable issue of maintaining professional boundaries while acting in a role that mimics friendship and lacks the reciprocity of natural mutual support[cite: 129, 137, 138, 140].",
+            "citations_from_the_paper": [
+              "An even more potentially contentious issue relates to opposing views of boundaries and friendship. [cite: 129]",
+              "Unless they are confined to service settings, peer staff also are more likely to gravitate to non-office settings such as coffee shops, restaurants, or other public spaces for meetings with group members, spaces that traditionally have been associated more with friendship than with health care. [cite: 132, 136]",
+              "How can they succeed in being 'friendly' toward their clients without actually becoming friends with them? [cite: 140]",
+              "If so, then when is a chat over coffee a reimbursable service and when is it just a friendly interaction? [cite: 144]"
+            ]
+          },
+          {
+            "id": "The Complexity of Disclosure",
+            "criterion": "How does the character intentionally use personal disclosure as a tool for the client's benefit rather than their own?",
+            "explanation": "The character is expected to share intimate stories from their lives, unlike conventional clinical staff who are often reluctant to disclose personal history[cite: 94, 131]. However, this disclosure must be highly intentional and strictly in the client's best interest, not for the staff member's benefit[cite: 149].",
+            "citations_from_the_paper": [
+              "First, by virtue of drawing on their own experiences and the lessons they have learned from their own challenges and accomplishments in living with mental illness, peer staff are not only allowed but are in fact expected to disclose personal information and to share intimate stories from their own lives. [cite: 131]",
+              "Like A but unlike B, it is clear in this case that the person is not a paid friend and is only to disclose personal information when it is in the client's best interest (as opposed to for the staff member's own benefit). [cite: 149]"
+            ]
+          },
+          {
+            "id": "Active Ingredients and Early Engagement",
+            "criterion": "Does the biography showcase the character's ability to forge effective early alliances, particularly with disengaged clients?",
+            "explanation": "The biography should highlight the unique capacity of the peer to build trust and 'remoralize' clients early in treatment[cite: 168, 171]. They excel at instilling hope and modeling adaptive problem-solving through their shared background, even if non-peer providers eventually catch up in forming strong alliances later on[cite: 168, 178, 179].",
+            "citations_from_the_paper": [
+              "In terms of possible active ingredients, these findings appear to support peer providers' abilities to forge effective and stable working alliances early in the treatment process with clients typically viewed as among the most disengaged from traditional approaches to care. [cite: 178]",
+              "...these findings also suggest that differences between relationships with peer specialists and those with regular case managers may tend to surface early in the engagement process and eventually dissolve over time, as non-peer providers 'catch up' in forming stronger working alliances with their clients. [cite: 179]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "paper_citation": "Haun, M., Adler Ben-Dor, I., Hall, C., Kalha, J., Korde, P., Moran, G., Müller-Stierlin, A. S., Niwemuhwezi, J., Nixdorf, R., Puschner, B., Ramesh, M., Charles, A., & Krumm, S. (2024). Perspectives of key informants before and after implementing UPSIDES peer support in mental health services: qualitative findings from an international multi-site study. BMC Health Services Research, 24(159). https://doi.org/10.1186/s12913-024-10543-w",
+        "paper_summary": "Overview: This qualitative study assessed the implementation of the UPSIDES peer support intervention across diverse global settings, including low-, middle-, and high-income countries (Germany, Uganda, Tanzania, Israel, and India)[cite: 5, 13, 14]. Guided by the Consolidated Framework for Implementation Research (CFIR), the researchers aimed to identify facilitators and barriers to scaling up peer support[cite: 13, 54]. Methodology: The study utilized six focus groups involving 54 key informants with relevant organizational knowledge[cite: 14, 97]. Data collection occurred at two time points: before the start of the intervention and 1.5 years post-implementation[cite: 14, 94, 95]. Key Findings: Across all sites, peer support was seen as a benefit for service users (SUs) and peer support workers (PSWs) by providing hope and role-modeling[cite: 16, 160, 168]. However, the study revealed significant contextual differences. In low- and middle-income countries (LMICs), such as Uganda and Tanzania, peer support was uniquely valued for reducing the workload of traditional mental health workers (MHWs) and extending care into communities[cite: 17, 184, 270]. In contrast, high-income countries (HICs) reported fewer organizational benefits, with some MHWs perceiving PSWs as 'additional' patients rather than colleagues[cite: 180, 232, 298]. Major implementation barriers included the COVID-19 pandemic and systemic resource scarcity, particularly in LMICs where lack of meeting space, transportation funds, and fair payment were prominent[cite: 19, 191, 194, 273]. Conclusion: The study highlights that successful implementation depends on local contextual factors. Recommendations include context-adapted training and the establishment of legal and organizational structures that foster frequent interaction between peer and non-peer staff[cite: 331, 335, 336].",
+        "criteria": [
+          {
+            "id": "The Workload Paradox",
+            "criterion": "Does the character's presence reduce or increase the perceived burden on the professional team?",
+            "explanation": "The biography must reflect the specific organizational utility of the peer specialist. In under-resourced settings, the character should be seen as an essential worker extending the reach of the hospital. In highly-resourced settings, they may face the barrier of being viewed as an 'extra person to manage.'",
+            "citations_from_the_paper": [
+              "At study sites with lower resources, reduced workload for mental health workers and improved access to mental health services through peer support were perceived as implementation facilitators[cite: 17].",
+              "MHWs could perceive PSWs as 'additional' SUs than a colleague to work alongside (ULM 55; UKE 39) and in turn increase MHWs workload[cite: 232].",
+              "Key informants in settings with low resources availability (Tanzania, Uganda) discussed benefits of UPSIDES more intensively... especially regarding the positive impact on MH organisations, such as workload reduction[cite: 270].",
+              "In Dar es Salaam, PSWs were perceived as valuable supporters by reducing MHWs' workload[cite: 305]."
+            ]
+          },
+          {
+            "id": "Resource-Grounded Realism",
+            "criterion": "Does the character's daily routine include specific, tangible logistical hurdles identified in the study?",
+            "explanation": "A realistic biography must account for the material conditions of the work. This includes the presence or absence of a salary, official identification, a designated meeting room, or the funds to travel to service users' homes.",
+            "citations_from_the_paper": [
+              "Key informants... emphasised the urgent need for more resources... This included the need for space, e.g., to arrange meetings, working materials, equipment such as identity cards, and payment or other incentives for PSWs[cite: 189, 190, 191].",
+              "In terms of resources for peer support, key informants at study sites in LMICs (Tanzania, Uganda) pointed to more severe challenges compared to study sites in HICs[cite: 273].",
+              "Key informants assessed resource availability as a key factor for successful UPSIDES implementation throughout all stages[cite: 309].",
+              "Participants in Dar es Salaam reported insufficient resources including time or money for transport fees[cite: 236]."
+            ]
+          },
+          {
+            "id": "Structural Integration vs. Isolation",
+            "criterion": "Is the character integrated into the 'DNA' of the organization or working in a structural silo?",
+            "explanation": "The biography should define the character's relationship to the broader medical team. They might attend team meetings and provide input on care plans, or they might work completely independently, leading to a lack of visibility among traditional staff.",
+            "citations_from_the_paper": [
+              "In Be'er Sheva... employing those with knowledge from experience is done without any guidance, it exists in the organisation's DNA[cite: 204].",
+              "Participants in the FGD Ulm and Hamburg (Germany) reported that UPSIDES was implemented largely independent from the existing structures of the MH teams or the inner setting[cite: 217].",
+              "The structural disconnection between PSWs, MHWs, and a low number of PSWs were introduced as explanations for the small impact of UPSIDES on the organisational culture in Ulm and Hamburg[cite: 218].",
+              "In Butabika and Pune, PSWs took part in MH team meetings and provided support to MHWs with daily activities on the wards[cite: 242, 246]."
+            ]
+          },
+          {
+            "id": "Outer Setting Crisis Resilience",
+            "criterion": "How does an unexpected systemic crisis (like a pandemic or war) disrupt the character's ability to fulfill their role?",
+            "explanation": "Drawing on the study's COVID-19 findings, the biography must address how external crises break the link between peers and service users, forcing the character to adapt (e.g., telephone support) while managing their own distress.",
+            "citations_from_the_paper": [
+              "Participants across study sites... addressed the Covid-19 pandemic as a major unexpected challenge impacting the implementation of UPSIDES[cite: 194].",
+              "Key informants reported that the intervention plans could not be fully realised due to the pandemic or that SUs could not be reached anymore[cite: 195].",
+              "The pandemic had a negative impact on SUs' and PSWs' wellbeing, PSWs and SUs could not meet face to face[cite: 196].",
+              "Offering telephone contact was described as a strategy to provide peer support during the pandemic in Hamburg[cite: 197]."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "paper_citation": "Krumm, S., Haun, M., Hiller, S., Charles, A., Kalha, J., Niwemuhwezi, J., Nixdorf, R., Puschner, B., Ryan, G., Shamba, D., Garber Epstein, P., & Moran, G. (2022). Mental health workers' perspectives on peer support in high-, middle- and low income settings: a focus group study. BMC Psychiatry, 22(604). https://doi.org/10.1186/s12888-022-04206-5",
+        "paper_summary": "Overview: This focus group study investigates the attitudes of mental health workers (MHWs) toward the implementation of peer support across a diverse range of economic settings, including Germany and Israel (high-income), India (middle-income), and Tanzania and Uganda (low-income)[cite: 12]. The study was conducted as part of the UPSIDES project, which aims to scale up recovery-oriented peer support globally[cite: 56, 57]. Methodology: Researchers conducted six focus groups involving 35 MHWs (nurses, psychiatrists, psychologists, etc.) to explore expectations regarding roles, challenges, and collaboration prior to intervention implementation[cite: 13, 71, 82]. Results: MHWs across all sites generally held positive views of peer support, citing benefits like shared lived experience, hope, and role modeling for service users[cite: 15, 150, 155]. However, the study identified significant variations based on local context. In low- and middle-income countries (LMICs), PSWs were primarily seen as 'bridge-builders' between hospitals and communities[cite: 16, 186]. In settings with less peer support history, MHWs demanded strict role clarity to prevent 'role confusion' [cite: 50, 235], whereas sites with established traditions (e.g., Be'er Sheva and Hamburg) were more open to 'equal partnerships' and blurred role boundaries[cite: 257, 281, 352]. Challenges: Concerns included potential negative role modeling, inadequate advice regarding medication, and the risk of overburdening PSWs, who were noted as being psychologically vulnerable[cite: 15, 215, 222, 225]. There was also a noted systemic risk of PSWs being utilized as a 'cheap option' for underfunded services[cite: 325, 375]. Conclusion: Successful global implementation requires reconciling the need for local adaptation with the safeguarding of core peer values such as equity, hope, and shared experience[cite: 22, 379].",
+        "criteria": [
+          {
+            "id": "The Bridge-Builder and Community Ambassador",
+            "criterion": "How does the character connect the formal clinical setting to their local community or cultural context?",
+            "explanation": "In LMIC settings, the unique value of the peer specialist is their ability to act as a link between the hospital and the community, helping with reintegration and reducing stigma where resources are limited.",
+            "citations_from_the_paper": [
+              "Notably, mental health workers from low- and middle- income countries described peer support workers as bridge-builders and emphasized the mutual benefits of peer support[cite: 16].",
+              "PSWs were also expected to gather important information on the service users: 'Observing them, knowing who's their relatives, education level, taking initiative and talking to them, trying to understand the problem through the patient's relatives'[cite: 184, 185].",
+              "PSWs are described as often more familiar with local cultures than MHWs and thus, could better serve as bridge builders[cite: 193].",
+              "By building bridges between mental health services and local communities, PSWs can promote mental health awareness, reduce stigma and discrimination, support recovery and social inclusion, prevent mental disorders and protect human rights[cite: 322]."
+            ]
+          },
+          {
+            "id": "Role Clarity vs. Equal Partnership",
+            "criterion": "How does the character navigate their status within the team—are they a strictly defined assistant or an 'equal partner'?",
+            "explanation": "The biography should reflect the tension of role definition. In newer settings, there is a push for strict boundaries to protect professional domains, while established settings allow for more fluid, non-hierarchical collaboration.",
+            "citations_from_the_paper": [
+              "In some settings, mental health workers strongly agreed on the need for role clarity, whereas in others, mental health workers expressed mixed views, with some preferring blurred role boundaries[cite: 18].",
+              "Role confusion between PSWs and service users has also been identified as a key barrier to successful implementation of peer support, and role clarity is emphasized in order to avoid tokenism[cite: 50].",
+              "Participants in Be'er Sheva shared an understanding of an (ideal of) equal partnership between MHWs and PSWs[cite: 281].",
+              "Compared to settings with longer traditions of peer support combined with strong political activism towards overcoming the medical model, there might be a risk that PSWs in settings with less peer support experiences inherently reinforce the traditional hierarchies within medical systems[cite: 340]."
+            ]
+          },
+          {
+            "id": "Vulnerability and the Burden of the Role",
+            "criterion": "How does the character balance the emotional demands of peer support with their own psychological vulnerability and recovery?",
+            "explanation": "A realistic peer biography must acknowledge the risk of 'decompensation' or burnout. MHWs often perceive PSWs as more vulnerable to workplace stress due to their history of mental illness.",
+            "citations_from_the_paper": [
+              "PSWs are described as vulnerable and thus, sometimes incapable to endure 'usual' workplace stress[cite: 225].",
+              "A participant in Ulm referred to earlier experiences with a PSW who was burdened by a team conflict... 'that somehow decompensated him and I know that he was going to hospital one week later'[cite: 226, 227].",
+              "Referring to experiences with a PSW with long-term experiences as a service user... PSWs' identification with 'chronic' service users might counteract with the aspirations of younger, first-time service users to return to a 'normal' life[cite: 217].",
+              "Some participants were sceptical about the inclusion of PSWs into teams where they were formerly treated by the MHW team[cite: 252]."
+            ]
+          },
+          {
+            "id": "Mutual Benefit and the 'Cheap Option' Risk",
+            "criterion": "Does the character view their job as a personal recovery tool or are they aware of being used to fill systemic gaps?",
+            "explanation": "The biography should touch on the economic reality of the role. For some, it is a path to stability and medication access; for others, it feels like underpaid professional labor.",
+            "citations_from_the_paper": [
+              "In Butabika, Dar es Salaam and Ahmedabad MHWs expected that working as a PSW has a positive impact on the personal recovery of the PSWs themselves[cite: 197].",
+              "Supporting service users enables PSWs to live a 'useful', 'stable' (BU 19) or 'economically independent' (AD 244) life in the community[cite: 198].",
+              "There is a risk, however, that PSWs, who often receive little payment, could be the 'cheaper option' by filling gaps for underfunded services in mental health system[cite: 325].",
+              "PSWs play a key role in the provision of mental health services and they may be required to step in for mental health services otherwise not fully accessible due to lacking resources, e.g. informal support during hospital admission[cite: 327, 328]."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "paper_citation": "Gillard, S., Foster, R., White, S., Barlow, S., Bhattacharya, R., Binfield, P., Eborall, R., Faulkner, A., Gibson, S., Goldsmith, L. P., Simpson, A., Lucock, M., Marks, J., Morshead, R., Patel, S., Priebe, S., Repper, J., Rinaldi, M., Ussher, M., & Worner, J. (2022). The impact of working as a peer worker in mental health services: a longitudinal mixed methods study. BMC Psychiatry, 22, 373. https://doi.org/10.1186/s12888-022-03999-9",
+        "paper_summary": "Overview: This longitudinal mixed-methods study tracks the experiences and employment outcomes of 32 peer workers in the UK over a one-year period. It aims to understand the sustainability of the peer role and its impact on the workers themselves, challenging assumptions about their inherent vulnerability. Findings: The study identifies a non-linear emotional trajectory where peer workers experience a temporary dip in wellbeing and job satisfaction—and an increase in burnout—around the 4-month mark as the 'realities of the job' set in. However, by 12 months, these levels typically stabilize and remain comparable to general healthcare professional norms. While the role provides a transformational sense of empowerment and connection, peer workers face systemic challenges including poor integration with clinical teams and growing anxiety regarding job security and future prospects as fixed-term contracts near their end. The research emphasizes that with appropriate supervision and team support, peer workers can thrive in acute mental health settings without higher rates of relapse or absenteeism than their non-peer colleagues.",
+        "criteria": [
+          {
+            "id": "The 4-Month Temporal Arc",
+            "criterion": "Does the character's emotional state follow a trajectory of initial optimism, a mid-point crisis, and eventual stabilization?",
+            "explanation": "A key unique finding is the '4-month dip.' Biography generation should reflect that peer workers often find the job harder to manage once the initial excitement fades, but they find balance by the end of their first year if properly supported.",
+            "citations_from_the_paper": [
+              "There were small-to-medium decreases in wellbeing and aspects of job satisfaction, and increase in burnout after 4 months, but these changes were largely not maintained at 12 months. [cite: 17]",
+              "Peer workers... could find it challenging to adjust to the demands of the job after initial optimism. [cite: 18]",
+              "initial high scores, perhaps buoyed by optimism at taking on a new role, were tempered somewhat as the realities of the job sank in, but that as peer workers became further accustomed to the role there was no sustained decline at 12 months. [cite: 409]"
+            ]
+          },
+          {
+            "id": "Systemic Isolation and Clinical Tension",
+            "criterion": "How does the character's relationship (or lack thereof) with non-peer clinical colleagues impact their sense of professional self-worth?",
+            "explanation": "The paper identifies a disconnect where peer workers feel highly supported by fellow peers but 'disheartened' by clinical teams who misunderstand or belittle their role. This tension is a central conflict for the biography.",
+            "citations_from_the_paper": [
+              "that sense of value could be undermined where peer workers felt their role was misunderstood or not acknowledged by the clinicians they worked alongside. [cite: 233]",
+              "So that's been quite challenging not really having any communication or contact really with the mental health teams that are working with the service users that's been a bit challenging and quite disheartening really. [cite: 238]",
+              "connection with the clinical team was not as strong... peer workers might not have had the opportunity to build that shared understanding of their role with clinicians. [cite: 428, 433]"
+            ]
+          },
+          {
+            "id": "Emotional Re-attachment vs. Clinical Detachment",
+            "criterion": "Does the character describe the process of 're-attaching' to their raw lived experiences, and how do they manage the resulting emotional intensity?",
+            "explanation": "Unlike traditional clinicians who are taught to detach, peer workers must 're-attach' to their own history of distress to help others. The biography should reflect the difficulty and the 'traumatising' but 'safe' nature of this process.",
+            "citations_from_the_paper": [
+              "if I was speaking to a consultant or something I'd talk about my mental health like it's happening to a different body... And you become detached from it and this is about re-attachment to it. [cite: 316-317]",
+              "It opens your eyes because it puts you back in touch with what you experienced and you have those feelings right there raw, but it was such a safe place to do that. [cite: 318]",
+              "I can really feel their pain sometimes and that can be a bit difficult. [cite: 322]"
+            ]
+          },
+          {
+            "id": "Waning Vocational Prospects",
+            "criterion": "Does the character express growing anxiety about their future career path as they reach the one-year mark?",
+            "explanation": "The study found that satisfaction with job prospects and training significantly decreased over time. A realistic biography must include the stress of fixed-term contracts and the 'waning' optimism about what comes after the current role.",
+            "citations_from_the_paper": [
+              "This decrease in satisfaction with prospects continued over the year with T1 to T3 scores reducing by 0.45 points, a statistically significant change. [cite: 187]",
+              "optimism around future employment... that peer workers initially expressed starting to wane as fixed term contracts came towards to an end and ongoing job security became less certain. [cite: 421]",
+              "satisfaction with job prospects and training can drop over time where job certainty and career development opportunities are unclear. [cite: 413]"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "8",
+        "paper_citation": "Moran, G. S., Goldfarb, Y., Adler Ben-Dor, I., Hadas-Grundman, S., Kalha, J., Baillie, D., Kwebiiha, E., Mahlke, C., Ramesh, M., Slade, M., Haun, M., & Krumm, S. (2025). Multicultural Implementation-Experiences of Peer Support Workers in MH Services: Qualitative Findings of UPSIDES Innovative Intervention-An International Multi-Site Project. Journal of Occupational Rehabilitation. https://doi.org/10.1007/s10926-025-10320-4",
+        "paper_summary": "Overview: This qualitative study explores the implementation experiences of mental health Peer Support Workers (PSWs) within the UPSIDES project, an international initiative scaling peer support across Germany, Uganda, Tanzania, Israel, and India[cite: 3, 11, 12]. The research focuses on how training and role delivery impact recovery, identity, and community dynamics in diverse socioeconomic contexts[cite: 11, 272]. Methodology: The study analyzed nine focus groups involving 38 PSWs across low-, middle-, and high-income countries (LMIC & HIC) using thematic analysis[cite: 11, 12, 131]. Findings: The analysis identified four domains: recovery experiences, vocational development, relations with staff/MH systems, and influence on broader social circles[cite: 14, 15]. Key insights include the emergence of PSWs as 'social change agents' who bridge formal services and the community to humanize mental health care and counter stigma[cite: 313, 316, 327]. In LMIC sites, the peer role provided critical financial benefits and prioritized access to care, fostering a 'positive upward spiral' of recovery[cite: 16, 291]. Challenges: Despite the benefits, PSWs consistently faced issues regarding role clarity, dual-role ambivalence, and the need for stronger systemic integration within clinical hierarchies[cite: 19, 234, 301, 309].",
+        "criteria": [
+          {
+            "id": "The Social Change Agent Role",
+            "criterion": "Does the character engage in proactive outreach and advocacy to stakeholders outside the formal mental health system?",
+            "explanation": "The biography should reflect how the peer supporter's identity extends beyond one-on-one clinical support to become a catalyst for community-level change. This includes educating law enforcement, families, and religious leaders to shift attitudes toward mental illness[cite: 17, 318, 324].",
+            "citations_from_the_paper": [
+              "PSWs reached out to broader circles and engaged in influential activities that promote awareness, educate about severe mental health conditions, enhance access to mental health care and counter stigma[cite: 243].",
+              "In LMICs specifically, PSWs... engaged in active interactions with stakeholders in the community (e.g., relatives, police, etc.) promoting social-educative and anti-stigma influences[cite: 16, 17].",
+              "The findings of the current study showed that PSWs in both HIC and LMIC sites developed a proactive 'social change agent' approach[cite: 327]."
+            ]
+          },
+          {
+            "id": "The Positive Upward Spiral of Recovery",
+            "criterion": "How do the vocational, financial, and clinical aspects of the character's life interact to reinforce their ongoing recovery?",
+            "explanation": "The narrative must demonstrate the mutual influence between professional employment and personal wellness. In resource-scarce environments, financial stability and vocational pride create an 'upward spiral' that heightens motivation for illness management[cite: 291, 292, 296].",
+            "citations_from_the_paper": [
+              "The findings further suggest that in LMIC PSWs often experienced a positive upward spiral due to UPSIDES implementation[cite: 291].",
+              "This occurred through mutual influences between one's personal and clinical recovery: often, engaging in PS implementation enhanced one's motivation for illness management, which in turn enabled PSWs' vocational development and vice versa[cite: 292].",
+              "PSWs' engagement in peer roles contributed to their financial abilities and in some instances were transformative in securing their financial state through better financial handling, development of small businesses and employability[cite: 294, 296]."
+            ]
+          },
+          {
+            "id": "Systemic Identity and Role Clarity",
+            "criterion": "Does the story portray the character's struggle for professional recognition and the specific symbols they use to define their role?",
+            "explanation": "A realistic biography must address the friction between peer identity and established clinical hierarchies. This includes challenges with role clarity and the psychological importance of physical identifiers, like ID cards, to establish professional value[cite: 19, 230, 307].",
+            "citations_from_the_paper": [
+              "Across sites PSWs' expressed challenges and needs related to lack of role clarity, relations with MH staff and integration into services[cite: 19].",
+              "In Pune, a PSW asked for 'a dress code or ID card' so PSWs aren't mistaken for service users... 'They will then understand our value'[cite: 230, 232].",
+              "Overall the challenge of better integration in statutory mental health services was prominent across sites[cite: 309]."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "9",
+        "paper_citation": "Bochicchio, L., Tuda, D., Stefancic, A., Collins-Anderson, A., & Cabassa, L. (2023). \"Getting the Staff to Understand It:\" Leadership Perspectives on Peer Specialists Before and After the Implementation of a Peer-Delivered Healthy Lifestyle Intervention. Community Mental Health Journal, 59, 904-913. https://doi.org/10.1007/s10597-022-01074-x",
+        "paper_summary": "Overview: This study explores leadership perspectives on peer specialists before and after the implementation of a peer-led healthy lifestyle intervention (PGLB) in supportive housing agencies[cite: 1]. Background and Challenges: Initially, agency leadership valued peers for their lived experience but restricted their roles largely to basic care coordination[cite: 1]. Leaders expressed doubts regarding peers' soft skills, professional boundaries, and their capacity to manage full-time work without experiencing secondary traumatization[cite: 1]. Furthermore, a significant barrier to integration was the stigma and misconceptions held by non-peer staff, which often made peers feel like second-class employees[cite: 1]. Shifting Perspectives: Following the PGLB intervention, leadership perspectives shifted dramatically[cite: 1]. Peers successfully demonstrated their ability to take ownership of programs and lead manualized interventions, proving they were essential assets rather than just auxiliary support[cite: 1]. Key Recommendations: The study concludes that successful workplace integration requires more than just hiring peers; it necessitates active exposure to peer-led services, comprehensive training for non-peer staff to dispel stigma, and robust formal supervision to enhance peers' capabilities[cite: 1].",
+        "criteria": [
+          {
+            "id": "Role Evolution and Professional Capabilities",
+            "criterion": "How does the character evolve from performing basic support tasks to taking ownership and leading manualized interventions?",
+            "explanation": "The biography should demonstrate the peer's growth and ability to overcome leadership's initial doubts regarding their skills, education, and capacity to handle complex, evidence-based programs.",
+            "citations_from_the_paper": [
+              "For me, that fact that it's peer delivered and that I was able to demonstrate to [non-peer] staff that peers can be trained to [teach] manualized [interventions]. [cite: 1]",
+              "It's like, you're a peer coordinator. You're not just like a peer drop-in volunteer support you know? You are doing these duties because you're the only one that can; and you're accountable for the pieces of it. [cite: 1]",
+              "And there are varying degrees of [peers'] writing ability and data tracking and all of that sort of stuff... where the rest of our staff usually with like meeting a minimum of a bachelor's degree, you're usually expecting that there's going to be a higher level of producing there. [cite: 1]"
+            ]
+          },
+          {
+            "id": "Navigating Workplace Stigma and Integration",
+            "criterion": "What specific challenges does the character face regarding misconceptions and stigma from non-peer staff, and how does this affect their social and professional integration?",
+            "explanation": "The story must reflect the systemic tension of integrating into a non-peer dominated workforce. This includes overcoming the fear of being treated as a 'second-class employee' and navigating the complex social dynamics with non-peer colleagues.",
+            "citations_from_the_paper": [
+              "I think the other difficulty is not an issue with peers, but it is an issue with training our staff on how to interact with peer staff. And how not to make peer staff second class employees [cite: 1]",
+              "But I don't want this to have a stigma attached to it where the residential counselor says, 'Oh that's a peer, that's a client. Why is that person doing that job? Or push him away. [cite: 1]",
+              "You're going out to a bar after work. A bunch of people are going out after work... There are complications socially that then affect I think some of the relationships in the workplace not in any formal way and people get along okay. But you can just see some of those dynamics happening. [cite: 1]"
+            ]
+          },
+          {
+            "id": "Emotional Capacity and Boundary Management",
+            "criterion": "How does the character manage the emotional toll of full-time peer work and maintain appropriate professional boundaries while drawing on their lived experience?",
+            "explanation": "The biography must authentically depict the emotional weight of the job, including the risk of secondary traumatization, the stress of increased workload, and the challenge of keeping the relationship professional rather than just friendly.",
+            "citations_from_the_paper": [
+              "Well, I think some of our challenges... is sometimes the boundary issues on knowing there is a difference between being a friend and being a peer. [cite: 1]",
+              "at part-time [the peer specialists] were doing amazing, amazing, amazing work. Then [the peer specialists] really fall apart at full-time. I've seen that happen. [cite: 1]",
+              "But I worry about when they are face to face with other people who are in a different space in their lives and are really struggling or they are kind of secondary traumatization... I just don't want to put people in at-risk situations. [cite: 1]"
+            ]
+          }
+        ]
+      }
+    ]
+}

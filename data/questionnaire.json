@@ -1,0 +1,156 @@
+{
+  "sections": [
+    {
+      "id": "mwms",
+      "title": {
+        "en": "Work motivation (MWMS)",
+        "he": "מוטיבציה לעבודה (MWMS)"
+      },
+      "scale": [
+        { "en": "Not at all", "he": "כלל לא" },
+        { "en": "Very little", "he": "במעט מאוד" },
+        { "en": "A little", "he": "במעט" },
+        { "en": "Moderately", "he": "במידה בינונית" },
+        { "en": "Strongly", "he": "במידה רבה" },
+        { "en": "Very strongly", "he": "במידה רבה מאוד" },
+        { "en": "Completely", "he": "לחלוטין" }
+      ],
+      "questions": [
+        { "id": "mwms_1",  "question": { "en": "I don't make an effort because I feel it's a waste of time.",                                                                 "he": "אני לא משקיע/ה מאמץ כי אני מרגיש/ה שזה בזבוז זמן." } },
+        { "id": "mwms_2",  "question": { "en": "I put in little effort because I don't think this work is worth investing in.",                                               "he": "אני משקיע/ה מעט מאמץ כי אני לא חושב/ת שכדאי להשקיע בעבודה הזו." } },
+        { "id": "mwms_3",  "question": { "en": "I don't know why I do this work; it's pointless.",                                                                            "he": "אני לא יודע/ת מדוע אני עושה את העבודה הזו, היא חסרת טעם." } },
+        { "id": "mwms_4",  "question": { "en": "I put in effort at work to gain other people's approval.",                                                                    "he": "אני משקיע/ה מאמץ בעבודה כדי לקבל את אישורם של אחרים." } },
+        { "id": "mwms_5",  "question": { "en": "I put in effort at work so that others will respect me more.",                                                                "he": "אני משקיע/ה מאמץ בעבודה כי כך אחרים יכבדו אותי יותר." } },
+        { "id": "mwms_6",  "question": { "en": "I put in effort at work to avoid being criticized by others.",                                                                "he": "אני משקיע/ה מאמץ בעבודה כדי להימנע מביקורת של אחרים." } },
+        { "id": "mwms_7",  "question": { "en": "I put in effort at work because I'll only be paid if I invest enough in my work.",                                            "he": "אני משקיע/ה מאמץ בעבודה כי אקבל תגמול כספי רק אם אשקיע מספיק בעבודתי." } },
+        { "id": "mwms_8",  "question": { "en": "I put in effort at work because others offer me job security only if I invest enough.",                                        "he": "אני משקיע/ה מאמץ בעבודה כי אחרים מציעים לי ביטחון תעסוקתי רק אם אשקיע מספיק." } },
+        { "id": "mwms_9",  "question": { "en": "I put in effort at work because there's a risk I'll lose my job if I don't.",                                                  "he": "אני משקיע/ה מאמץ בעבודה כי קיים סיכון שאאבד את עבודתי אם לא אשקיע." } },
+        { "id": "mwms_10", "question": { "en": "I put in effort at work to prove to myself that I'm capable.",                                                                 "he": "אני משקיע/ה מאמץ בעבודה כדי להוכיח לעצמי שאני מסוגל/ת." } },
+        { "id": "mwms_11", "question": { "en": "I put in effort at work so that I can feel proud of myself.",                                                                  "he": "אני משקיע/ה מאמץ בעבודה כדי שאוכל להיות גאה בעצמי." } },
+        { "id": "mwms_12", "question": { "en": "I put in effort at work because otherwise I'd be ashamed of myself.",                                                          "he": "אני משקיע/ה מאמץ בעבודה כי אחרת אתבייש בעצמי." } },
+        { "id": "mwms_13", "question": { "en": "I put in effort at work because otherwise I'd feel bad about myself.",                                                         "he": "אני משקיע/ה מאמץ בעבודה כי אחרת ארגיש רע עם עצמי." } },
+        { "id": "mwms_14", "question": { "en": "I put in effort at work because it is personally important to me to invest in my work.",                                       "he": "אני משקיע/ה מאמץ בעבודה כי חשוב לי אישית להשקיע בעבודה." } },
+        { "id": "mwms_15", "question": { "en": "I put in effort at work because investing in my work aligns with my values.",                                                  "he": "אני משקיע/ה מאמץ בעבודה כי השקעה בעבודה עולה בקנה אחד עם ערכיי." } },
+        { "id": "mwms_16", "question": { "en": "I put in effort at work because investing in my work is personally meaningful to me.",                                         "he": "אני משקיע/ה מאמץ בעבודה כי ההשקעה בעבודה בעלת משמעות אישית עבורי." } },
+        { "id": "mwms_17", "question": { "en": "I put in effort at work because I enjoy doing the work.",                                                                      "he": "אני משקיע/ה מאמץ בעבודה כי אני נהנה/ית לעשות את העבודה." } },
+        { "id": "mwms_18", "question": { "en": "I put in effort at work because what I do at work excites me.",                                                                "he": "אני משקיע/ה מאמץ בעבודה כי מה שאני עושה בעבודה מרגש/ת אותי." } },
+        { "id": "mwms_19", "question": { "en": "I put in effort because what I do at work interests me.",                                                                      "he": "אני משקיע/ה מאמץ כי מה שאני עושה בעבודה מעניין אותי." } }
+      ]
+    },
+    {
+      "id": "bpns",
+      "title": {
+        "en": "Basic psychological needs satisfaction at work (BPNS-W)",
+        "he": "סיפוק צרכים פסיכולוגיים בסיסיים בעבודה (BPNS-W)"
+      },
+      "scale": [
+        { "en": "Strongly disagree (1)", "he": "לא מסכים/ה כלל (1)" },
+        { "en": "Disagree (2)",          "he": "לא מסכים/ה (2)" },
+        { "en": "Slightly disagree (3)", "he": "לא מסכים/ה במעט (3)" },
+        { "en": "Neutral (4)",           "he": "ניטרלי/ת (4)" },
+        { "en": "Slightly agree (5)",    "he": "מסכים/ה במעט (5)" },
+        { "en": "Agree (6)",             "he": "מסכים/ה (6)" },
+        { "en": "Strongly agree (7)",    "he": "מסכים/ה לחלוטין (7)" }
+      ],
+      "questions": [
+        { "id": "bpns_1",  "question": { "en": "At work, I feel that I have the freedom to choose the tasks I perform.",                         "he": "בעבודה, אני מרגיש/ה שיש לי חופש לבחור את המשימות שאני מבצע/ת." } },
+        { "id": "bpns_2",  "question": { "en": "I feel disconnected from the group I want to belong to at work.",                                 "he": "אני מרגיש/ה מנותק/ת מהקבוצה שאני רוצה להשתייך אליה בעבודה." } },
+        { "id": "bpns_3",  "question": { "en": "I feel confident in my ability to perform my tasks well at work.",                                "he": "אני מרגיש/ה בטוח/ה ביכולתי לבצע את המשימות שלי היטב בעבודה." } },
+        { "id": "bpns_4",  "question": { "en": "The people I care about at work — they care about me too.",                                       "he": "אנשים שאכפת לי מהם בעבודה — גם אכפת להם ממני." } },
+        { "id": "bpns_5",  "question": { "en": "For most of the tasks I perform at work, I feel a sense of obligation and no real choice.",       "he": "לגבי רוב המשימות שאני מבצע/ת בעבודה, אני מרגיש/ה חובה וחוסר ברירה." } },
+        { "id": "bpns_6",  "question": { "en": "When I'm at work, I have significant doubts about my ability to perform tasks well.",             "he": "כשאני בעבודה, יש לי ספק רב ביכולתי לבצע את המשימות היטב." } },
+        { "id": "bpns_7",  "question": { "en": "I feel that the decisions I make at work reflect my true wishes.",                                "he": "אני מרגיש/ה שההחלטות שאני מקבל/ת בעבודה משקפות את רצוני האמיתי." } },
+        { "id": "bpns_8",  "question": { "en": "I feel that people who are important to me at work are cold and distant toward me.",              "he": "אני מרגיש/ה שאנשים החשובים לי בעבודה מפגינים קרירות וריחוק כלפיי." } },
+        { "id": "bpns_9",  "question": { "en": "At work, I feel capable of performing my role.",                                                  "he": "בעבודה, אני מרגיש/ה מסוגל/ת לבצע את תפקידי." } },
+        { "id": "bpns_10", "question": { "en": "I feel pressured or coerced to do many things at work that I wouldn't choose to do.",             "he": "אני מרגיש/ה לחץ/כפייה לעשות בעבודה דברים רבים שלא הייתי בוחר/ת לעשות." } },
+        { "id": "bpns_11", "question": { "en": "I'm disappointed with my performance at work.",                                                   "he": "אני מאוכזב/ת מביצועיי בעבודה." } },
+        { "id": "bpns_12", "question": { "en": "I feel connected to people at work; they care about me and I care about them.",                    "he": "אני מרגיש/ה קשר עם אנשים בעבודה; הם אכפת להם ממני ואכפת לי מהם." } },
+        { "id": "bpns_13", "question": { "en": "I feel that the choices I make at work reflect who I really am.",                                 "he": "אני מרגיש/ה שהבחירות שלי בעבודה משקפות מי שאני באמת." } },
+        { "id": "bpns_14", "question": { "en": "When I'm at work, I feel capable of reaching my goals.",                                          "he": "כשאני בעבודה, אני מרגיש/ה מסוגל/ת להשיג את יעדיי." } },
+        { "id": "bpns_15", "question": { "en": "In many of the things I do at work, I feel forced.",                                              "he": "בדברים רבים שאני עושה בעבודה, אני מרגיש/ה מאולץ/ת." } },
+        { "id": "bpns_16", "question": { "en": "At work, I feel close and connected to the people who matter to me.",                             "he": "בעבודה, אני מרגיש/ה קרוב/ה ומחובר/ת לאנשים החשובים לי." } },
+        { "id": "bpns_17", "question": { "en": "I feel insecure about my abilities to perform this role.",                                        "he": "אני מרגיש/ה חוסר ביטחון ביכולותיי לבצע את התפקיד." } },
+        { "id": "bpns_18", "question": { "en": "My daily tasks at work feel like a chain of obligations.",                                        "he": "המשימות היומיות שלי בעבודה מרגישות כרצף של חובות." } },
+        { "id": "bpns_19", "question": { "en": "I feel that at work I do what truly interests me.",                                               "he": "אני מרגיש/ה שאני עושה בעבודה את מה שמעניין אותי באמת." } },
+        { "id": "bpns_20", "question": { "en": "I have a sense that the people I'm with at work don't like me.",                                  "he": "יש לי תחושה שהאנשים שאני עמם בעבודה לא אוהבים אותי." } },
+        { "id": "bpns_21", "question": { "en": "Within my role, I feel that I can successfully perform optional/voluntary tasks.",                "he": "בגדר תפקידי, אני מרגיש/ה שאוכל לבצע בהצלחה משימות אופציונליות/וולונטריות." } },
+        { "id": "bpns_22", "question": { "en": "I feel that the relationships I have at work are superficial.",                                   "he": "אני מרגיש/ה שהקשרים שיש לי בעבודה הם שטחיים." } },
+        { "id": "bpns_23", "question": { "en": "When I'm at work, I feel like a failure because of mistakes I make.",                             "he": "כשאני בעבודה, אני מרגיש/ה כישלון עקב טעויות שאני עושה." } },
+        { "id": "bpns_24", "question": { "en": "I feel warmth among the people I'm with at work.",                                                "he": "אני מרגיש/ה חמימות בקרב האנשים שאני עמם בעבודה." } }
+      ]
+    },
+    {
+      "id": "role_clarity",
+      "title": {
+        "en": "Role clarity",
+        "he": "בהירות תפקיד"
+      },
+      "scale": [
+        { "en": "Strongly disagree",   "he": "לא מסכים/ה בכלל" },
+        { "en": "Generally disagree",  "he": "בדרך כלל לא מסכים/ה" },
+        { "en": "Slightly disagree",   "he": "לא מסכים/ה במעט" },
+        { "en": "Slightly agree",      "he": "מסכים/ה במעט" },
+        { "en": "Generally agree",     "he": "בדרך כלל מסכים/ה" },
+        { "en": "Strongly agree",      "he": "מסכים/ה מאוד" }
+      ],
+      "questions": [
+        { "id": "role_1", "question": { "en": "I know exactly what I'm supposed to do within my role.",                          "he": "אני יודע/ת בדיוק מה אמור/ה לעשות בגדר תפקידי." } },
+        { "id": "role_2", "question": { "en": "I understand well which of my tasks at work are more important than others.",    "he": "אני מבין/ה היטב אילו מהמשימות שלי בעבודה חשובות יותר מאחרות." } },
+        { "id": "role_3", "question": { "en": "My areas of responsibility at work are clear and well defined.",                  "he": "תחומי האחריות שלי בעבודה ברורים ומוגדרים היטב." } },
+        { "id": "role_4", "question": { "en": "My supervisor clearly explains work expectations to me.",                         "he": "הממונה עלי מסביר/ה לי בבירור את ציפיות העבודה." } },
+        { "id": "role_5", "question": { "en": "My supervisor keeps me informed about matters that affect my work.",              "he": "הממונה עלי מעדכן/ת אותי בנושאים המשפיעים על עבודתי." } },
+        { "id": "role_6", "question": { "en": "My direct supervisor tells me when I'm doing a good job.",                        "he": "הממונה הישיר/ה שלי אומר/ת לי כשאני עושה עבודה טובה." } },
+        { "id": "role_7", "question": { "en": "My supervisor gives me enough guidance on how to do my work.",                    "he": "הממונה שלי מנחה אותי מספיק לגבי כיצד לבצע את עבודתי." } }
+      ]
+    },
+    {
+      "id": "ropp",
+      "title": {
+        "en": "Roles of peer professionals (ROPP)",
+        "he": "תפקוד אופטימלי של עמיתים (ROPP)"
+      },
+      "scale": [
+        { "en": "Not applicable",           "he": "לא רלוונטי" },
+        { "en": "Not at all true of me",    "he": "כלל לא נכון לגביי" },
+        { "en": "Slightly true of me",      "he": "נכון במעט לגביי" },
+        { "en": "Somewhat true of me",      "he": "נכון במידה מסוימת לגביי" },
+        { "en": "True of me",               "he": "נכון לגביי" },
+        { "en": "Very true of me",          "he": "נכון מאוד לגביי" }
+      ],
+      "questions": [
+        { "id": "ropp_1",  "question": { "en": "As a peer, I primarily draw on my personal story.",                                                                         "he": "כעמית, אני בעיקר משתמש/ת בסיפורי האישי." } },
+        { "id": "ropp_2",  "question": { "en": "My relationships with the people I support are reciprocal.",                                                                "he": "הקשרים שלי עם האנשים שאני תומך/ת בהם הם הדדיים." } },
+        { "id": "ropp_3",  "question": { "en": "As a peer, I share my experiences with the mental-health system with the team I work with.",                                "he": "כעמית, אני משתף/ת את הצוות שאני עובד/ת עמו בחוויותיי עם מערכת בריאות הנפש." } },
+        { "id": "ropp_4",  "question": { "en": "I express empathy toward the people I support in every situation.",                                                         "he": "אני מביע/ה אמפתיה כלפי האנשים שאני תומך/ת בהם בכל מצב." } },
+        { "id": "ropp_5",  "question": { "en": "Working as a peer is not just a job — it is a personal mission for me.",                                                    "he": "עבודה כעמית אינה רק עבודה, אלא שליחות אישית עבורי." } },
+        { "id": "ropp_6",  "question": { "en": "I have social connections with other peers.",                                                                                "he": "יש לי קשרים חברתיים עם עמיתים אחרים." } },
+        { "id": "ropp_7",  "question": { "en": "I'm open to learning from the experience of the people I support.",                                                         "he": "אני פתוח/ה ללמוד מהניסיון של האנשים שאני תומך/ת בהם." } },
+        { "id": "ropp_8",  "question": { "en": "I have a network of peers I stay in regular contact with.",                                                                 "he": "יש לי רשת עמיתים שאני בקשר קבוע עמה." } },
+        { "id": "ropp_9",  "question": { "en": "I tell the people I support about my recovery experiences.",                                                                "he": "אני מספר/ת לאנשים שאני תומך/ת בהם על חוויות ההחלמה שלי." } },
+        { "id": "ropp_10", "question": { "en": "I can be with the people I support even in difficult situations.",                                                          "he": "אני יכול/ה להיות עם האנשים שאני תומך/ת בהם גם במצבים קשים." } },
+        { "id": "ropp_11", "question": { "en": "Working as a peer holds personal meaning for me.",                                                                          "he": "עבודה כעמית נושאת עבורי משמעות אישית." } },
+        { "id": "ropp_12", "question": { "en": "As a peer, I tell the staff at my workplace about my mental-health difficulties and recovery.",                             "he": "כעמית, אני מספר/ת לאנשי הצוות במקום עבודתי על קשייי הנפשיים והחלמתי." } },
+        { "id": "ropp_13", "question": { "en": "I feel comfortable drawing on my personal life experience as a peer.",                                                      "he": "אני מרגיש/ה בנוח להשתמש בניסיון החיים האישי שלי כעמית." } },
+        { "id": "ropp_14", "question": { "en": "I use my work as a peer to advance additional professional goals outside the organization where I work.",                    "he": "אני משתמש/ת בעבודתי כעמית לקידום מטרות מקצועיות נוספות מחוץ לארגון שבו אני עובד/ת." } },
+        { "id": "ropp_15", "question": { "en": "As a peer, I invest less energy in hiding my mental-health difficulties.",                                                   "he": "כעמית, אני משקיע/ה פחות אנרגיה בהסתרת קשיי הנפש שלי." } },
+        { "id": "ropp_16", "question": { "en": "My work as a peer has reduced my sense of social isolation.",                                                                "he": "עבודתי כעמית הפחיתה את תחושת הבידוד החברתי שלי." } },
+        { "id": "ropp_17", "question": { "en": "I can be more authentic and direct with the people I support compared with other professionals.",                           "he": "אני יכול/ה להיות אותנטי/ת וישיר/ה יותר עם האנשים שאני תומך/ת בהם בהשוואה לאנשי מקצוע אחרים." } },
+        { "id": "ropp_18", "question": { "en": "I believe the person I support is responsible for their own recovery process.",                                             "he": "אני מאמין/ה שהאדם שאני תומך/ת בו אחראי לתהליך ההחלמה שלו." } },
+        { "id": "ropp_19", "question": { "en": "I talk with the people I support about practical solutions that worked for me.",                                            "he": "אני מדבר/ת עם האנשים שאני תומך/ת בהם על פתרונות מעשיים שעבדו עבורי." } },
+        { "id": "ropp_20", "question": { "en": "My work as a peer strengthens my sense of community.",                                                                      "he": "עבודתי כעמית מחזקת אצלי תחושת קהילה." } },
+        { "id": "ropp_21", "question": { "en": "I consult with other peers on issues that come up in my work.",                                                             "he": "אני מתייעץ/ת עם עמיתים אחרים בנושאים המתעוררים בעבודתי." } },
+        { "id": "ropp_22", "question": { "en": "I share the lived experience of other peers with the team.",                                                                "he": "אני משתף/ת את הצוות בניסיון החיים של עמיתים אחרים." } },
+        { "id": "ropp_23", "question": { "en": "I share with the people I support self-help strategies I have used.",                                                       "he": "אני משתף/ת את האנשים שאני תומך/ת בהם באסטרטגיות עזרה עצמית שהשתמשתי בהן." } },
+        { "id": "ropp_24", "question": { "en": "As a peer, I encourage professionals to consult with me on matters related to mental-health service recipients.",           "he": "כעמית, אני מעודד/ת אנשי מקצוע להתייעץ עמי בנושאים הקשורים למקבלי שירותי בריאות הנפש." } },
+        { "id": "ropp_25", "question": { "en": "I talk about inspiring moments in my recovery with the people I support.",                                                  "he": "אני מדבר/ת על רגעים מעוררי השראה בהחלמה שלי עם האנשים שאני תומך/ת בהם." } },
+        { "id": "ropp_26", "question": { "en": "As a peer, I feel connected to something broader than 'just work'.",                                                        "he": "כעמית, אני מרגיש/ה מחובר/ת למשהו רחב יותר מעבר ל'רק עבודה'." } },
+        { "id": "ropp_27", "question": { "en": "I'm almost a friend to the people I serve.",                                                                                "he": "אני כמעט חבר/ה לאנשים שאני משרת/ת." } },
+        { "id": "ropp_28", "question": { "en": "I enjoy a sense of companionship with the other peers.",                                                                    "he": "אני נהנה/ית מתחושת חברות עם העמיתים האחרים." } },
+        { "id": "ropp_29", "question": { "en": "I take part in a peer group that supports my work as a peer.",                                                              "he": "אני משתתף/ת בקבוצת עמיתים התומכת בעבודתי כעמית." } },
+        { "id": "ropp_30", "question": { "en": "I know how, what, and when to share parts of my personal story in order to help the people I serve.",                        "he": "אני יודע/ת כיצד, מה ומתי לשתף חלקים מסיפורי האישי כדי לעזור למקבלי השירות שלי." } },
+        { "id": "ropp_31", "question": { "en": "As a peer, I feel I have a unique professional niche.",                                                                     "he": "כעמית, אני מרגיש/ה שיש לי נישה מקצועית ייחודית." } },
+        { "id": "ropp_32", "question": { "en": "As a peer, I share with service recipients the experiences I have had with the health system.",                             "he": "כעמית, אני משתף/ת את מקבלי השירות בחוויה שהיתה לי עם מערכת הבריאות." } }
+      ]
+    }
+  ]
+}
