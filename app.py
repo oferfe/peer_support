@@ -643,10 +643,15 @@ def _render_saved_personas_page(
                 st.info(t("saved_persona_no_simulations"))
                 continue
 
-            for simulation in simulations:
+            for index, simulation in enumerate(simulations):
                 sim_bio = simulation.get("biography") or latest_bio
                 sim_revision = sim_bio.get("revision_number", "?")
                 created_at = simulation.get("created_at") or ""
+                previous_simulation = (
+                    simulations[index + 1]
+                    if index + 1 < len(simulations)
+                    else None
+                )
                 st.divider()
                 st.markdown(
                     f"### {t('saved_persona_simulation', n=sim_revision)}"
@@ -659,6 +664,10 @@ def _render_saved_personas_page(
                     height=180,
                     disabled=True,
                     key=f"saved_sim_bio_{simulation.get('id')}",
+                )
+                _render_biography_change(
+                    sim_bio.get("biography_text") or "",
+                    previous_simulation,
                 )
                 answers = _merge_answer_reasonings(
                     simulation.get("answers") or {},
@@ -673,7 +682,7 @@ def _render_saved_personas_page(
                     questionnaire_id=simulation.get("id"),
                     persona_id=persona_id,
                     researcher_name=researcher_name,
-                    previous_simulation=None,
+                    previous_simulation=previous_simulation,
                 )
 
 
