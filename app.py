@@ -1311,8 +1311,13 @@ with intake_col:
             st.session_state.latest_saved_biography_text,
             st.session_state.previous_simulation,
         )
-        col_edit, col_finish = st.columns(2)
-        if col_edit.button(
+        simulation_exists_for_revision = (
+            st.session_state.current_questionnaire_id is not None
+        )
+        action_cols = (
+            st.columns(2) if simulation_exists_for_revision else [st.container()]
+        )
+        if action_cols[0].button(
             t("edit_bio_button"),
             type="primary",
             use_container_width=True,
@@ -1327,39 +1332,40 @@ with intake_col:
             st.session_state.pop("bio_edit_area", None)
             st.session_state.pop("bio_readonly_area", None)
             st.rerun()
-        if col_finish.button(
-            t("finish_persona_button"),
-            use_container_width=True,
-            key="finish_persona_btn",
-        ):
-            try:
-                with st.spinner(t("finish_persona_spinner")):
-                    db.finalize_persona(st.session_state.persona_id)
-            except Exception as exc:  # noqa: BLE001
-                st.error(t("finish_persona_failed", error=exc))
-            else:
-                # Reset every persona-scoped session key so the next render
-                # lands back in State 1 with a clean slate.
-                st.session_state.update(
-                    persona_id=None,
-                    biography_id=None,
-                    biography_revision_number=0,
-                    biography_text="",
-                    latest_saved_biography_text="",
-                    initial_intake_answers={},
-                    biography_edit_mode=False,
-                    persona_is_final=False,
-                    questionnaire_answers=None,
-                    current_questionnaire_id=None,
-                    previous_simulation=None,
-                    session_id=None,
-                    messages=[],
-                )
-                st.session_state.pop("bio_unsaved_area", None)
-                st.session_state.pop("bio_edit_area", None)
-                st.session_state.pop("bio_readonly_area", None)
-                st.toast(t("finish_persona_success_toast"), icon="🏁")
-                st.rerun()
+        if simulation_exists_for_revision:
+            if action_cols[1].button(
+                t("finish_persona_button"),
+                use_container_width=True,
+                key="finish_persona_btn",
+            ):
+                try:
+                    with st.spinner(t("finish_persona_spinner")):
+                        db.finalize_persona(st.session_state.persona_id)
+                except Exception as exc:  # noqa: BLE001
+                    st.error(t("finish_persona_failed", error=exc))
+                else:
+                    # Reset every persona-scoped session key so the next render
+                    # lands back in State 1 with a clean slate.
+                    st.session_state.update(
+                        persona_id=None,
+                        biography_id=None,
+                        biography_revision_number=0,
+                        biography_text="",
+                        latest_saved_biography_text="",
+                        initial_intake_answers={},
+                        biography_edit_mode=False,
+                        persona_is_final=False,
+                        questionnaire_answers=None,
+                        current_questionnaire_id=None,
+                        previous_simulation=None,
+                        session_id=None,
+                        messages=[],
+                    )
+                    st.session_state.pop("bio_unsaved_area", None)
+                    st.session_state.pop("bio_edit_area", None)
+                    st.session_state.pop("bio_readonly_area", None)
+                    st.toast(t("finish_persona_success_toast"), icon="🏁")
+                    st.rerun()
 
         # Generate questionnaire responses — unchanged behavior, but only
         # reachable in the saved read-only view (edit mode blocks it so
