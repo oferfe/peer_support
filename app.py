@@ -103,10 +103,12 @@ def _render_intake_question(
             )
     elif qtype == "likert_with_open_elaboration":
         if scale_labels:
-            st.select_slider(
+            st.radio(
                 label,
                 options=list(range(1, len(scale_labels) + 1)),
                 format_func=lambda r: scale_labels[r - 1],
+                horizontal=True,
+                index=None,
                 key=_rating_key(qid),
                 disabled=disabled,
             )
