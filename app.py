@@ -597,6 +597,10 @@ def _render_saved_personas_page(
     except Exception as exc:  # noqa: BLE001
         st.error(t("saved_personas_load_failed", error=exc))
         return
+    persona_numbers = {
+        persona.get("persona_id"): index
+        for index, persona in enumerate(reversed(personas), start=1)
+    }
     if only_persona_id is not None:
         personas = [
             persona
@@ -664,9 +668,14 @@ def _render_saved_personas_page(
             if latest_bio.get("is_final")
             else t("saved_persona_active")
         )
+        persona_number = persona_numbers.get(persona_id, "?")
         with st.expander(
-            f"{t('saved_persona_latest')} - "
-            f"{t('saved_persona_revision', n=revision)} - {status}",
+            t(
+                "saved_persona_heading",
+                persona=persona_number,
+                version=revision,
+                status=status,
+            ),
             expanded=should_expand,
         ):
             st.caption(f"`{persona_id}`")

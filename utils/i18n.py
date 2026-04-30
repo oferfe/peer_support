@@ -205,10 +205,13 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "saved_personas_empty": "No saved personas yet.",
         "saved_personas_load_failed": "Could not load saved personas: {error}",
+        "saved_persona_heading": (
+            "Persona {persona} - version {version} - {status}"
+        ),
         "saved_persona_revision": "Revision {n}",
         "saved_persona_latest": "Latest biography",
-        "saved_persona_final": "Finalized",
-        "saved_persona_active": "Active",
+        "saved_persona_final": "completed",
+        "saved_persona_active": "active",
         "saved_persona_no_simulations": (
             "No simulation answers saved for this persona yet."
         ),
@@ -409,6 +412,9 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "saved_personas_empty": "עדיין אין פרסונות שמורות.",
         "saved_personas_load_failed": "טעינת הפרסונות השמורות נכשלה: {error}",
+        "saved_persona_heading": (
+            "פרסונה {persona} - גרסה {version} - {status}"
+        ),
         "saved_persona_revision": "גרסה {n}",
         "saved_persona_latest": "ביוגרפיה אחרונה",
         "saved_persona_final": "הושלמה",
