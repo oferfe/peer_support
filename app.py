@@ -98,7 +98,7 @@ def _render_intake_question(
             st.text_area(
                 t("intake_details_label"),
                 key=_text_key(qid),
-                height=80,
+                height=160,
                 disabled=disabled,
             )
     elif qtype == "likert_with_open_elaboration":
@@ -113,14 +113,14 @@ def _render_intake_question(
         st.text_area(
             t("intake_elaborate_label"),
             key=_text_key(qid),
-            height=80,
+            height=160,
             disabled=disabled,
         )
     elif qtype == "open_ended":
         st.text_area(
             label,
             key=_text_key(qid),
-            height=140,
+            height=180,
             disabled=disabled,
         )
 

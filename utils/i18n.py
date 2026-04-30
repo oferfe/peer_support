@@ -471,6 +471,23 @@ _RTL_CSS = """
         text-align: right !important;
         unicode-bidi: plaintext;
     }
+
+    /* Multi-line free-text boxes should behave like real paragraph boxes:
+       wrap long text, hide horizontal overflow, and scroll vertically when
+       the answer is longer than the visible area. */
+    .stTextArea textarea,
+    .stTextArea [data-baseweb="textarea"] textarea,
+    .stChatInput textarea,
+    .stChatInput [data-baseweb="textarea"] textarea,
+    [data-baseweb="textarea"] textarea {
+        white-space: pre-wrap !important;
+        overflow-wrap: anywhere !important;
+        word-break: break-word !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        line-height: 1.5 !important;
+    }
+
     .stTextInput input::placeholder,
     .stTextArea textarea::placeholder,
     .stChatInput textarea::placeholder,
