@@ -18,6 +18,7 @@ human-readable without cross-referencing `intake.json`:
 
     open_ended                      -> str
     multiple_choice, boolean        -> str   (the selected option label)
+        demo_q4 / children may also store {"choice": str, "number": str}
     boolean_with_text               -> {"choice": str, "elaboration": str}
     likert_with_open_elaboration    -> {"rating": str, "elaboration": str}
 
@@ -268,6 +269,15 @@ def _format_answer_line(
         return None
 
     if qtype in ("boolean", "multiple_choice"):
+        if isinstance(answer, dict):
+            choice = answer.get("choice")
+            number = str(answer.get("number") or "").strip()
+            if not isinstance(choice, str) or not choice.strip():
+                return None
+            line = f"- {qtext} {choice.strip()}"
+            if number:
+                line += f" — {number}"
+            return line
         label = _resolve_choice(answer)
         if label is None:
             return None

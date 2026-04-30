@@ -43,6 +43,8 @@ from utils.questionnaire import (
 # ---------------------------------------------------------------------------
 # Widget state lives under predictable keys so both Randomize and Draft-bio
 # buttons can read/write a single source of truth.
+_CHILDREN_QID = "demo_q4"
+
 
 def _choice_key(qid: str) -> str:
     return f"intake_choice_{qid}"
@@ -50,6 +52,10 @@ def _choice_key(qid: str) -> str:
 
 def _text_key(qid: str) -> str:
     return f"intake_text_{qid}"
+
+
+def _children_count_key() -> str:
+    return "intake_children_count"
 
 
 def _rating_key(qid: str) -> str:
@@ -82,6 +88,15 @@ def _render_intake_question(
             key=_choice_key(qid),
             disabled=disabled,
         )
+        if qid == _CHILDREN_QID and st.session_state.get(_choice_key(qid)) == 1:
+            count_col, _ = st.columns([1, 5])
+            with count_col:
+                st.text_input(
+                    options[1],
+                    key=_children_count_key(),
+                    max_chars=2,
+                    disabled=disabled,
+                )
     elif qtype == "boolean_with_text":
         st.radio(
             label,
@@ -150,6 +165,11 @@ def _apply_random_intake_answers(
             st.session_state[_text_key(qid)] = value
         elif isinstance(value, int):
             st.session_state[_choice_key(qid)] = value
+            if qid == _CHILDREN_QID:
+                if value == 1:
+                    st.session_state[_children_count_key()] = "2"
+                else:
+                    st.session_state.pop(_children_count_key(), None)
         elif isinstance(value, dict) and "rating" in value:
             st.session_state[_rating_key(qid)] = value["rating"]
             st.session_state[_text_key(qid)] = value.get("elaboration", "")
@@ -209,6 +229,8 @@ def _seed_intake_widget_state_from_answers(
             st.session_state.pop(_choice_key(qid), None)
             st.session_state.pop(_text_key(qid), None)
             st.session_state.pop(_rating_key(qid), None)
+            if qid == _CHILDREN_QID:
+                st.session_state.pop(_children_count_key(), None)
 
     for section in get_localized_sections(intake, language):
         scale = section["scale"]
@@ -223,6 +245,14 @@ def _seed_intake_widget_state_from_answers(
             if qtype in ("boolean", "multiple_choice"):
                 if isinstance(value, str) and value in options:
                     st.session_state[_choice_key(qid)] = options.index(value)
+                elif qid == _CHILDREN_QID and isinstance(value, dict):
+                    choice = value.get("choice")
+                    if isinstance(choice, str) and choice in options:
+                        st.session_state[_choice_key(qid)] = options.index(choice)
+                    number = value.get("number")
+                    st.session_state[_children_count_key()] = (
+                        str(number) if number is not None else ""
+                    )
             elif qtype == "boolean_with_text" and isinstance(value, dict):
                 choice = value.get("choice")
                 if isinstance(choice, str) and choice in options:
@@ -272,7 +302,16 @@ def _collect_intake_answers(
             if qtype in ("boolean", "multiple_choice"):
                 idx = st.session_state.get(_choice_key(qid))
                 if isinstance(idx, int) and 0 <= idx < len(options):
-                    out[qid] = options[idx]
+                    if qid == _CHILDREN_QID and idx == 1:
+                        out[qid] = {
+                            "choice": options[idx],
+                            "number": st.session_state.get(
+                                _children_count_key(), ""
+                            )
+                            or "",
+                        }
+                    else:
+                        out[qid] = options[idx]
             elif qtype == "boolean_with_text":
                 idx = st.session_state.get(_choice_key(qid))
                 if isinstance(idx, int) and 0 <= idx < len(options):
