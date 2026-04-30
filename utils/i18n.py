@@ -502,23 +502,6 @@ _RTL_CSS = """
         text-align: right !important;
     }
 
-    /* Keep horizontal radio scales, such as the Swords of Iron questions,
-       on a single readable line instead of wrapping like a slider. */
-    [data-testid="stRadio"] div[role="radiogroup"] {
-        display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
-        align-items: center !important;
-        gap: 0.75rem !important;
-        overflow-x: auto !important;
-        padding-bottom: 0.25rem !important;
-    }
-
-    [data-testid="stRadio"] div[role="radiogroup"] label,
-    [data-testid="stRadio"] div[role="radiogroup"] label * {
-        white-space: nowrap !important;
-    }
-
     /* Tables/dataframes often render in virtualized grids; align all headers
        and cells to the right in Hebrew mode. */
     [data-testid="stDataFrame"],
