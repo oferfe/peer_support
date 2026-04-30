@@ -193,6 +193,12 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "go_saved_personas_button": "Go to saved personas",
         "back_to_intake_button": "Back to intake",
+        "back_to_edit_persona_button": "Back to edit current persona",
+        "current_persona_results_title": "Current persona simulation results",
+        "current_persona_results_caption": (
+            "Results for the current persona. Go back to edit the biography, "
+            "save changes, and run another simulation."
+        ),
         "saved_personas_title": "Saved personas",
         "saved_personas_caption": (
             "Saved biographies and simulation answers for **{name}**."
@@ -389,6 +395,12 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "go_saved_personas_button": "מעבר לפרסונות שמורות",
         "back_to_intake_button": "חזרה לטופס",
+        "back_to_edit_persona_button": "חזרה לעריכת הפרסונה הנוכחית",
+        "current_persona_results_title": "תוצאות סימולציה לפרסונה הנוכחית",
+        "current_persona_results_caption": (
+            "תוצאות עבור הפרסונה הנוכחית. ניתן לחזור לעריכת הביוגרפיה, "
+            "לשמור שינויים ולהריץ סימולציה נוספת."
+        ),
         "saved_personas_title": "פרסונות שמורות",
         "saved_personas_caption": (
             "ביוגרפיות ותשובות סימולציה שנשמרו עבור **{name}**."

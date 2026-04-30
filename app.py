@@ -554,13 +554,42 @@ def _render_saved_personas_page(
     language: str,
     *,
     researcher_name: str,
+    only_persona_id: str | None = None,
 ) -> None:
     """Render a separate page with this researcher's saved personas."""
-    st.title(t("saved_personas_title"))
-    st.caption(t("saved_personas_caption", name=researcher_name))
+    is_current_persona_view = only_persona_id is not None
+    st.title(
+        t(
+            "current_persona_results_title"
+            if is_current_persona_view
+            else "saved_personas_title"
+        )
+    )
+    st.caption(
+        t(
+            "current_persona_results_caption"
+            if is_current_persona_view
+            else "saved_personas_caption",
+            name=researcher_name,
+        )
+    )
 
-    if st.button(t("back_to_intake_button"), use_container_width=True):
+    back_col, saved_col = st.columns(2)
+    if back_col.button(
+        t(
+            "back_to_edit_persona_button"
+            if is_current_persona_view
+            else "back_to_intake_button"
+        ),
+        use_container_width=True,
+    ):
         st.session_state.app_view = "intake"
+        st.rerun()
+    if is_current_persona_view and saved_col.button(
+        t("go_saved_personas_button"),
+        use_container_width=True,
+    ):
+        st.session_state.app_view = "saved_personas"
         st.rerun()
 
     try:
@@ -568,6 +597,12 @@ def _render_saved_personas_page(
     except Exception as exc:  # noqa: BLE001
         st.error(t("saved_personas_load_failed", error=exc))
         return
+    if only_persona_id is not None:
+        personas = [
+            persona
+            for persona in personas
+            if persona.get("persona_id") == only_persona_id
+        ]
 
     if not personas:
         st.info(t("saved_personas_empty"))
@@ -583,7 +618,7 @@ def _render_saved_personas_page(
         should_expand = any(
             simulation.get("id") == focused_questionnaire_id
             for simulation in simulations
-        )
+        ) or is_current_persona_view
         revision = latest_bio.get("revision_number", "?")
         status = (
             t("saved_persona_final")
@@ -969,11 +1004,19 @@ if (
 language = st.session_state.language
 questionnaire = load_questionnaire()
 
-if st.session_state.get("app_view") == "saved_personas":
+if st.session_state.get("app_view") in (
+    "saved_personas",
+    "current_persona_results",
+):
     _render_saved_personas_page(
         questionnaire,
         language,
         researcher_name=researcher_name,
+        only_persona_id=(
+            st.session_state.persona_id
+            if st.session_state.get("app_view") == "current_persona_results"
+            else None
+        ),
     )
     st.stop()
 
@@ -1380,7 +1423,7 @@ with intake_col:
                     st.session_state.saved_personas_focus_questionnaire_id = (
                         questionnaire_id
                     )
-                    st.session_state.app_view = "saved_personas"
+                    st.session_state.app_view = "current_persona_results"
                     st.toast(t("generate_q_success_toast"), icon="✅")
                     st.rerun()
 
