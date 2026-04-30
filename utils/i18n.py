@@ -191,6 +191,23 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "answer_comments_unavailable": (
             "Comments can be saved after a new simulation is generated."
         ),
+        "go_saved_personas_button": "Go to saved personas",
+        "back_to_intake_button": "Back to intake",
+        "saved_personas_title": "Saved personas",
+        "saved_personas_caption": (
+            "Saved biographies and simulation answers for **{name}**."
+        ),
+        "saved_personas_empty": "No saved personas yet.",
+        "saved_personas_load_failed": "Could not load saved personas: {error}",
+        "saved_persona_revision": "Revision {n}",
+        "saved_persona_latest": "Latest biography",
+        "saved_persona_final": "Finalized",
+        "saved_persona_active": "Active",
+        "saved_persona_no_simulations": (
+            "No simulation answers saved for this persona yet."
+        ),
+        "saved_persona_simulation": "Simulation from revision {n}",
+        "saved_persona_created": "Created: {date}",
 
         # Log tab
         "log_caption": "Most recent biographies created by **{name}** (up to 10).",
@@ -370,6 +387,23 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "answer_comments_unavailable": (
             "ניתן לשמור הערות לאחר יצירת סימולציה חדשה."
         ),
+        "go_saved_personas_button": "מעבר לפרסונות שמורות",
+        "back_to_intake_button": "חזרה לטופס",
+        "saved_personas_title": "פרסונות שמורות",
+        "saved_personas_caption": (
+            "ביוגרפיות ותשובות סימולציה שנשמרו עבור **{name}**."
+        ),
+        "saved_personas_empty": "עדיין אין פרסונות שמורות.",
+        "saved_personas_load_failed": "טעינת הפרסונות השמורות נכשלה: {error}",
+        "saved_persona_revision": "גרסה {n}",
+        "saved_persona_latest": "ביוגרפיה אחרונה",
+        "saved_persona_final": "הושלמה",
+        "saved_persona_active": "פעילה",
+        "saved_persona_no_simulations": (
+            "עדיין אין תשובות סימולציה שמורות עבור הפרסונה הזו."
+        ),
+        "saved_persona_simulation": "סימולציה מגרסה {n}",
+        "saved_persona_created": "נוצר: {date}",
 
         # Log tab
         "log_caption": "הביוגרפיות האחרונות שיצר/ה **{name}** (עד 10).",

@@ -549,6 +549,92 @@ def _render_questionnaire_results(
                 st.info(t("answer_comments_none_to_save"))
 
 
+def _render_saved_personas_page(
+    questionnaire: dict[str, Any],
+    language: str,
+    *,
+    researcher_name: str,
+) -> None:
+    """Render a separate page with this researcher's saved personas."""
+    st.title(t("saved_personas_title"))
+    st.caption(t("saved_personas_caption", name=researcher_name))
+
+    if st.button(t("back_to_intake_button"), use_container_width=True):
+        st.session_state.app_view = "intake"
+        st.rerun()
+
+    try:
+        personas = db.fetch_saved_personas_for_researcher(researcher_name)
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("saved_personas_load_failed", error=exc))
+        return
+
+    if not personas:
+        st.info(t("saved_personas_empty"))
+        return
+
+    for persona in personas:
+        latest_bio = persona.get("latest_biography") or {}
+        persona_id = persona.get("persona_id")
+        revision = latest_bio.get("revision_number", "?")
+        status = (
+            t("saved_persona_final")
+            if latest_bio.get("is_final")
+            else t("saved_persona_active")
+        )
+        with st.expander(
+            f"{t('saved_persona_latest')} - "
+            f"{t('saved_persona_revision', n=revision)} - {status}",
+            expanded=False,
+        ):
+            st.caption(f"`{persona_id}`")
+            st.text_area(
+                t("saved_persona_latest"),
+                value=latest_bio.get("biography_text") or "",
+                height=220,
+                disabled=True,
+                key=f"saved_latest_bio_{persona_id}",
+            )
+
+            simulations = persona.get("simulations") or []
+            if not simulations:
+                st.info(t("saved_persona_no_simulations"))
+                continue
+
+            for simulation in simulations:
+                sim_bio = simulation.get("biography") or latest_bio
+                sim_revision = sim_bio.get("revision_number", "?")
+                created_at = simulation.get("created_at") or ""
+                st.divider()
+                st.markdown(
+                    f"### {t('saved_persona_simulation', n=sim_revision)}"
+                )
+                if created_at:
+                    st.caption(t("saved_persona_created", date=created_at))
+                st.text_area(
+                    t("bio_label"),
+                    value=sim_bio.get("biography_text") or "",
+                    height=180,
+                    disabled=True,
+                    key=f"saved_sim_bio_{simulation.get('id')}",
+                )
+                answers = _merge_answer_reasonings(
+                    simulation.get("answers") or {},
+                    simulation.get("reasonings"),
+                )
+                _render_questionnaire_results(
+                    answers,
+                    questionnaire,
+                    language,
+                    model_label=simulation.get("model_used") or "",
+                    biography_id=simulation.get("biography_id"),
+                    questionnaire_id=simulation.get("id"),
+                    persona_id=persona_id,
+                    researcher_name=researcher_name,
+                    previous_simulation=None,
+                )
+
+
 # ---------------------------------------------------------------------------
 # Page configuration
 # ---------------------------------------------------------------------------
@@ -638,6 +724,7 @@ def _clear_persona_session_state() -> None:
         session_id=None,
         messages=[],
         active_persona_loaded_for=None,
+        app_view="intake",
     )
     for key in ("bio_unsaved_area", "bio_edit_area", "bio_readonly_area"):
         st.session_state.pop(key, None)
@@ -770,6 +857,7 @@ _DEFAULT_STATE: dict[str, object] = {
     "session_id": None,
     "messages": [],
     "active_persona_loaded_for": None,
+    "app_view": "intake",
 }
 for _key, _value in _DEFAULT_STATE.items():
     st.session_state.setdefault(_key, _value)
@@ -872,21 +960,26 @@ if (
 language = st.session_state.language
 questionnaire = load_questionnaire()
 
+if st.session_state.get("app_view") == "saved_personas":
+    _render_saved_personas_page(
+        questionnaire,
+        language,
+        researcher_name=researcher_name,
+    )
+    st.stop()
+
 
 # ---------------------------------------------------------------------------
-# Main layout: wide intake/biography area + side panel
+# Main layout: intake/biography workspace
 # ---------------------------------------------------------------------------
-# While the intake form is visible, give it most of the page so long
-# open-ended Hebrew answers are readable. After a simulation exists, rebalance
-# the layout so questionnaire results have enough room next to the biography.
-# The `direction: rtl` flip applied by `inject_rtl_css()` automatically
-# reverses the visual order for Hebrew without language-specific branching.
+# Simulation answers no longer render on this intake page. Researchers can use
+# the saved-personas page to review past biographies and questionnaire runs.
 st.title(t("app_title"))
+if st.button(t("go_saved_personas_button"), use_container_width=True):
+    st.session_state.app_view = "saved_personas"
+    st.rerun()
 
-layout_weights = (
-    [9, 1] if st.session_state.questionnaire_answers is None else [3, 2]
-)
-intake_col, tabs_col = st.columns(layout_weights, gap="large")
+intake_col = st.container()
 
 with intake_col:
     st.subheader(t("persona_setup"))
@@ -901,10 +994,10 @@ with intake_col:
         )
 
     # --- Intake form -------------------------------------------------------
-    # After a simulation has been generated, hide the intake form so the
-    # right-side simulation panel is visually paired only with the biography.
-    # Saving a new biography revision clears `questionnaire_answers`, which
-    # brings the locked intake snapshot back until the next simulation run.
+    # After a simulation has been generated, hide the intake form so this page
+    # stays focused on the current saved biography. Saving a new biography
+    # revision clears `questionnaire_answers`, which brings the locked intake
+    # snapshot back until the next simulation run.
     show_intake_form = st.session_state.questionnaire_answers is None
     try:
         intake_data = load_intake()
@@ -1292,67 +1385,3 @@ with intake_col:
             )
         )
 
-with tabs_col:
-    # Wrap the side panel in a bordered container so it reads as a clearly
-    # separated workspace — distinct from the intake form on the main side.
-    side_panel = st.container(border=True)
-with side_panel:
-    # The simulation result now lives directly in the side panel next to the
-    # biography instead of behind a tab, so after clicking "Generate
-    # questionnaire responses" the researcher immediately sees the answers.
-    # Biography version comparison is rendered beneath the biography itself.
-    st.subheader(t("simulation_results_header"))
-    _render_questionnaire_results(
-        st.session_state.questionnaire_answers,
-        questionnaire,
-        language,
-        model_label=model_label,
-        biography_id=st.session_state.biography_id,
-        questionnaire_id=st.session_state.current_questionnaire_id,
-        persona_id=st.session_state.persona_id,
-        researcher_name=researcher_name,
-        previous_simulation=st.session_state.previous_simulation,
-    )
-
-    # -----------------------------------------------------------------------
-    # Log History
-    # -----------------------------------------------------------------------
-    st.divider()
-    with st.expander(t("tab_history"), expanded=False):
-        st.caption(t("log_caption", name=researcher_name))
-        try:
-            rows = db.fetch_recent_biographies(researcher_name, limit=10)
-        except Exception as exc:  # noqa: BLE001
-            st.error(t("log_error", error=exc))
-        else:
-            if not rows:
-                st.info(t("log_empty"))
-            else:
-                st.dataframe(
-                    rows,
-                    use_container_width=True,
-                    hide_index=True,
-                    column_config={
-                        "id": st.column_config.TextColumn(
-                            t("log_col_id"), width="small"
-                        ),
-                        "persona_id": st.column_config.TextColumn(
-                            t("log_col_persona"), width="small"
-                        ),
-                        "revision_number": st.column_config.NumberColumn(
-                            t("log_col_revision"), width="small"
-                        ),
-                        "is_final": st.column_config.CheckboxColumn(
-                            t("log_col_final"), width="small"
-                        ),
-                        "researcher_name": st.column_config.TextColumn(
-                            t("log_col_researcher"), width="small"
-                        ),
-                        "biography_text": st.column_config.TextColumn(
-                            t("log_col_biography"), width="large"
-                        ),
-                        "created_at": st.column_config.DatetimeColumn(
-                            t("log_col_created"), format="YYYY-MM-DD HH:mm"
-                        ),
-                    },
-                )

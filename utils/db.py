@@ -292,6 +292,83 @@ def fetch_recent_biographies(
     return resp.data or []
 
 
+def fetch_saved_personas_for_researcher(
+    researcher_name: str,
+    *,
+    biography_limit: int = 200,
+    questionnaire_limit_per_persona: int = 25,
+) -> list[dict[str, Any]]:
+    """Return saved personas with their revisions and simulation runs.
+
+    The UI uses this for the saved-personas page. We group biography revisions
+    by `persona_id`, keep the newest personas first, and attach questionnaire
+    rows for each persona. Each questionnaire row also gets the biography
+    revision it was generated from so the page can show "biography + answers"
+    together without doing joins in Streamlit.
+    """
+    client = get_client()
+    bio_resp = (
+        client.table("biographies")
+        .select(
+            "id, persona_id, revision_number, is_final, finalized_at, "
+            "researcher_name, biography_text, created_at"
+        )
+        .eq("researcher_name", researcher_name)
+        .order("created_at", desc=True)
+        .limit(biography_limit)
+        .execute()
+    )
+
+    personas_by_id: dict[str, dict[str, Any]] = {}
+    for row in bio_resp.data or []:
+        persona_id = row.get("persona_id") or row.get("id")
+        if not isinstance(persona_id, str):
+            continue
+        persona = personas_by_id.setdefault(
+            persona_id,
+            {
+                "persona_id": persona_id,
+                "latest_biography": row,
+                "revisions": [],
+                "simulations": [],
+            },
+        )
+        persona["revisions"].append(row)
+
+    personas = list(personas_by_id.values())
+    for persona in personas:
+        revisions = sorted(
+            persona["revisions"],
+            key=lambda item: item.get("revision_number") or 0,
+            reverse=True,
+        )
+        persona["revisions"] = revisions
+        persona["latest_biography"] = revisions[0] if revisions else None
+        revisions_by_id = {
+            row["id"]: row for row in revisions if isinstance(row.get("id"), str)
+        }
+
+        q_resp = (
+            client.table("questionnaires")
+            .select(
+                "id, biography_id, persona_id, model_used, "
+                "answers, reasonings, created_at"
+            )
+            .eq("persona_id", persona["persona_id"])
+            .order("created_at", desc=True)
+            .limit(questionnaire_limit_per_persona)
+            .execute()
+        )
+        simulations = q_resp.data or []
+        for simulation in simulations:
+            simulation["biography"] = revisions_by_id.get(
+                simulation.get("biography_id")
+            )
+        persona["simulations"] = simulations
+
+    return personas
+
+
 def fetch_latest_questionnaire_for_biography(
     biography_id: str,
 ) -> dict[str, Any] | None:
