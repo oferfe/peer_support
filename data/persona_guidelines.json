@@ -381,6 +381,43 @@
             ]
           }
         ]
+      },
+      {
+        "id": "10",
+        "paper_citation": "Goldfarb, Y., Grayzman, A., Meir, L. G., Grundman, S. H., Rabinian, M., Lachman, M., Epstein, P. G., Ben-Dor, I. A., Naaman, A., Puschner, B., & Moran, G. S. (2022). UPSIDES Mental Health Peer Support in Face of the COVID-19 Pandemic: Actions and Insights. Community Mental Health Journal, 60, 5-13. https://doi.org/10.1007/s10597-022-01030-9",
+        "paper_summary": "The article details the implementation and adaptation of the UPSIDES mental health peer support intervention in Israel during the COVID-19 pandemic[cite: 1]. It focuses on how the project navigated sudden lockdowns to continue supporting individuals with Significant Mental Illness (SMI), a group particularly vulnerable to the pandemic's effects[cite: 1]. The intervention utilized a small-group format called 'Chevruta', rooted in camaraderie and self-directed dialogue[cite: 1]. When the pandemic paused in-person meetings, the program maintained connection through flexible telecommunication, shifting to phone calls and virtual supervision[cite: 1]. This shift unexpectedly acted as an amplifier for peer principles, leveling power imbalances, enhancing intimacy, and providing peer workers with a renewed sense of meaning and competence through shared vulnerability[cite: 1].",
+        "criteria": [
+          {
+            "id": "Leveling the Playing Field",
+            "criterion": "Does the crisis environment break down traditional professional hierarchies and power imbalances between the peer worker, staff, and service users?",
+            "explanation": "The biography should highlight how the shared reality of an external threat (like a pandemic or war) shifts dynamics, making the support feel incredibly horizontal and mutual[cite: 1]. Instead of widening the gap between staff, peer workers, and service users, the crisis actually helps level the power imbalance[cite: 1].",
+            "citations_from_the_paper": [
+              "The sudden pandemic challenges appeared to level out power imbalances and accelerated the formation of reciprocal and supportive relational interactions within the intervention.",
+              "Interestingly, the online platform served as a leveling arena, where space for intimacy was enhanced in face of the pandemic.",
+              "However, for the most part, the implementation of UPSIDES during COVID-19 so far was experienced as an event which impacted all stakeholders involved in the UPSIDES project, and helped level more the power imbalance."
+            ]
+          },
+          {
+            "id": "The Duality of Crisis and Shared Vulnerability",
+            "criterion": "How does the character navigate the shared vulnerability of the crisis while simultaneously experiencing the 'helper therapy' effect?",
+            "explanation": "The biography should show how the peer worker's personal distress acts as a catalyst[cite: 1]. It allows them to use their past mental health crises as a specialized toolkit to survive and help others, giving them a sense of competence, control, and heightened meaning during the crisis[cite: 1].",
+            "citations_from_the_paper": [
+              "specifically on days of lockdown with limited opportunities to meet and receive social support, the calls I made to service users and making use of experiential knowledge gave us a sense of competence... and a feeling we are not alone",
+              "I feel that I am a pioneer on a mission. For me it is an opportunity to provide strength and meaning to another person",
+              "when the pandemic broke out, I reminded myself that I know something about life-crisis and that the most important part is support, conversation, not staying alone"
+            ]
+          },
+          {
+            "id": "Telecommunication as an Amplifier",
+            "criterion": "How does the character adapt to digital/remote communication, and does it unexpectedly enhance intimacy and accessibility?",
+            "explanation": "The biography should emphasize the transition to remote tools (WhatsApp, Zoom, phone calls) not just as a limitation, but as an unexpected way to forge deeper connections[cite: 1]. It highlights how virtual platforms amplify core peer values and provide a sustainable solution to historical gaps in peer supervision[cite: 1].",
+            "citations_from_the_paper": [
+              "These elements allowed to use online technology as a kind of amplifier of peer principles, leveling out power imbalances and forming reciprocal and supportive relational interactions.",
+              "The regular conversations with the PSW, regarded in the unique position of a peer who reaches out continuously 'from the outside (of the regular MH staff) provided a sense of support and stability",
+              "Indeed online MH peer supervision can help with an already known lack of supervision which curtails the sustainability of PSW roles in MH organizations"
+            ]
+          }
+        ]
       }
     ]
 }

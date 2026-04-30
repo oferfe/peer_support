@@ -117,7 +117,12 @@ def _render_intake_question(
             disabled=disabled,
         )
     elif qtype == "open_ended":
-        st.text_input(label, key=_text_key(qid), disabled=disabled)
+        st.text_area(
+            label,
+            key=_text_key(qid),
+            height=140,
+            disabled=disabled,
+        )
 
 
 def _apply_random_intake_answers(
