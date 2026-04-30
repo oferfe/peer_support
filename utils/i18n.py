@@ -214,6 +214,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "saved_persona_simulation": "Simulation from revision {n}",
         "saved_persona_created": "Created: {date}",
+        "saved_persona_previous_versions": "Previous versions",
+        "saved_persona_previous_tab": "Revision {n}",
 
         # Log tab
         "log_caption": "Most recent biographies created by **{name}** (up to 10).",
@@ -416,6 +418,8 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "saved_persona_simulation": "סימולציה מגרסה {n}",
         "saved_persona_created": "נוצר: {date}",
+        "saved_persona_previous_versions": "גרסאות קודמות",
+        "saved_persona_previous_tab": "גרסה {n}",
 
         # Log tab
         "log_caption": "הביוגרפיות האחרונות שיצר/ה **{name}** (עד 10).",
