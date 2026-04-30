@@ -120,7 +120,7 @@ def _render_intake_question(
         st.text_area(
             label,
             key=_text_key(qid),
-            height=180,
+            height=280,
             disabled=disabled,
         )
 
@@ -833,19 +833,19 @@ questionnaire = load_questionnaire()
 
 
 # ---------------------------------------------------------------------------
-# Main layout: wide intake area (70%) + narrow tabs sidebar (30%)
+# Main layout: wide intake/biography area + side panel
 # ---------------------------------------------------------------------------
-# The Persona Setup area is wide because the researcher spends most of their
-# time in the intake form; the Chat / Questionnaire / Log tabs live in a
-# narrow side panel for reviewing results. The `direction: rtl` flip applied
-# by `inject_rtl_css()` automatically reverses the visual order of these
-# columns for Hebrew — so in English the intake is on the visual LEFT and
-# the tabs on the RIGHT, while in Hebrew the intake appears on the visual
-# RIGHT (reader's start side) and the tabs on the LEFT, without any
-# language-specific Python branching here.
+# While the intake form is visible, give it most of the page so long
+# open-ended Hebrew answers are readable. After a simulation exists, rebalance
+# the layout so questionnaire results have enough room next to the biography.
+# The `direction: rtl` flip applied by `inject_rtl_css()` automatically
+# reverses the visual order for Hebrew without language-specific branching.
 st.title(t("app_title"))
 
-intake_col, tabs_col = st.columns([7, 3], gap="large")
+layout_weights = (
+    [9, 1] if st.session_state.questionnaire_answers is None else [3, 2]
+)
+intake_col, tabs_col = st.columns(layout_weights, gap="large")
 
 with intake_col:
     st.subheader(t("persona_setup"))

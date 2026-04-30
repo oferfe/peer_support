@@ -480,12 +480,17 @@ _RTL_CSS = """
     .stChatInput textarea,
     .stChatInput [data-baseweb="textarea"] textarea,
     [data-baseweb="textarea"] textarea {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        min-height: 180px !important;
         white-space: pre-wrap !important;
         overflow-wrap: anywhere !important;
         word-break: break-word !important;
         overflow-x: hidden !important;
         overflow-y: auto !important;
         line-height: 1.5 !important;
+        resize: vertical !important;
     }
 
     .stTextInput input::placeholder,
