@@ -576,6 +576,14 @@ def _render_saved_personas_page(
     for persona in personas:
         latest_bio = persona.get("latest_biography") or {}
         persona_id = persona.get("persona_id")
+        focused_questionnaire_id = st.session_state.get(
+            "saved_personas_focus_questionnaire_id"
+        )
+        simulations = persona.get("simulations") or []
+        should_expand = any(
+            simulation.get("id") == focused_questionnaire_id
+            for simulation in simulations
+        )
         revision = latest_bio.get("revision_number", "?")
         status = (
             t("saved_persona_final")
@@ -585,7 +593,7 @@ def _render_saved_personas_page(
         with st.expander(
             f"{t('saved_persona_latest')} - "
             f"{t('saved_persona_revision', n=revision)} - {status}",
-            expanded=False,
+            expanded=should_expand,
         ):
             st.caption(f"`{persona_id}`")
             st.text_area(
@@ -596,7 +604,6 @@ def _render_saved_personas_page(
                 key=f"saved_latest_bio_{persona_id}",
             )
 
-            simulations = persona.get("simulations") or []
             if not simulations:
                 st.info(t("saved_persona_no_simulations"))
                 continue
@@ -725,6 +732,7 @@ def _clear_persona_session_state() -> None:
         messages=[],
         active_persona_loaded_for=None,
         app_view="intake",
+        saved_personas_focus_questionnaire_id=None,
     )
     for key in ("bio_unsaved_area", "bio_edit_area", "bio_readonly_area"):
         st.session_state.pop(key, None)
@@ -858,6 +866,7 @@ _DEFAULT_STATE: dict[str, object] = {
     "messages": [],
     "active_persona_loaded_for": None,
     "app_view": "intake",
+    "saved_personas_focus_questionnaire_id": None,
 }
 for _key, _value in _DEFAULT_STATE.items():
     st.session_state.setdefault(_key, _value)
@@ -1368,6 +1377,10 @@ with intake_col:
                     st.session_state.questionnaire_answers = answers
                     st.session_state.current_questionnaire_id = questionnaire_id
                     st.session_state.previous_simulation = previous_simulation
+                    st.session_state.saved_personas_focus_questionnaire_id = (
+                        questionnaire_id
+                    )
+                    st.session_state.app_view = "saved_personas"
                     st.toast(t("generate_q_success_toast"), icon="✅")
                     st.rerun()
 
