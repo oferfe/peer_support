@@ -34,6 +34,7 @@ from typing import Any
 
 import streamlit as st
 
+from . import guidelines
 from .i18n import LANG_EN, LANG_HE
 
 
@@ -127,6 +128,42 @@ _LANGUAGE_INSTRUCTIONS: dict[str, str] = {
 }
 
 
+def _build_academic_context_block() -> str:
+    """Render compact paper context for questionnaire-answer explanations."""
+    try:
+        data = guidelines.load_guidelines()
+    except (FileNotFoundError, ValueError):
+        return ""
+
+    paper_blocks: list[str] = []
+    for paper in guidelines.get_papers(data):
+        if not isinstance(paper, dict):
+            continue
+        paper_id = str(paper.get("id") or "paper").strip()
+        citation = str(paper.get("paper_citation") or "").strip()
+        summary = str(paper.get("paper_summary") or "").strip()
+        criteria_lines: list[str] = []
+        for criterion in paper.get("criteria") or []:
+            if not isinstance(criterion, dict):
+                continue
+            title = str(criterion.get("criterion") or "").strip()
+            explanation = str(criterion.get("explanation") or "").strip()
+            if title and explanation:
+                criteria_lines.append(f"- {title}: {explanation}")
+            elif title:
+                criteria_lines.append(f"- {title}")
+        parts = [f"### Paper {paper_id}"]
+        if citation:
+            parts.append(f"Citation: {citation}")
+        if summary:
+            parts.append(f"Summary: {summary}")
+        if criteria_lines:
+            parts.append("Relevant criteria:\n" + "\n".join(criteria_lines))
+        if len(parts) > 1:
+            paper_blocks.append("\n".join(parts))
+    return "\n\n".join(paper_blocks)
+
+
 def build_json_prompt(
     biography_text: str,
     questionnaire: dict[str, Any],
@@ -151,6 +188,7 @@ def build_json_prompt(
     language_instruction = _LANGUAGE_INSTRUCTIONS.get(
         language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
     )
+    academic_context = _build_academic_context_block()
 
     blocks: list[str] = []
     for section in sections:
@@ -178,12 +216,19 @@ def build_json_prompt(
         "Answer every statement IN CHARACTER, in first person. For each\n"
         "statement, pick the rating on that section's scale that best\n"
         "reflects how the character would respond, and briefly explain why\n"
-        "in the character's voice.\n"
+        "in the character's voice. The explanation must combine evidence from\n"
+        "the biography with relevant peer-support concepts from the academic\n"
+        "papers/context below. You may use your broader knowledge of mental\n"
+        "health peer support to interpret the case, but keep the explanation\n"
+        "anchored in the biography and provided academic context.\n"
         f"{language_instruction}\n"
         "\n"
         "## Biography\n"
         f"{biography_text.strip()}\n"
         "\n"
+        "## Academic peer-support context\n"
+        + (academic_context or "No academic context was available.")
+        + "\n\n"
         "## Questionnaire\n"
         + "\n\n".join(blocks)
         + "\n\n"
@@ -195,7 +240,8 @@ def build_json_prompt(
         '  - "rating":    integer in the section\'s range (1..N).\n'
         '  - "label":     the scale label for that rating, copied verbatim\n'
         "                (including any number in parentheses).\n"
-        '  - "reasoning": 1-2 sentences, in character, explaining the choice.\n'
+        '  - "reasoning": 1-3 sentences explaining the choice using the\n'
+        "                 biography and the academic peer-support context.\n"
         "The rating and label MUST be consistent — i.e. label must be the\n"
         "Nth entry in that section's scale when rating is N."
     )

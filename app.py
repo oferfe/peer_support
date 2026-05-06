@@ -505,7 +505,7 @@ def _render_questionnaire_results(
 
             reasoning = _answer_reasoning(answer)
             if reasoning:
-                st.caption(reasoning)
+                st.caption(f"{t('answer_explanation_prefix')} {reasoning}")
             if questionnaire_id:
                 st.text_area(
                     t("answer_comment_label"),
@@ -1287,7 +1287,6 @@ else:
     intake_load_error = None
 
 with st.sidebar:
-    st.header(t("sb_actions_header"))
     app_view = st.session_state.get("app_view")
     persona_exists = st.session_state.persona_id is not None
     edit_mode = bool(st.session_state.biography_edit_mode)

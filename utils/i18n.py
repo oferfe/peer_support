@@ -39,7 +39,6 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "sb_supabase_connected": "Supabase: :green[connected]",
         "sb_supabase_unreachable": "Supabase: :red[unreachable]",
         "sb_secrets_hint": "Check SUPABASE_URL / SUPABASE_KEY in `.streamlit/secrets.toml`.",
-        "sb_actions_header": "Researcher actions",
         "login_username_label": "Username",
         "login_username_placeholder": "Researcher username",
         "login_password_label": "Password",
@@ -182,6 +181,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "simulation_answer_changed": "Changed from previous simulation",
         "simulation_previous_answer": "Previous answer: {answer}",
         "answer_comment_label": "Researcher comment / feedback (optional)",
+        "answer_explanation_prefix": "Explanation:",
         "answer_comment_placeholder": (
             "Add an optional note about this answer..."
         ),
@@ -251,7 +251,6 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "sb_supabase_connected": "Supabase: :green[מחובר]",
         "sb_supabase_unreachable": "Supabase: :red[לא זמין]",
         "sb_secrets_hint": "יש לבדוק את SUPABASE_URL / SUPABASE_KEY בקובץ `.streamlit/secrets.toml`.",
-        "sb_actions_header": "פעולות חוקר/ת",
         "login_username_label": "שם משתמש",
         "login_username_placeholder": "שם משתמש של החוקר/ת",
         "login_password_label": "סיסמה",
@@ -393,6 +392,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "simulation_answer_changed": "השתנה מהסימולציה הקודמת",
         "simulation_previous_answer": "תשובה קודמת: {answer}",
         "answer_comment_label": "הערה / משוב של החוקר/ת (רשות)",
+        "answer_explanation_prefix": "הסבר:",
         "answer_comment_placeholder": "אפשר להוסיף הערה על התשובה הזו...",
         "save_answer_comments_button": "שמירת הערות לתשובות",
         "answer_comments_saved": "נשמרו {count} הערות לתשובות.",
