@@ -39,6 +39,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "sb_supabase_connected": "Supabase: :green[connected]",
         "sb_supabase_unreachable": "Supabase: :red[unreachable]",
         "sb_secrets_hint": "Check SUPABASE_URL / SUPABASE_KEY in `.streamlit/secrets.toml`.",
+        "sb_actions_header": "Researcher actions",
         "login_username_label": "Username",
         "login_username_placeholder": "Researcher username",
         "login_password_label": "Password",
@@ -192,6 +193,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "Comments can be saved after a new simulation is generated."
         ),
         "go_saved_personas_button": "Go to saved personas",
+        "view_current_results_button": "View current simulation results",
         "back_to_intake_button": "Back to intake",
         "back_to_edit_persona_button": "Back to edit current persona",
         "current_persona_results_title": "Current persona simulation results",
@@ -249,6 +251,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "sb_supabase_connected": "Supabase: :green[מחובר]",
         "sb_supabase_unreachable": "Supabase: :red[לא זמין]",
         "sb_secrets_hint": "יש לבדוק את SUPABASE_URL / SUPABASE_KEY בקובץ `.streamlit/secrets.toml`.",
+        "sb_actions_header": "פעולות חוקר/ת",
         "login_username_label": "שם משתמש",
         "login_username_placeholder": "שם משתמש של החוקר/ת",
         "login_password_label": "סיסמה",
@@ -399,6 +402,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "ניתן לשמור הערות לאחר יצירת סימולציה חדשה."
         ),
         "go_saved_personas_button": "מעבר לפרסונות שמורות",
+        "view_current_results_button": "צפייה בתוצאות הסימולציה הנוכחית",
         "back_to_intake_button": "חזרה לטופס",
         "back_to_edit_persona_button": "חזרה לעריכת הפרסונה הנוכחית",
         "current_persona_results_title": "תוצאות סימולציה לפרסונה הנוכחית",

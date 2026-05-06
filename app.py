@@ -574,24 +574,6 @@ def _render_saved_personas_page(
         )
     )
 
-    back_col, saved_col = st.columns(2)
-    if back_col.button(
-        t(
-            "back_to_edit_persona_button"
-            if is_current_persona_view
-            else "back_to_intake_button"
-        ),
-        use_container_width=True,
-    ):
-        st.session_state.app_view = "intake"
-        st.rerun()
-    if is_current_persona_view and saved_col.button(
-        t("go_saved_personas_button"),
-        use_container_width=True,
-    ):
-        st.session_state.app_view = "saved_personas"
-        st.rerun()
-
     try:
         personas = db.fetch_saved_personas_for_researcher(researcher_name)
     except Exception as exc:  # noqa: BLE001
@@ -691,41 +673,6 @@ def _render_saved_personas_page(
                 st.info(t("saved_persona_no_simulations"))
                 continue
 
-            if is_current_persona_view and not latest_bio.get("is_final"):
-                if st.button(
-                    t("finish_persona_button"),
-                    use_container_width=True,
-                    key=f"finish_persona_results_{persona_id}",
-                ):
-                    try:
-                        with st.spinner(t("finish_persona_spinner")):
-                            db.finalize_persona(str(persona_id))
-                    except Exception as exc:  # noqa: BLE001
-                        st.error(t("finish_persona_failed", error=exc))
-                    else:
-                        st.session_state.update(
-                            persona_id=None,
-                            biography_id=None,
-                            biography_revision_number=0,
-                            biography_text="",
-                            latest_saved_biography_text="",
-                            initial_intake_answers={},
-                            biography_edit_mode=False,
-                            persona_is_final=False,
-                            questionnaire_answers=None,
-                            current_questionnaire_id=None,
-                            previous_simulation=None,
-                            session_id=None,
-                            messages=[],
-                            app_view="intake",
-                            saved_personas_focus_questionnaire_id=None,
-                        )
-                        st.session_state.pop("bio_unsaved_area", None)
-                        st.session_state.pop("bio_edit_area", None)
-                        st.session_state.pop("bio_readonly_area", None)
-                        st.toast(t("finish_persona_success_toast"), icon="🏁")
-                        st.rerun()
-
             if is_current_persona_view:
                 _render_saved_simulation(
                     simulations[0],
@@ -779,6 +726,230 @@ def _render_saved_personas_page(
                     persona_id=persona_id,
                     latest_bio=latest_bio,
                 )
+
+
+def _finish_current_persona() -> None:
+    """Finalize the current persona and reset persona-scoped session state."""
+    try:
+        with st.spinner(t("finish_persona_spinner")):
+            db.finalize_persona(st.session_state.persona_id)
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("finish_persona_failed", error=exc))
+    else:
+        st.session_state.update(
+            persona_id=None,
+            biography_id=None,
+            biography_revision_number=0,
+            biography_text="",
+            latest_saved_biography_text="",
+            initial_intake_answers={},
+            biography_edit_mode=False,
+            persona_is_final=False,
+            questionnaire_answers=None,
+            current_questionnaire_id=None,
+            previous_simulation=None,
+            session_id=None,
+            messages=[],
+            app_view="intake",
+            saved_personas_focus_questionnaire_id=None,
+        )
+        st.session_state.pop("bio_unsaved_area", None)
+        st.session_state.pop("bio_edit_area", None)
+        st.session_state.pop("bio_readonly_area", None)
+        st.toast(t("finish_persona_success_toast"), icon="🏁")
+        st.rerun()
+
+
+def _start_edit_current_biography() -> None:
+    """Switch the current saved biography into edit mode."""
+    st.session_state.biography_edit_mode = True
+    st.session_state.biography_text = st.session_state.latest_saved_biography_text
+    st.session_state.pop("bio_edit_area", None)
+    st.session_state.pop("bio_readonly_area", None)
+    st.session_state.app_view = "intake"
+    st.rerun()
+
+
+def _cancel_current_biography_edit() -> None:
+    """Discard the in-progress biography edit."""
+    st.session_state.update(
+        biography_edit_mode=False,
+        biography_text=st.session_state.latest_saved_biography_text,
+    )
+    st.session_state.pop("bio_edit_area", None)
+    st.session_state.pop("bio_readonly_area", None)
+    st.rerun()
+
+
+def _draft_biography_from_current_intake(
+    intake_data: dict[str, object],
+    model_label: str,
+    language: str,
+) -> None:
+    """Generate an unsaved biography draft from current intake answers."""
+    answers_payload = _collect_intake_answers(intake_data, language)
+    try:
+        with st.spinner(t("intake_drafting_spinner", model=model_label)):
+            drafted = llm.generate_biography(
+                model_label,
+                intake_data,
+                answers_payload,
+                language,
+            )
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("intake_draft_failed", error=exc))
+    else:
+        st.session_state.biography_text = drafted
+        st.session_state.pop("bio_unsaved_area", None)
+        st.toast(t("intake_draft_success"), icon="✅")
+        st.rerun()
+
+
+def _save_initial_biography(
+    researcher_name: str,
+    intake_data: dict[str, object] | None,
+    language: str,
+) -> None:
+    """Persist the first biography revision for a new persona."""
+    bio = (
+        st.session_state.get("bio_unsaved_area")
+        or st.session_state.biography_text
+        or ""
+    )
+    intake_payload = (
+        _collect_intake_answers(intake_data, language) if intake_data else {}
+    )
+    try:
+        with st.spinner(t("save_bio_spinner")):
+            revision_id, new_persona_id = db.insert_biography(
+                researcher_name,
+                bio,
+                persona_id=None,
+                revision_number=1,
+                intake_answers=intake_payload or None,
+            )
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("save_bio_failed", error=exc))
+    else:
+        st.session_state.update(
+            persona_id=new_persona_id,
+            biography_id=revision_id,
+            biography_revision_number=1,
+            biography_text=bio,
+            latest_saved_biography_text=bio,
+            initial_intake_answers=intake_payload or {},
+            biography_edit_mode=False,
+            persona_is_final=False,
+            questionnaire_answers=None,
+            current_questionnaire_id=None,
+            previous_simulation=None,
+            session_id=str(uuid.uuid4()),
+            messages=[],
+        )
+        st.session_state.pop("bio_unsaved_area", None)
+        st.session_state.pop("bio_edit_area", None)
+        st.session_state.pop("bio_readonly_area", None)
+        st.toast(t("save_bio_success_toast"), icon="✅")
+        st.rerun()
+
+
+def _save_biography_changes(researcher_name: str) -> None:
+    """Persist the edited biography as a new revision."""
+    bio = (
+        st.session_state.get("bio_edit_area")
+        or st.session_state.biography_text
+        or ""
+    )
+    if bio.strip() == st.session_state.latest_saved_biography_text.strip():
+        st.session_state.update(
+            biography_edit_mode=False,
+            biography_text=st.session_state.latest_saved_biography_text,
+        )
+        st.session_state.pop("bio_edit_area", None)
+        st.session_state.pop("bio_readonly_area", None)
+        st.toast(t("save_changes_noop_toast"), icon="ℹ️")
+        st.rerun()
+
+    next_rev = st.session_state.biography_revision_number + 1
+    intake_payload = st.session_state.initial_intake_answers
+    try:
+        with st.spinner(t("save_changes_spinner")):
+            revision_id, _ = db.insert_biography(
+                researcher_name,
+                bio,
+                persona_id=st.session_state.persona_id,
+                revision_number=next_rev,
+                intake_answers=intake_payload or None,
+            )
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("save_changes_failed", error=exc))
+    else:
+        st.session_state.update(
+            biography_id=revision_id,
+            biography_revision_number=next_rev,
+            biography_text=bio,
+            latest_saved_biography_text=bio,
+            biography_edit_mode=False,
+            questionnaire_answers=None,
+            current_questionnaire_id=None,
+            previous_simulation=None,
+        )
+        st.session_state.pop("bio_edit_area", None)
+        st.session_state.pop("bio_readonly_area", None)
+        st.toast(t("save_changes_success_toast", n=next_rev), icon="✅")
+        st.rerun()
+
+
+def _run_current_simulation(
+    model_label: str,
+    questionnaire: dict[str, Any],
+    language: str,
+) -> None:
+    """Generate and save questionnaire answers for the current saved biography."""
+    try:
+        with st.spinner(t("generate_q_spinner", model=model_label)):
+            previous_simulation = db.fetch_previous_questionnaire_for_persona(
+                st.session_state.persona_id,
+                current_biography_id=st.session_state.biography_id,
+            )
+            answers = llm.answer_questionnaire(
+                model_label,
+                st.session_state.latest_saved_biography_text,
+                questionnaire,
+                language,
+            )
+            structured_answers: dict[str, Any] = {}
+            reasonings: dict[str, str] = {}
+            for qid, value in answers.items():
+                if isinstance(value, dict):
+                    rating = value.get("rating")
+                    label = value.get("label")
+                    reasoning = value.get("reasoning") or ""
+                    structured_answers[qid] = {
+                        "rating": rating,
+                        "label": label,
+                    }
+                    if reasoning:
+                        reasonings[qid] = reasoning
+                else:
+                    structured_answers[qid] = value
+            questionnaire_id = db.insert_questionnaire(
+                st.session_state.biography_id,
+                model_label,
+                structured_answers,
+                reasonings or None,
+                persona_id=st.session_state.persona_id,
+            )
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("generate_q_failed", error=exc))
+    else:
+        st.session_state.questionnaire_answers = answers
+        st.session_state.current_questionnaire_id = questionnaire_id
+        st.session_state.previous_simulation = previous_simulation
+        st.session_state.saved_personas_focus_questionnaire_id = questionnaire_id
+        st.session_state.app_view = "current_persona_results"
+        st.toast(t("generate_q_success_toast"), icon="✅")
+        st.rerun()
 
 
 # ---------------------------------------------------------------------------
@@ -1107,6 +1278,130 @@ if (
 
 language = st.session_state.language
 questionnaire = load_questionnaire()
+try:
+    intake_data = load_intake()
+except (FileNotFoundError, ValueError) as exc:
+    intake_data = None
+    intake_load_error = exc
+else:
+    intake_load_error = None
+
+with st.sidebar:
+    st.header(t("sb_actions_header"))
+    app_view = st.session_state.get("app_view")
+    persona_exists = st.session_state.persona_id is not None
+    edit_mode = bool(st.session_state.biography_edit_mode)
+
+    if app_view != "saved_personas":
+        if st.button(t("go_saved_personas_button"), use_container_width=True):
+            st.session_state.app_view = "saved_personas"
+            st.rerun()
+    if app_view != "intake":
+        if st.button(
+            t(
+                "back_to_edit_persona_button"
+                if app_view == "current_persona_results"
+                else "back_to_intake_button"
+            ),
+            use_container_width=True,
+        ):
+            st.session_state.app_view = "intake"
+            st.rerun()
+
+    if app_view == "intake":
+        if not persona_exists:
+            if intake_data:
+                st.button(
+                    t("intake_randomize_button"),
+                    use_container_width=True,
+                    type="primary",
+                    key="sidebar_intake_randomize_btn",
+                    on_click=_apply_random_intake_answers,
+                    args=(intake_data, model_label, language),
+                )
+                missing_open_ended = _missing_open_ended_ids(intake_data)
+                if st.button(
+                    t("intake_draft_button"),
+                    use_container_width=True,
+                    type="secondary",
+                    key="sidebar_intake_draft_btn",
+                    disabled=bool(missing_open_ended),
+                ):
+                    _draft_biography_from_current_intake(
+                        intake_data, model_label, language
+                    )
+            bio_to_save = (
+                st.session_state.get("bio_unsaved_area")
+                or st.session_state.biography_text
+                or ""
+            )
+            if st.button(
+                t("save_bio_button"),
+                type="primary",
+                disabled=not bio_to_save.strip(),
+                use_container_width=True,
+                key="sidebar_save_bio_btn",
+            ):
+                _save_initial_biography(researcher_name, intake_data, language)
+        elif edit_mode:
+            edited_bio = (
+                st.session_state.get("bio_edit_area")
+                or st.session_state.biography_text
+                or ""
+            )
+            if st.button(
+                t("save_changes_button"),
+                type="primary",
+                disabled=not edited_bio.strip(),
+                use_container_width=True,
+                key="sidebar_save_changes_btn",
+            ):
+                _save_biography_changes(researcher_name)
+            if st.button(
+                t("cancel_edit_button"),
+                use_container_width=True,
+                key="sidebar_cancel_edit_btn",
+            ):
+                _cancel_current_biography_edit()
+        else:
+            if st.button(
+                t("edit_bio_button"),
+                type="primary",
+                use_container_width=True,
+                key="sidebar_edit_bio_btn",
+            ):
+                _start_edit_current_biography()
+            if st.session_state.questionnaire_answers is None:
+                if st.button(
+                    t("generate_q_button"),
+                    type="primary",
+                    use_container_width=True,
+                    key="sidebar_generate_q_btn",
+                ):
+                    _run_current_simulation(model_label, questionnaire, language)
+            else:
+                if st.button(
+                    t("view_current_results_button"),
+                    use_container_width=True,
+                    key="sidebar_view_current_results_btn",
+                ):
+                    st.session_state.app_view = "current_persona_results"
+                    st.rerun()
+            if st.session_state.current_questionnaire_id is not None:
+                if st.button(
+                    t("finish_persona_button"),
+                    use_container_width=True,
+                    key="sidebar_finish_persona_btn",
+                ):
+                    _finish_current_persona()
+    elif app_view == "current_persona_results":
+        if st.session_state.current_questionnaire_id is not None:
+            if st.button(
+                t("finish_persona_button"),
+                use_container_width=True,
+                key="sidebar_finish_persona_results_btn",
+            ):
+                _finish_current_persona()
 
 if st.session_state.get("app_view") in (
     "saved_personas",
@@ -1131,9 +1426,6 @@ if st.session_state.get("app_view") in (
 # Simulation answers no longer render on this intake page. Researchers can use
 # the saved-personas page to review past biographies and questionnaire runs.
 st.title(t("app_title"))
-if st.button(t("go_saved_personas_button"), use_container_width=True):
-    st.session_state.app_view = "saved_personas"
-    st.rerun()
 
 intake_col = st.container()
 
@@ -1155,11 +1447,8 @@ with intake_col:
     # revision clears `questionnaire_answers`, which brings the locked intake
     # snapshot back until the next simulation run.
     show_intake_form = st.session_state.questionnaire_answers is None
-    try:
-        intake_data = load_intake()
-    except (FileNotFoundError, ValueError) as exc:
-        intake_data = None
-        st.warning(t("intake_load_failed", error=exc))
+    if intake_load_error:
+        st.warning(t("intake_load_failed", error=intake_load_error))
 
     if intake_data and show_intake_form:
         st.subheader(t("intake_form_header"))
@@ -1172,23 +1461,6 @@ with intake_col:
                 )
         else:
             st.caption(t("intake_form_caption"))
-
-            # Randomize lives at the top so the researcher can fill the whole
-            # form in one click before scrolling, then tweak individual answers
-            # as needed. `on_click` fires before widgets re-instantiate, which
-            # is required to mutate their session_state keys. After the
-            # structured random picks, the callback also calls the LLM to
-            # generate short answers for every `open_ended` question — that
-            # way the "open-ended must be filled" rule is always satisfied
-            # once Randomize returns.
-            st.button(
-                t("intake_randomize_button"),
-                use_container_width=True,
-                type="primary",
-                key="intake_randomize_btn",
-                on_click=_apply_random_intake_answers,
-                args=(intake_data, model_label, language),
-            )
 
         for section in get_localized_sections(intake_data, language):
             st.markdown(f"##### {section['title']}")
@@ -1214,38 +1486,6 @@ with intake_col:
                     )
                 )
 
-            # Draft biography stays at the bottom because it consumes the
-            # current state of all answers above it.
-            draft_clicked = st.button(
-                t("intake_draft_button"),
-                use_container_width=True,
-                type="secondary",
-                key="intake_draft_btn",
-                disabled=bool(missing_open_ended),
-            )
-
-            if draft_clicked:
-                answers_payload = _collect_intake_answers(
-                    intake_data, language
-                )
-                try:
-                    with st.spinner(
-                        t("intake_drafting_spinner", model=model_label)
-                    ):
-                        drafted = llm.generate_biography(
-                            model_label,
-                            intake_data,
-                            answers_payload,
-                            language,
-                        )
-                except Exception as exc:  # noqa: BLE001 — surface LLM errors to the UI
-                    st.error(t("intake_draft_failed", error=exc))
-                else:
-                    st.session_state.biography_text = drafted
-                    st.session_state.pop("bio_unsaved_area", None)
-                    st.toast(t("intake_draft_success"), icon="✅")
-                    st.rerun()
-
     # --- Biography panel: three mutually-exclusive states -----------------
     # The persona lifecycle is:
     #   (1) no persona yet          -> editable bio + Save biography
@@ -1270,51 +1510,6 @@ with intake_col:
         )
         st.session_state.biography_text = bio
 
-        if st.button(
-            t("save_bio_button"),
-            type="primary",
-            disabled=not bio.strip(),
-            use_container_width=True,
-            key="save_bio_btn",
-        ):
-            intake_payload = (
-                _collect_intake_answers(intake_data, language)
-                if intake_data
-                else {}
-            )
-            try:
-                with st.spinner(t("save_bio_spinner")):
-                    revision_id, new_persona_id = db.insert_biography(
-                        researcher_name,
-                        bio,
-                        persona_id=None,
-                        revision_number=1,
-                        intake_answers=intake_payload or None,
-                    )
-            except Exception as exc:  # noqa: BLE001
-                st.error(t("save_bio_failed", error=exc))
-            else:
-                st.session_state.update(
-                    persona_id=new_persona_id,
-                    biography_id=revision_id,
-                    biography_revision_number=1,
-                    biography_text=bio,
-                    latest_saved_biography_text=bio,
-                    initial_intake_answers=intake_payload or {},
-                    biography_edit_mode=False,
-                    persona_is_final=False,
-                    questionnaire_answers=None,
-                    current_questionnaire_id=None,
-                    previous_simulation=None,
-                    session_id=str(uuid.uuid4()),
-                    messages=[],
-                )
-                st.session_state.pop("bio_unsaved_area", None)
-                st.session_state.pop("bio_edit_area", None)
-                st.session_state.pop("bio_readonly_area", None)
-                st.toast(t("save_bio_success_toast"), icon="✅")
-                st.rerun()
-
     elif edit_mode:
         # --- State 3: editing a saved biography ---------------------------
         if "bio_edit_area" not in st.session_state:
@@ -1332,69 +1527,6 @@ with intake_col:
         st.caption(
             t("bio_edit_hint", n=st.session_state.biography_revision_number)
         )
-        col_save, col_cancel = st.columns(2)
-        if col_save.button(
-            t("save_changes_button"),
-            type="primary",
-            disabled=not bio.strip(),
-            use_container_width=True,
-            key="save_changes_btn",
-        ):
-            if bio.strip() == st.session_state.latest_saved_biography_text.strip():
-                st.session_state.update(
-                    biography_edit_mode=False,
-                    biography_text=st.session_state.latest_saved_biography_text,
-                )
-                st.session_state.pop("bio_edit_area", None)
-                st.session_state.pop("bio_readonly_area", None)
-                st.toast(t("save_changes_noop_toast"), icon="ℹ️")
-                st.rerun()
-            next_rev = st.session_state.biography_revision_number + 1
-            intake_payload = st.session_state.initial_intake_answers
-            try:
-                with st.spinner(t("save_changes_spinner")):
-                    revision_id, _ = db.insert_biography(
-                        researcher_name,
-                        bio,
-                        persona_id=st.session_state.persona_id,
-                        revision_number=next_rev,
-                        intake_answers=intake_payload or None,
-                    )
-            except Exception as exc:  # noqa: BLE001
-                st.error(t("save_changes_failed", error=exc))
-            else:
-                st.session_state.update(
-                    biography_id=revision_id,
-                    biography_revision_number=next_rev,
-                    biography_text=bio,
-                    latest_saved_biography_text=bio,
-                    biography_edit_mode=False,
-                    questionnaire_answers=None,
-                    current_questionnaire_id=None,
-                    previous_simulation=None,
-                )
-                # Drop the widget-state slot so next edit re-seeds from
-                # `biography_text` instead of the now-saved-but-stale value.
-                st.session_state.pop("bio_edit_area", None)
-                st.session_state.pop("bio_readonly_area", None)
-                st.toast(
-                    t("save_changes_success_toast", n=next_rev), icon="✅"
-                )
-                st.rerun()
-        if col_cancel.button(
-            t("cancel_edit_button"),
-            use_container_width=True,
-            key="cancel_edit_btn",
-        ):
-            st.session_state.update(
-                biography_edit_mode=False,
-                biography_text=st.session_state.latest_saved_biography_text,
-            )
-            # Drop the in-flight edit so re-entering edit mode later starts
-            # from the last saved biography, not the discarded changes.
-            st.session_state.pop("bio_edit_area", None)
-            st.session_state.pop("bio_readonly_area", None)
-            st.rerun()
 
     else:
         # --- State 2: saved view, read-only -------------------------------
@@ -1415,128 +1547,6 @@ with intake_col:
             st.session_state.latest_saved_biography_text,
             st.session_state.previous_simulation,
         )
-        simulation_exists_for_revision = (
-            st.session_state.current_questionnaire_id is not None
-        )
-        action_cols = (
-            st.columns(2) if simulation_exists_for_revision else [st.container()]
-        )
-        if action_cols[0].button(
-            t("edit_bio_button"),
-            type="primary",
-            use_container_width=True,
-            key="edit_bio_btn",
-        ):
-            st.session_state.biography_edit_mode = True
-            st.session_state.biography_text = (
-                st.session_state.latest_saved_biography_text
-            )
-            # Reset any stale widget state so the edit area seeds from the
-            # current `biography_text` rather than an older cached value.
-            st.session_state.pop("bio_edit_area", None)
-            st.session_state.pop("bio_readonly_area", None)
-            st.rerun()
-        if simulation_exists_for_revision:
-            if action_cols[1].button(
-                t("finish_persona_button"),
-                use_container_width=True,
-                key="finish_persona_btn",
-            ):
-                try:
-                    with st.spinner(t("finish_persona_spinner")):
-                        db.finalize_persona(st.session_state.persona_id)
-                except Exception as exc:  # noqa: BLE001
-                    st.error(t("finish_persona_failed", error=exc))
-                else:
-                    # Reset every persona-scoped session key so the next render
-                    # lands back in State 1 with a clean slate.
-                    st.session_state.update(
-                        persona_id=None,
-                        biography_id=None,
-                        biography_revision_number=0,
-                        biography_text="",
-                        latest_saved_biography_text="",
-                        initial_intake_answers={},
-                        biography_edit_mode=False,
-                        persona_is_final=False,
-                        questionnaire_answers=None,
-                        current_questionnaire_id=None,
-                        previous_simulation=None,
-                        session_id=None,
-                        messages=[],
-                    )
-                    st.session_state.pop("bio_unsaved_area", None)
-                    st.session_state.pop("bio_edit_area", None)
-                    st.session_state.pop("bio_readonly_area", None)
-                    st.toast(t("finish_persona_success_toast"), icon="🏁")
-                    st.rerun()
-
-        # Generate questionnaire responses — unchanged behavior, but only
-        # reachable in the saved read-only view (edit mode blocks it so
-        # unsaved edits can't leak into the LLM call).
-        if st.session_state.questionnaire_answers is None:
-            if st.button(
-                t("generate_q_button"),
-                type="primary",
-                use_container_width=True,
-                key="generate_q_btn",
-            ):
-                try:
-                    with st.spinner(
-                        t("generate_q_spinner", model=model_label)
-                    ):
-                        previous_simulation = (
-                            db.fetch_previous_questionnaire_for_persona(
-                                st.session_state.persona_id,
-                                current_biography_id=st.session_state.biography_id,
-                            )
-                        )
-                        answers = llm.answer_questionnaire(
-                            model_label,
-                            st.session_state.latest_saved_biography_text,
-                            questionnaire,
-                            language,
-                        )
-                        # {qid: {"rating", "label", "reasoning"}}. Split
-                        # rationales into their own JSONB column so the
-                        # `answers` payload stays compact and the
-                        # rationales are easy to read / hide in Supabase.
-                        structured_answers: dict[str, Any] = {}
-                        reasonings: dict[str, str] = {}
-                        for qid, value in answers.items():
-                            if isinstance(value, dict):
-                                rating = value.get("rating")
-                                label = value.get("label")
-                                reasoning = value.get("reasoning") or ""
-                                structured_answers[qid] = {
-                                    "rating": rating,
-                                    "label": label,
-                                }
-                                if reasoning:
-                                    reasonings[qid] = reasoning
-                            else:
-                                # Legacy bare-string answers.
-                                structured_answers[qid] = value
-                        questionnaire_id = db.insert_questionnaire(
-                            st.session_state.biography_id,
-                            model_label,
-                            structured_answers,
-                            reasonings or None,
-                            persona_id=st.session_state.persona_id,
-                        )
-                except Exception as exc:  # noqa: BLE001
-                    st.error(t("generate_q_failed", error=exc))
-                else:
-                    st.session_state.questionnaire_answers = answers
-                    st.session_state.current_questionnaire_id = questionnaire_id
-                    st.session_state.previous_simulation = previous_simulation
-                    st.session_state.saved_personas_focus_questionnaire_id = (
-                        questionnaire_id
-                    )
-                    st.session_state.app_view = "current_persona_results"
-                    st.toast(t("generate_q_success_toast"), icon="✅")
-                    st.rerun()
-
     if persona_exists:
         st.caption(
             t(
