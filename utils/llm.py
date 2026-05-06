@@ -28,7 +28,7 @@ from openai import OpenAI
 
 from .i18n import LANG_EN, LANG_HE
 from .intake import build_biography_prompt, get_localized_sections
-from .questionnaire import build_json_prompt
+from .questionnaire import build_explanation_prompt, build_json_prompt
 
 
 # Accepted model labels from the UI radio. `OLLAMA` routes through a local
@@ -112,6 +112,29 @@ def _parse_json(text: str) -> dict[str, Any]:
         raise
 
 
+def _attach_explanations(
+    answers: dict[str, Any],
+    explanations: dict[str, Any],
+) -> dict[str, Any]:
+    """Attach second-LLM explanations to first-LLM questionnaire answers."""
+    merged: dict[str, Any] = {}
+    for qid, answer in answers.items():
+        explanation = explanations.get(qid)
+        if isinstance(explanation, str) and explanation.strip():
+            if isinstance(answer, dict):
+                enriched = dict(answer)
+                enriched["reasoning"] = explanation.strip()
+                merged[qid] = enriched
+            else:
+                merged[qid] = {
+                    "label": answer,
+                    "reasoning": explanation.strip(),
+                }
+        else:
+            merged[qid] = answer
+    return merged
+
+
 def _history_to_genai(
     system_prompt: str,
     history: list[dict[str, str]],
@@ -193,7 +216,7 @@ def _openai_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    prompt = build_json_prompt(biography_text, questionnaire, language)
+    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
     resp = _openai_client().chat.completions.create(
         model=_openai_model(),
         messages=[
@@ -205,11 +228,37 @@ def _openai_questionnaire(
                     f"JSON. {_language_directive(language)}"
                 ),
             },
-            {"role": "user", "content": prompt},
+            {"role": "user", "content": answer_prompt},
         ],
         response_format={"type": "json_object"},
     )
-    return _parse_json(resp.choices[0].message.content or "{}")
+    answers = _parse_json(resp.choices[0].message.content or "{}")
+
+    explanation_prompt = build_explanation_prompt(
+        biography_text,
+        questionnaire,
+        answers,
+        language,
+    )
+    explanation_resp = _openai_client().chat.completions.create(
+        model=_openai_model(),
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are an expert academic explainer of mental health "
+                    "peer support questionnaire responses. Return only valid "
+                    f"JSON. {_language_directive(language)}"
+                ),
+            },
+            {"role": "user", "content": explanation_prompt},
+        ],
+        response_format={"type": "json_object"},
+    )
+    explanations = _parse_json(
+        explanation_resp.choices[0].message.content or "{}"
+    )
+    return _attach_explanations(answers, explanations)
 
 
 # ---------------------------------------------------------------------------
@@ -296,16 +345,32 @@ def _gemma_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    prompt = build_json_prompt(biography_text, questionnaire, language)
-    text = _gemma_generate_json_text(prompt)
+    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
+    text = _gemma_generate_json_text(answer_prompt)
     try:
-        return _parse_json(text)
+        answers = _parse_json(text)
     except Exception as exc:
         snippet = text[:400].replace("\n", " ")
         raise RuntimeError(
             f"Gemma returned content that is not valid JSON. Snippet: "
             f"{snippet!r}"
         ) from exc
+    explanation_prompt = build_explanation_prompt(
+        biography_text,
+        questionnaire,
+        answers,
+        language,
+    )
+    explanation_text = _gemma_generate_json_text(explanation_prompt)
+    try:
+        explanations = _parse_json(explanation_text)
+    except Exception as exc:
+        snippet = explanation_text[:400].replace("\n", " ")
+        raise RuntimeError(
+            "Gemma returned explanation content that is not valid JSON. "
+            f"Snippet: {snippet!r}"
+        ) from exc
+    return _attach_explanations(answers, explanations)
 
 
 # ---------------------------------------------------------------------------
@@ -383,21 +448,49 @@ def _ollama_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    prompt = build_json_prompt(biography_text, questionnaire, language)
-    system_content = (
+    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
+    answer_system_content = (
         "You respond to psychological questionnaires as the character "
         "described by the user, returning only valid JSON. "
         f"{_language_directive(language)}"
     )
-    text = _ollama_json_chat(system_content, prompt)
+    text = _ollama_json_chat(answer_system_content, answer_prompt)
     try:
-        return _parse_json(text)
+        answers = _parse_json(text)
     except Exception as exc:
         snippet = text[:400].replace("\n", " ") if text else "<empty>"
         raise RuntimeError(
             f"Ollama returned content that is not valid JSON. Snippet: "
             f"{snippet!r}"
         ) from exc
+    explanation_prompt = build_explanation_prompt(
+        biography_text,
+        questionnaire,
+        answers,
+        language,
+    )
+    explanation_system_content = (
+        "You are an expert academic explainer of mental health peer support "
+        "questionnaire responses. Return only valid JSON. "
+        f"{_language_directive(language)}"
+    )
+    explanation_text = _ollama_json_chat(
+        explanation_system_content,
+        explanation_prompt,
+    )
+    try:
+        explanations = _parse_json(explanation_text)
+    except Exception as exc:
+        snippet = (
+            explanation_text[:400].replace("\n", " ")
+            if explanation_text
+            else "<empty>"
+        )
+        raise RuntimeError(
+            "Ollama returned explanation content that is not valid JSON. "
+            f"Snippet: {snippet!r}"
+        ) from exc
+    return _attach_explanations(answers, explanations)
 
 
 def _ollama_json(prompt: str, language: str) -> dict[str, Any]:

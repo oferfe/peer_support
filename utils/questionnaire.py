@@ -9,18 +9,19 @@ Public API mirrors `utils.intake` so the app can treat both forms alike:
 
 - `load_questionnaire()`         cached read of the JSON.
 - `get_localized_sections()`     flattens bilingual strings to the active language.
-- `build_json_prompt()`          builds the LLM prompt that asks for a JSON
-                                 object keyed by statement id, whose values
-                                 are the chosen scale labels (verbatim).
+- `build_json_prompt()`          builds the first LLM prompt: answer as the
+                                 character with ratings/labels only.
+- `build_explanation_prompt()`   builds the second LLM prompt: explain the
+                                 first LLM answers using academic context.
 
-Storage shape: the LLM returns (and Supabase stores) a JSON object keyed by
-statement id whose values include the numeric rating, the verbal label, and a
-short rationale — e.g.
+Storage shape: the app stores a JSON object keyed by statement id whose values
+include the numeric rating, the verbal label, and a short explanation — e.g.
 
-    {
-      "mwms_1":  {"rating": 1, "label": "כלל לא",           "reasoning": "..."},
-      "bpns_7":  {"rating": 4, "label": "ניטרלי/ת (4)",     "reasoning": "..."}
-    }
+    {"mwms_1": {"rating": 1, "label": "כלל לא", "reasoning": "..."}}
+
+The rating/label are produced by a persona LLM call. The explanation is
+produced by a second expert LLM call using the biography, the first answers,
+the model's peer-support knowledge, and `data/persona_guidelines.json`.
 
 The app.py Results tab falls back gracefully to the older `{id: label}` shape
 for rows written before this change.
@@ -171,12 +172,11 @@ def build_json_prompt(
 ) -> str:
     """Build the prompt that asks the LLM to answer the full questionnaire.
 
-    For every statement in every section the model must:
+    This is the first LLM call. For every statement the character must:
       1. Pick a numeric rating on that section's scale (1..N, where N varies
          per section — e.g. MWMS and BPNS-W use 1..7, Role clarity and ROPP
          use 1..6).
       2. Copy the matching verbal label verbatim from the scale.
-      3. Provide a short in-character rationale (1-2 sentences).
 
     Returns a single string suitable for OpenAI's `response_format=json_object`
     mode or Gemma's `response_mime_type="application/json"`.
@@ -188,7 +188,6 @@ def build_json_prompt(
     language_instruction = _LANGUAGE_INSTRUCTIONS.get(
         language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
     )
-    academic_context = _build_academic_context_block()
 
     blocks: list[str] = []
     for section in sections:
@@ -212,36 +211,89 @@ def build_json_prompt(
     id_hint = ", ".join(all_ids[:4]) + ", ..."
 
     return (
-        "You are role-playing as the person described in the biography below.\n"
-        "Answer every statement IN CHARACTER, in first person. For each\n"
-        "statement, pick the rating on that section's scale that best\n"
-        "reflects how the character would respond, and briefly explain why\n"
-        "in the character's voice. The explanation must combine evidence from\n"
-        "the biography with relevant peer-support concepts from the academic\n"
-        "papers/context below. You may use your broader knowledge of mental\n"
-        "health peer support to interpret the case, but keep the explanation\n"
-        "anchored in the biography and provided academic context.\n"
+        "You are the person described in the biography below.\n"
+        "Answer every statement as this character. For each statement, pick\n"
+        "the rating on that section's scale that best reflects how the\n"
+        "character would answer. Do NOT explain the answer in this step.\n"
         f"{language_instruction}\n"
         "\n"
         "## Biography\n"
         f"{biography_text.strip()}\n"
         "\n"
-        "## Academic peer-support context\n"
-        + (academic_context or "No academic context was available.")
-        + "\n\n"
         "## Questionnaire\n"
         + "\n\n".join(blocks)
         + "\n\n"
         "## Output format\n"
         "Respond with ONLY a valid JSON object. No prose, no markdown, no\n"
         "code fences. The keys MUST be the statement ids (e.g. "
-        f"{id_hint}). Each value MUST be an object with exactly three\n"
+        f"{id_hint}). Each value MUST be an object with exactly two\n"
         "fields:\n"
         '  - "rating":    integer in the section\'s range (1..N).\n'
         '  - "label":     the scale label for that rating, copied verbatim\n'
         "                (including any number in parentheses).\n"
-        '  - "reasoning": 1-3 sentences explaining the choice using the\n'
-        "                 biography and the academic peer-support context.\n"
         "The rating and label MUST be consistent — i.e. label must be the\n"
         "Nth entry in that section's scale when rating is N."
+    )
+
+
+def build_explanation_prompt(
+    biography_text: str,
+    questionnaire: dict[str, Any],
+    answers: dict[str, Any],
+    language: str = LANG_EN,
+) -> str:
+    """Build the second-LLM prompt that explains fixed persona answers."""
+    sections = get_localized_sections(questionnaire, language)
+    if not sections:
+        raise ValueError("questionnaire has no sections")
+
+    language_instruction = _LANGUAGE_INSTRUCTIONS.get(
+        language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
+    )
+    academic_context = _build_academic_context_block()
+
+    question_lines: list[str] = []
+    for section in sections:
+        question_lines.append(f"### {section['title']}")
+        for q in section["questions"]:
+            qid = q["id"]
+            answer = answers.get(qid)
+            if isinstance(answer, dict):
+                rating = answer.get("rating", "")
+                label = answer.get("label", "")
+                answer_text = f"rating={rating}, label={label}"
+            else:
+                answer_text = str(answer)
+            question_lines.append(
+                f"- {qid}: {q['question']}\n  First LLM answer: {answer_text}"
+            )
+
+    all_ids = [
+        q["id"] for section in sections for q in section["questions"]
+    ]
+    id_hint = ", ".join(all_ids[:4]) + ", ..."
+
+    return (
+        "You are an expert analyst of mental health peer support, not the\n"
+        "persona. A first LLM has already answered the questionnaire as the\n"
+        "character. Your task is to explain those fixed answers.\n"
+        f"{language_instruction}\n\n"
+        "For each answer, write 1-3 concise sentences explaining why this\n"
+        "answer is plausible. Base the explanation on: (1) the biography,\n"
+        "(2) the first LLM's selected rating/label, (3) your professional\n"
+        "knowledge of peer support and mental health services, and (4) the\n"
+        "academic context below from persona_guidelines.json. Do not change the\n"
+        "rating or label. Do not answer as the persona.\n\n"
+        "## Biography\n"
+        f"{biography_text.strip()}\n\n"
+        "## First LLM answers to explain\n"
+        + "\n".join(question_lines)
+        + "\n\n"
+        "## Academic peer-support context\n"
+        + (academic_context or "No academic context was available.")
+        + "\n\n"
+        "## Output format\n"
+        "Respond with ONLY a valid JSON object. No prose, no markdown, no code\n"
+        f"fences. The keys MUST be the statement ids (e.g. {id_hint}). Each\n"
+        "value MUST be a plain string explanation."
     )
