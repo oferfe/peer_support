@@ -9,6 +9,9 @@ Public API mirrors `utils.intake` so the app can treat both forms alike:
 
 - `load_questionnaire()`         cached read of the JSON.
 - `get_localized_sections()`     flattens bilingual strings to the active language.
+- `build_character_system_prompt()`
+                                 builds the system prompt that defines the
+                                 character from the biography.
 - `build_json_prompt()`          builds the first LLM prompt: answer as the
                                  character with ratings/labels only.
 - `build_explanation_prompt()`   builds the second LLM prompt: explain the
@@ -165,12 +168,25 @@ def _build_academic_context_block() -> str:
     return "\n\n".join(paper_blocks)
 
 
-def build_json_prompt(
+def build_character_system_prompt(
     biography_text: str,
+    language: str = LANG_EN,
+) -> str:
+    """Build the system prompt that defines the answering character."""
+    language_instruction = _LANGUAGE_INSTRUCTIONS.get(
+        language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
+    )
+    return (
+        "You are:\n"
+        f"{biography_text.strip()}\n\n"
+    )
+
+
+def build_json_prompt(
     questionnaire: dict[str, Any],
     language: str = LANG_EN,
 ) -> str:
-    """Build the prompt that asks the LLM to answer the full questionnaire.
+    """Build the questionnaire instruction prompt for the character LLM.
 
     This is the first LLM call. For every statement the character must:
       1. Pick a numeric rating on that section's scale (1..N, where N varies
@@ -211,14 +227,9 @@ def build_json_prompt(
     id_hint = ", ".join(all_ids[:4]) + ", ..."
 
     return (
-        "You are the person described in the biography below.\n"
-        "Answer every statement as this character. For each statement, pick\n"
-        "the rating on that section's scale that best reflects how the\n"
-        "character would answer. Do NOT explain the answer in this step.\n"
+        "You are a survey respondent. For each statement, pick\n"
+        "the rating on that section's scale that best reflects you."
         f"{language_instruction}\n"
-        "\n"
-        "## Biography\n"
-        f"{biography_text.strip()}\n"
         "\n"
         "## Questionnaire\n"
         + "\n\n".join(blocks)
@@ -274,16 +285,13 @@ def build_explanation_prompt(
     id_hint = ", ".join(all_ids[:4]) + ", ..."
 
     return (
-        "You are an expert analyst of mental health peer support, not the\n"
-        "persona. A first LLM has already answered the questionnaire as the\n"
-        "character. Your task is to explain those fixed answers.\n"
+        "You are an expert analyst of mental health peer support. Your task is to explain the persona answers.\n"
         f"{language_instruction}\n\n"
-        "For each answer, write 1-3 concise sentences explaining why this\n"
+        "For each answer, write an explanation why this\n"
         "answer is plausible. Base the explanation on: (1) the biography,\n"
-        "(2) the first LLM's selected rating/label, (3) your professional\n"
-        "knowledge of peer support and mental health services, and (4) the\n"
-        "academic context below from persona_guidelines.json. Do not change the\n"
-        "rating or label. Do not answer as the persona.\n\n"
+        "(2) your professional knowledge of peer support and mental health services,\n"
+        "and (4) the academic context below from persona_guidelines.json."
+        "Do not change the answer, only explain why it is plausible.\n"
         "## Biography\n"
         f"{biography_text.strip()}\n\n"
         "## First LLM answers to explain\n"

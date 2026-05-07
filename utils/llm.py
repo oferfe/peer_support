@@ -28,7 +28,11 @@ from openai import OpenAI
 
 from .i18n import LANG_EN, LANG_HE
 from .intake import build_biography_prompt, get_localized_sections
-from .questionnaire import build_explanation_prompt, build_json_prompt
+from .questionnaire import (
+    build_character_system_prompt,
+    build_explanation_prompt,
+    build_json_prompt,
+)
 
 
 # Accepted model labels from the UI radio. `OLLAMA` routes through a local
@@ -216,17 +220,17 @@ def _openai_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
+    character_system_prompt = build_character_system_prompt(
+        biography_text,
+        language,
+    )
+    answer_prompt = build_json_prompt(questionnaire, language)
     resp = _openai_client().chat.completions.create(
         model=_openai_model(),
         messages=[
             {
                 "role": "system",
-                "content": (
-                    "You respond to psychological questionnaires as the "
-                    "character described by the user, returning only valid "
-                    f"JSON. {_language_directive(language)}"
-                ),
+                "content": character_system_prompt,
             },
             {"role": "user", "content": answer_prompt},
         ],
@@ -345,8 +349,16 @@ def _gemma_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
-    text = _gemma_generate_json_text(answer_prompt)
+    character_system_prompt = build_character_system_prompt(
+        biography_text,
+        language,
+    )
+    answer_prompt = build_json_prompt(questionnaire, language)
+    combined_answer_prompt = (
+        f"## System prompt: character\n{character_system_prompt}\n\n"
+        f"## System instructions: questionnaire\n{answer_prompt}"
+    )
+    text = _gemma_generate_json_text(combined_answer_prompt)
     try:
         answers = _parse_json(text)
     except Exception as exc:
@@ -448,12 +460,11 @@ def _ollama_questionnaire(
     questionnaire: dict[str, Any],
     language: str,
 ) -> dict[str, Any]:
-    answer_prompt = build_json_prompt(biography_text, questionnaire, language)
-    answer_system_content = (
-        "You respond to psychological questionnaires as the character "
-        "described by the user, returning only valid JSON. "
-        f"{_language_directive(language)}"
+    answer_system_content = build_character_system_prompt(
+        biography_text,
+        language,
     )
+    answer_prompt = build_json_prompt(questionnaire, language)
     text = _ollama_json_chat(answer_system_content, answer_prompt)
     try:
         answers = _parse_json(text)
@@ -704,7 +715,7 @@ def generate_biography(
     answers: dict[str, Any],
     language: str = LANG_EN,
 ) -> str:
-    """Draft a first-person persona biography from the intake answers.
+    """Draft a third-person persona biography from the intake answers.
 
     The prompt is assembled by `utils.intake.build_biography_prompt` and sent
     through the selected provider in plain-text mode (no JSON). The prompt
