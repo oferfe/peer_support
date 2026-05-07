@@ -210,6 +210,22 @@ def _missing_open_ended_ids(
     return missing
 
 
+def _open_ended_question_labels(
+    intake: dict[str, object],
+    language: str,
+    qids: list[str],
+) -> list[str]:
+    """Resolve missing open-ended question ids to localized question text."""
+    wanted = set(qids)
+    labels: list[str] = []
+    for section in get_localized_sections(intake, language):
+        for question in section["questions"]:
+            qid = str(question["id"])
+            if qid in wanted:
+                labels.append(str(question["question"]))
+    return labels or qids
+
+
 def _seed_intake_widget_state_from_answers(
     intake: dict[str, object],
     answers: dict[str, object],
@@ -1478,10 +1494,17 @@ with intake_col:
         if not persona_exists:
             missing_open_ended = _missing_open_ended_ids(intake_data)
             if missing_open_ended:
+                missing_questions = _open_ended_question_labels(
+                    intake_data,
+                    language,
+                    missing_open_ended,
+                )
                 st.info(
                     t(
                         "intake_open_ended_missing",
-                        ids=", ".join(missing_open_ended),
+                        ids="\n".join(
+                            f"- {question}" for question in missing_questions
+                        ),
                     )
                 )
 
