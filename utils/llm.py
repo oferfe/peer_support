@@ -29,6 +29,7 @@ from openai import OpenAI
 from .i18n import LANG_EN, LANG_HE
 from .intake import build_biography_prompt, get_localized_sections
 from .questionnaire import (
+    build_change_explanation_prompt,
     build_character_system_prompt,
     build_explanation_prompt,
     build_json_prompt,
@@ -603,6 +604,68 @@ def convert_biography_for_simulation(
     if model_label == GEMMA:
         return _gemma_biography(prompt)
     raise ValueError(f"Unknown model_label: {model_label!r}")
+
+
+def explain_answer_changes(
+    model_label: str,
+    *,
+    current_biography_text: str,
+    previous_biography_text: str,
+    questionnaire: dict[str, Any],
+    current_answers: dict[str, Any],
+    previous_answers: dict[str, Any],
+    language: str = LANG_EN,
+) -> dict[str, str]:
+    """Explain why answers changed between two simulated revisions."""
+    prompt = build_change_explanation_prompt(
+        current_biography_text=current_biography_text,
+        previous_biography_text=previous_biography_text,
+        questionnaire=questionnaire,
+        current_answers=current_answers,
+        previous_answers=previous_answers,
+        language=language,
+    )
+    if not prompt:
+        return {}
+
+    if model_label == CHATGPT:
+        resp = _openai_client().chat.completions.create(
+            model=_openai_model(),
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are an expert academic explainer of mental "
+                        "health peer support questionnaire changes. Return "
+                        f"only valid JSON. {_language_directive(language)}"
+                    ),
+                },
+                {"role": "user", "content": prompt},
+            ],
+            response_format={"type": "json_object"},
+        )
+        raw = _parse_json(resp.choices[0].message.content or "{}")
+    elif model_label == OLLAMA:
+        text = _ollama_json_chat(
+            (
+                "You are an expert academic explainer of mental health peer "
+                "support questionnaire changes. Return only valid JSON. "
+                f"{_language_directive(language)}"
+            ),
+            prompt,
+        )
+        raw = _parse_json(text)
+    elif model_label == GEMMA:
+        text = _gemma_generate_json_text(prompt)
+        raw = _parse_json(text)
+    else:
+        raise ValueError(f"Unknown model_label: {model_label!r}")
+
+    return {
+        qid: explanation.strip()
+        for qid, explanation in raw.items()
+        if isinstance(explanation, str) and explanation.strip()
+    }
 
 
 def _collect_open_ended_questions(

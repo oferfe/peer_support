@@ -333,3 +333,99 @@ def build_explanation_prompt(
         f"fences. The keys MUST be the statement ids (e.g. {id_hint}). Each\n"
         "value MUST be a plain string explanation."
     )
+
+
+def _answer_summary(answer: Any) -> str:
+    """Return a compact answer summary for explanation prompts."""
+    if isinstance(answer, dict):
+        rating = answer.get("rating")
+        label = answer.get("label")
+        if rating is not None and label:
+            return f"rating={rating}, label={label}"
+        if label:
+            return str(label)
+        if rating is not None:
+            return str(rating)
+    return str(answer)
+
+
+def build_change_explanation_prompt(
+    *,
+    current_biography_text: str,
+    previous_biography_text: str,
+    questionnaire: dict[str, Any],
+    current_answers: dict[str, Any],
+    previous_answers: dict[str, Any],
+    language: str = LANG_EN,
+) -> str:
+    """Build an expert prompt explaining why changed answers changed."""
+    sections = get_localized_sections(questionnaire, language)
+    if not sections:
+        raise ValueError("questionnaire has no sections")
+
+    language_instruction = _LANGUAGE_INSTRUCTIONS.get(
+        language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
+    )
+    academic_context = _build_academic_context_block()
+
+    changed_lines: list[str] = []
+    for section in sections:
+        section_lines: list[str] = []
+        for q in section["questions"]:
+            qid = q["id"]
+            if qid not in current_answers or qid not in previous_answers:
+                continue
+            current = _answer_summary(current_answers[qid])
+            previous = _answer_summary(previous_answers[qid])
+            if current == previous:
+                continue
+            section_lines.append(
+                f"- {qid}: {q['question']}\n"
+                f"  Previous answer: {previous}\n"
+                f"  Current answer: {current}"
+            )
+        if section_lines:
+            changed_lines.append(
+                f"### {section['title']}\n" + "\n".join(section_lines)
+            )
+
+    if not changed_lines:
+        return ""
+
+    changed_ids = [
+        q["id"]
+        for section in sections
+        for q in section["questions"]
+        if q["id"] in current_answers
+        and q["id"] in previous_answers
+        and _answer_summary(current_answers[q["id"]])
+        != _answer_summary(previous_answers[q["id"]])
+    ]
+    id_hint = ", ".join(changed_ids[:4]) + (", ..." if len(changed_ids) > 4 else "")
+
+    return (
+        "You are the same expert analyst of mental health peer support who "
+        "explains questionnaire answers. Your task now is to explain WHY the "
+        "persona's answer changed between two biography revisions.\n"
+        f"{language_instruction}\n\n"
+        "For each changed answer, write 1-3 concise sentences explaining the "
+        "most plausible reason for the change. Base the explanation on: "
+        "(1) the differences between the previous and current biographies, "
+        "(2) your professional knowledge of peer support and mental health "
+        "services, and (3) the academic context below from "
+        "persona_guidelines.json. Do not change any answer.\n\n"
+        "## Previous biography\n"
+        f"{previous_biography_text.strip()}\n\n"
+        "## Current biography\n"
+        f"{current_biography_text.strip()}\n\n"
+        "## Changed questionnaire answers\n"
+        + "\n\n".join(changed_lines)
+        + "\n\n"
+        "## Academic peer-support context\n"
+        + (academic_context or "No academic context was available.")
+        + "\n\n"
+        "## Output format\n"
+        "Respond with ONLY a valid JSON object. No prose, no markdown, no code "
+        f"fences. The keys MUST be the changed statement ids (e.g. {id_hint}). "
+        "Each value MUST be a plain string explaining why that answer changed."
+    )

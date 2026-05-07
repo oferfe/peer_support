@@ -463,6 +463,7 @@ def _render_questionnaire_results(
     persona_id: str | None,
     researcher_name: str,
     previous_simulation: dict[str, Any] | None = None,
+    change_explanations: dict[str, str] | None = None,
 ) -> None:
     """Render questionnaire answers, highlighting changes from last run."""
     if not answers:
@@ -487,6 +488,7 @@ def _render_questionnaire_results(
         previous_bio = previous_simulation.get("biography") or {}
         previous_rev = previous_bio.get("revision_number", "?")
         st.info(t("simulation_comparison_info", n=previous_rev))
+    change_explanations = change_explanations or {}
 
     rendered_question_ids: list[str] = []
     for section in get_questionnaire_sections(questionnaire, language):
@@ -517,6 +519,12 @@ def _render_questionnaire_results(
                         answer=previous_text,
                     )
                 )
+                change_explanation = change_explanations.get(qid)
+                if change_explanation:
+                    st.caption(
+                        f"{t('simulation_change_explanation_prefix')} "
+                        f"{change_explanation}"
+                    )
             else:
                 st.markdown(f"**{current_text}**")
 
@@ -611,6 +619,63 @@ def _render_saved_personas_page(
         st.info(t("saved_personas_empty"))
         return
 
+    def _load_saved_revision(
+        persona: dict[str, Any],
+        revision: dict[str, Any],
+    ) -> None:
+        """Load a selected saved revision into the active persona workspace."""
+        revisions = persona.get("revisions") or []
+        latest_revision_number = max(
+            (
+                int(row.get("revision_number") or 0)
+                for row in revisions
+                if isinstance(row, dict)
+            ),
+            default=int(revision.get("revision_number") or 1),
+        )
+        initial_revision = (
+            min(
+                revisions,
+                key=lambda row: int(row.get("revision_number") or 0),
+            )
+            if revisions
+            else revision
+        )
+        st.session_state.update(
+            persona_id=persona.get("persona_id"),
+            biography_id=revision.get("id"),
+            biography_revision_number=latest_revision_number,
+            biography_text=revision.get("biography_text") or "",
+            latest_saved_biography_text=revision.get("biography_text") or "",
+            initial_intake_answers=(
+                initial_revision.get("intake_answers")
+                or revision.get("intake_answers")
+                or {}
+            ),
+            biography_edit_mode=False,
+            persona_is_final=bool(
+                (persona.get("latest_biography") or {}).get("is_final")
+            ),
+            questionnaire_answers=None,
+            current_questionnaire_id=None,
+            previous_simulation=None,
+            session_id=str(uuid.uuid4()),
+            messages=[],
+            app_view="intake",
+            saved_personas_focus_questionnaire_id=None,
+        )
+        st.session_state.pop("bio_unsaved_area", None)
+        st.session_state.pop("bio_edit_area", None)
+        st.session_state.pop("bio_readonly_area", None)
+        st.toast(
+            t(
+                "saved_persona_version_loaded",
+                n=revision.get("revision_number", "?"),
+            ),
+            icon="📂",
+        )
+        st.rerun()
+
     def _render_saved_simulation(
         simulation: dict[str, Any],
         previous_simulation: dict[str, Any] | None,
@@ -648,6 +713,7 @@ def _render_saved_personas_page(
             persona_id=persona_id,
             researcher_name=researcher_name,
             previous_simulation=previous_simulation,
+            change_explanations=simulation.get("change_explanations") or {},
         )
 
     for persona in personas:
@@ -678,71 +744,108 @@ def _render_saved_personas_page(
             expanded=should_expand,
         ):
             st.caption(f"`{persona_id}`")
-            st.text_area(
-                t("saved_persona_latest"),
-                value=latest_bio.get("biography_text") or "",
-                height=220,
-                disabled=True,
-                key=f"saved_latest_bio_{persona_id}",
+            overview_tab, versions_tab, simulations_tab = st.tabs(
+                [
+                    t("saved_persona_tab_overview"),
+                    t("saved_persona_tab_versions"),
+                    t("saved_persona_tab_simulations"),
+                ]
             )
 
-            if not simulations:
-                st.info(t("saved_persona_no_simulations"))
-                continue
-
-            if is_current_persona_view:
-                _render_saved_simulation(
-                    simulations[0],
-                    simulations[1] if len(simulations) > 1 else None,
-                    persona_id,
-                    latest_bio,
+            with overview_tab:
+                st.text_area(
+                    t("saved_persona_latest"),
+                    value=latest_bio.get("biography_text") or "",
+                    height=220,
+                    disabled=True,
+                    key=f"saved_latest_bio_{persona_id}",
                 )
-                previous_simulations = simulations[1:]
-                if previous_simulations:
-                    st.divider()
-                    st.markdown(f"### {t('saved_persona_previous_versions')}")
-                    tabs = st.tabs(
-                        [
+
+            with versions_tab:
+                for revision_row in persona.get("revisions") or []:
+                    revision_number = revision_row.get("revision_number", "?")
+                    with st.expander(
+                        t("saved_persona_revision", n=revision_number),
+                        expanded=False,
+                    ):
+                        st.caption(
                             t(
-                                "saved_persona_previous_tab",
-                                n=(
-                                    (simulation.get("biography") or {}).get(
-                                        "revision_number", "?"
-                                    )
-                                ),
+                                "saved_persona_created",
+                                date=revision_row.get("created_at") or "",
                             )
-                            for simulation in previous_simulations
-                        ]
-                    )
-                    for tab, simulation in zip(tabs, previous_simulations):
-                        with tab:
-                            index = simulations.index(simulation)
-                            previous_simulation = (
-                                simulations[index + 1]
-                                if index + 1 < len(simulations)
-                                else None
-                            )
-                            _render_saved_simulation(
-                                simulation,
-                                previous_simulation,
-                                persona_id,
-                                latest_bio,
-                            )
-                continue
+                        )
+                        st.text_area(
+                            t("bio_label"),
+                            value=revision_row.get("biography_text") or "",
+                            height=220,
+                            disabled=True,
+                            key=f"saved_revision_bio_{revision_row.get('id')}",
+                        )
+                        if st.button(
+                            t("saved_persona_load_version_button"),
+                            use_container_width=True,
+                            key=f"load_revision_{revision_row.get('id')}",
+                        ):
+                            _load_saved_revision(persona, revision_row)
 
-            for index, simulation in enumerate(simulations):
-                previous_simulation = (
-                    simulations[index + 1]
-                    if index + 1 < len(simulations)
-                    else None
-                )
-                st.divider()
-                _render_saved_simulation(
-                    simulation,
-                    previous_simulation,
-                    persona_id=persona_id,
-                    latest_bio=latest_bio,
-                )
+            with simulations_tab:
+                if not simulations:
+                    st.info(t("saved_persona_no_simulations"))
+                    continue
+
+                if is_current_persona_view:
+                    _render_saved_simulation(
+                        simulations[0],
+                        simulations[1] if len(simulations) > 1 else None,
+                        persona_id,
+                        latest_bio,
+                    )
+                    previous_simulations = simulations[1:]
+                    if previous_simulations:
+                        st.divider()
+                        st.markdown(f"### {t('saved_persona_previous_versions')}")
+                        tabs = st.tabs(
+                            [
+                                t(
+                                    "saved_persona_previous_tab",
+                                    n=(
+                                        (simulation.get("biography") or {}).get(
+                                            "revision_number", "?"
+                                        )
+                                    ),
+                                )
+                                for simulation in previous_simulations
+                            ]
+                        )
+                        for tab, simulation in zip(tabs, previous_simulations):
+                            with tab:
+                                index = simulations.index(simulation)
+                                previous_simulation = (
+                                    simulations[index + 1]
+                                    if index + 1 < len(simulations)
+                                    else None
+                                )
+                                _render_saved_simulation(
+                                    simulation,
+                                    previous_simulation,
+                                    persona_id,
+                                    latest_bio,
+                                )
+                    continue
+
+                for index, simulation in enumerate(simulations):
+                    previous_simulation = (
+                        simulations[index + 1]
+                        if index + 1 < len(simulations)
+                        else None
+                    )
+                    st.divider()
+                    _render_saved_simulation(
+                        simulation,
+                        previous_simulation,
+                        persona_id=persona_id,
+                        latest_bio=latest_bio,
+                    )
 
 
 def _finish_current_persona() -> None:
@@ -959,11 +1062,33 @@ def _run_current_simulation(
                         reasonings[qid] = reasoning
                 else:
                     structured_answers[qid] = value
+            change_explanations: dict[str, str] = {}
+            previous_bio = (
+                previous_simulation.get("biography") if previous_simulation else None
+            )
+            previous_answers = (
+                previous_simulation.get("answers") if previous_simulation else None
+            )
+            if (
+                isinstance(previous_bio, dict)
+                and isinstance(previous_bio.get("biography_text"), str)
+                and isinstance(previous_answers, dict)
+            ):
+                change_explanations = llm.explain_answer_changes(
+                    model_label,
+                    current_biography_text=saved_biography,
+                    previous_biography_text=previous_bio["biography_text"],
+                    questionnaire=questionnaire,
+                    current_answers=structured_answers,
+                    previous_answers=previous_answers,
+                    language=language,
+                )
             questionnaire_id = db.insert_questionnaire(
                 st.session_state.biography_id,
                 model_label,
                 structured_answers,
                 reasonings or None,
+                change_explanations or None,
                 persona_id=st.session_state.persona_id,
             )
     except Exception as exc:  # noqa: BLE001

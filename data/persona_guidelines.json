@@ -418,6 +418,43 @@
             ]
           }
         ]
+      },
+      {
+        "id": "11",
+        "paper_citation": "Goldfarb, Y., Grayzman, A., Gai Meir, L., Grundman, S. H., Rabinian, M., Lachman, M., Garber Epstein, P., Adler Ben-Dor, I., Naaman, A., Puschner, B., & Moran, G. S. (2022). UPSIDES Mental Health Peer Support in Face of the COVID-19 Pandemic: Actions and Insights. Community Mental Health Journal, 60(5), 5-13. https://doi.org/10.1007/s10597-022-01030-9",
+        "paper_summary": "Overview\nThe document describes the adaptation and implementation of the UPSIDES mental health peer support intervention in Israel during the COVID-19 pandemic. It outlines how a structured peer support program navigated sudden physical distancing and leveraged digital tools to maintain social inclusion and support for individuals with severe mental illness (SMI).\n\nBackground and Challenges\nIndividuals with SMI face disadvantaged circumstances and are particularly vulnerable to the secondary effects of global crises like lockdowns and isolation. UPSIDES, an international project built on core peer principles (camaraderie, shared experience, non-hierarchical support), faced significant disruption. The primary challenge was the halting of in-person 'Chevruta' (companionship) groups, creating a severe risk of dropout, loneliness, and a loss of the intervention's relational core.\n\nAdaptations and Digital Transition\nTo maintain connection, the intervention shifted to telecommunication (phone calls, video conferences, WhatsApp). While initially regarded with ambivalence, these digital tools became a crucial lifeline. Peer Support Workers (PSWs) conducted regular outreach to provide stability and model coping strategies rather than just delivering standardized intervention content.\n\nKey Insights and Findings\nThe crisis unexpectedly catalyzed several positive psychological shifts. First, using their experiential knowledge to support others during a collective emergency gave PSWs a profound sense of competence and control (feeling like a 'pioneer on a mission'). Second, the shared vulnerability of the pandemic helped level traditional power imbalances between clinical staff, supervisors, peers, and service users, enhancing reciprocity and intimacy. Finally, the crisis underscored the critical necessity of structured, multi-layered supervision (senior peers supporting newer peers) to process emotional distress and co-create coping strategies.",
+        "criteria": [
+          {
+            "id": "Meaning-Making and Competence in Crisis",
+            "criterion": "How does the character transform their shared vulnerability and past life crises into a sense of competence and purpose when navigating a collective emergency?",
+            "explanation": "The biography must show how the peer supporter reacts to a crisis (like war or a pandemic). Rather than just feeling despair, they should draw on their lived experience of navigating personal crises to provide stability for others, transforming their self-perception into one of an empowered 'pioneer'. This grounds questions about 'role meaningfulness' during times of national trauma.",
+            "citations_from_the_paper": [
+              "PSWs also referred to these calls as providing a sense of control, saying that \"specifically on days of lockdown with limited opportunities to meet and receive social support, the calls I made to service users and making use of experiential knowledge gave us a sense of competence... and a feeling we are not alone\".",
+              "The following quote by one of the participating PSWs offers a vivid portrayal of the positive effect of the intervention: \"I feel that I am a pioneer on a mission. For me it is an opportunity to provide strength and meaning to another person...\"",
+              "\"...when the pandemic broke out, I reminded myself that I know something about life-crisis and that the most important part is support, conversation, not staying alone\"."
+            ]
+          },
+          {
+            "id": "Leveling Power Imbalances through Shared Trauma",
+            "criterion": "How does the shared external threat of the crisis dissolve traditional hierarchies between the peer, the clinical staff, and the service user?",
+            "explanation": "The story should reflect that a collective trauma impacts everyone simultaneously. This shared reality can uniquely enhance reciprocity and blur the lines between the 'supporter' and the 'supported', accelerating supportive relational interactions and intimacy in ways that traditional clinical settings cannot.",
+            "citations_from_the_paper": [
+              "The sudden pandemic challenges appeared to level out power imbalances and accelerated the formation of reciprocal and supportive relational interactions within the intervention.",
+              "However, for the most part, the implementation of UPSIDES during COVID-19 so far was experienced as an event which impacted all stakeholders involved in the UPSIDES project, and helped level more the power imbalance.",
+              "Interestingly, the online platform served as a leveling arena, where space for intimacy was enhanced in face of the pandemic."
+            ]
+          },
+          {
+            "id": "Multi-Layered Peer Supervision and Support",
+            "criterion": "In what ways does the character rely on supervision from senior peers and peer networks to process their own distress and co-create coping strategies?",
+            "explanation": "A peer supporter does not work in a vacuum. The biography must illustrate their engagement in structured supervision with Peer Support Supervisors (PSSs) and peer networks (like WhatsApp groups). It should show how they process their own emotional/mental distress during the crisis and find solutions rooted in shared lived experience.",
+            "citations_from_the_paper": [
+              "UPSIDES systemic processes involving training, supervision and implementation allowed to maintain a space in which three 'generations' of individuals with SMI (i.e., PSSs, PSWs and UPSIDES service user participants) could reciprocate and acknowledge their lived experience as a unique asset and source for coping.",
+              "Notably, PSSs encouraged the PSWs to jointly explore their coping strategies in time of crisis which are rooted in their own lived experiences, and co-created a list of useful tools.",
+              "This led PSSs to use supervision sessions to reflect on PSWs emotions, share their own currently related personal dilemmas and uncertainties and apply coping strategies employing a reciprocal approach."
+            ]
+          }
+        ]
       }
     ]
 }

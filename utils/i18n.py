@@ -180,6 +180,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "simulation_answer_changed": "Changed from previous simulation",
         "simulation_previous_answer": "Previous answer: {answer}",
+        "simulation_change_explanation_prefix": "Why this changed:",
         "answer_comment_label": "Researcher comment / feedback (optional)",
         "answer_explanation_prefix": "Explanation:",
         "answer_comment_placeholder": (
@@ -217,6 +218,11 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "saved_persona_no_simulations": (
             "No simulation answers saved for this persona yet."
         ),
+        "saved_persona_tab_overview": "Overview",
+        "saved_persona_tab_versions": "Versions",
+        "saved_persona_tab_simulations": "Simulations",
+        "saved_persona_load_version_button": "Load this version",
+        "saved_persona_version_loaded": "Loaded revision {n}.",
         "saved_persona_simulation": "Simulation from revision {n}",
         "saved_persona_created": "Created: {date}",
         "saved_persona_previous_versions": "Previous versions",
@@ -391,6 +397,7 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         ),
         "simulation_answer_changed": "השתנה מהסימולציה הקודמת",
         "simulation_previous_answer": "תשובה קודמת: {answer}",
+        "simulation_change_explanation_prefix": "למה זה השתנה:",
         "answer_comment_label": "הערה / משוב של החוקר/ת (רשות)",
         "answer_explanation_prefix": "הסבר:",
         "answer_comment_placeholder": "אפשר להוסיף הערה על התשובה הזו...",
@@ -426,6 +433,11 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "saved_persona_no_simulations": (
             "עדיין אין תשובות סימולציה שמורות עבור הפרסונה הזו."
         ),
+        "saved_persona_tab_overview": "סקירה",
+        "saved_persona_tab_versions": "גרסאות",
+        "saved_persona_tab_simulations": "סימולציות",
+        "saved_persona_load_version_button": "טעינת גרסה זו",
+        "saved_persona_version_loaded": "גרסה {n} נטענה.",
         "saved_persona_simulation": "סימולציה מגרסה {n}",
         "saved_persona_created": "נוצר: {date}",
         "saved_persona_previous_versions": "גרסאות קודמות",

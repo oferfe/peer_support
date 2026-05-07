@@ -114,6 +114,7 @@ def insert_questionnaire(
     model_used: str,
     answers: dict[str, Any],
     reasonings: dict[str, str] | None = None,
+    change_explanations: dict[str, str] | None = None,
     *,
     persona_id: str | None = None,
 ) -> str:
@@ -138,6 +139,8 @@ def insert_questionnaire(
     }
     if reasonings is not None:
         row["reasonings"] = reasonings
+    if change_explanations is not None:
+        row["change_explanations"] = change_explanations
     if persona_id is not None:
         row["persona_id"] = persona_id
     get_client().table("questionnaires").insert(row).execute()
@@ -311,7 +314,7 @@ def fetch_saved_personas_for_researcher(
         client.table("biographies")
         .select(
             "id, persona_id, revision_number, is_final, finalized_at, "
-            "researcher_name, biography_text, created_at"
+            "researcher_name, biography_text, intake_answers, created_at"
         )
         .eq("researcher_name", researcher_name)
         .order("created_at", desc=True)
@@ -352,7 +355,7 @@ def fetch_saved_personas_for_researcher(
             client.table("questionnaires")
             .select(
                 "id, biography_id, persona_id, model_used, "
-                "answers, reasonings, created_at"
+                "answers, reasonings, change_explanations, created_at"
             )
             .eq("persona_id", persona["persona_id"])
             .order("created_at", desc=True)
@@ -378,7 +381,7 @@ def fetch_latest_questionnaire_for_biography(
         .table("questionnaires")
         .select(
             "id, biography_id, persona_id, model_used, "
-            "answers, reasonings, created_at"
+            "answers, reasonings, change_explanations, created_at"
         )
         .eq("biography_id", biography_id)
         .order("created_at", desc=True)
@@ -406,7 +409,10 @@ def fetch_previous_questionnaire_for_persona(
     client = get_client()
     q_resp = (
         client.table("questionnaires")
-        .select("id, biography_id, model_used, answers, reasonings, created_at")
+        .select(
+            "id, biography_id, model_used, answers, reasonings, "
+            "change_explanations, created_at"
+        )
         .eq("persona_id", persona_id)
         .order("created_at", desc=True)
         .limit(limit)

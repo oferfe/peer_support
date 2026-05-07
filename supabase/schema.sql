@@ -72,6 +72,12 @@ alter table biographies
 alter table questionnaires
     add column if not exists reasonings jsonb;
 
+-- Step 18 — Expert explanations for answer changes between simulations.
+-- `change_explanations` maps statement_id -> explanation for why the current
+-- simulation answer changed compared with the previous simulated revision.
+alter table questionnaires
+    add column if not exists change_explanations jsonb;
+
 -- Step 15 — Persona lifecycle (revisions + finalization).
 -- One persona can have many biography revisions. Every save of the biography
 -- (initial save + each "Save changes" while editing) inserts a new row in
