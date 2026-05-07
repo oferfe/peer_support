@@ -290,7 +290,7 @@ def build_explanation_prompt(
         "For each answer, write an explanation why this\n"
         "answer is plausible. Base the explanation on: (1) the biography,\n"
         "(2) your professional knowledge of peer support and mental health services,\n"
-        "and (4) the academic context below from persona_guidelines.json."
+        "and (3) the academic context below from persona_guidelines.json. If you use an iformation from a paper, cite the paper by its citation."
         "Do not change the answer, only explain why it is plausible.\n"
         "## Biography\n"
         f"{biography_text.strip()}\n\n"

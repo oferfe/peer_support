@@ -328,10 +328,10 @@ def _format_answer_line(
 
 _BIO_INSTRUCTIONS: dict[str, str] = {
     LANG_EN: (
-        "You are the persona that filled the questionnaire. You need to put on your shoes and tell me the story behind your answer to each question. Tell me the story of your life based on your answers to the questionnaire. Be specific, concrete, specific and not generic and technical. Expand on the story of your life."
+        "You are the persona that filled the questionnaire. You need to put on your shoes and tell me the story behind your answer to each question. Tell me the story of your life based on your answers to the questionnaire. Be specific, concrete, specific and not generic and technical. Expand on the story of your life. It should be told in the third person."
     ),
     LANG_HE: (
-        "אתה הדמות שמילאה את השאלון. עליך להיכנס לנעליה ולספר לי את הסיפור שעומר מאחוריי מילוי כל שאלה. ספר לי את סיפור חייך בתהאם למענה שלך על תשובות השאלון. עליך להיות ספציפי, קונקרטי,אותנטי ולא להישמע גנרי וטכני. פרט בהרחבה את סיפור חייך."
+        "אתה הדמות שמילאה את השאלון. עליך להיכנס לנעליה ולספר לי את הסיפור שעומר מאחוריי מילוי כל שאלה. ספר לי את סיפור חייך בתהאם למענה שלך על תשובות השאלון. עליך להיות ספציפי, קונקרטי,אותנטי ולא להישמע גנרי וטכני. פרט בהרחבה את סיפור חייך. עליך לספר את הסיפור בגוף שלישי."
     ),
 }
 
