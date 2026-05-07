@@ -12,6 +12,7 @@ from __future__ import annotations
 from collections.abc import Mapping
 import difflib
 import html
+import importlib
 import uuid
 from typing import Any
 
@@ -929,6 +930,8 @@ def _run_current_simulation(
                 current_biography_id=st.session_state.biography_id,
             )
             saved_biography = st.session_state.latest_saved_biography_text
+            if not hasattr(llm, "convert_biography_for_simulation"):
+                importlib.reload(llm)
             simulation_biography = llm.convert_biography_for_simulation(
                 model_label,
                 saved_biography,
