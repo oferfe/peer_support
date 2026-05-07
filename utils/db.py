@@ -39,6 +39,12 @@ def health_check() -> bool:
         return False
 
 
+def _is_missing_change_explanations_error(exc: Exception) -> bool:
+    """True when Supabase has not yet been migrated for change explanations."""
+    message = str(exc)
+    return "change_explanations" in message
+
+
 # ---------------------------------------------------------------------------
 # Inserts
 # ---------------------------------------------------------------------------
@@ -143,7 +149,17 @@ def insert_questionnaire(
         row["change_explanations"] = change_explanations
     if persona_id is not None:
         row["persona_id"] = persona_id
-    get_client().table("questionnaires").insert(row).execute()
+    try:
+        get_client().table("questionnaires").insert(row).execute()
+    except Exception as exc:
+        if (
+            "change_explanations" in row
+            and _is_missing_change_explanations_error(exc)
+        ):
+            row.pop("change_explanations", None)
+            get_client().table("questionnaires").insert(row).execute()
+        else:
+            raise
     return questionnaire_id
 
 
@@ -351,17 +367,32 @@ def fetch_saved_personas_for_researcher(
             row["id"]: row for row in revisions if isinstance(row.get("id"), str)
         }
 
-        q_resp = (
-            client.table("questionnaires")
-            .select(
-                "id, biography_id, persona_id, model_used, "
-                "answers, reasonings, change_explanations, created_at"
+        try:
+            q_resp = (
+                client.table("questionnaires")
+                .select(
+                    "id, biography_id, persona_id, model_used, "
+                    "answers, reasonings, change_explanations, created_at"
+                )
+                .eq("persona_id", persona["persona_id"])
+                .order("created_at", desc=True)
+                .limit(questionnaire_limit_per_persona)
+                .execute()
             )
-            .eq("persona_id", persona["persona_id"])
-            .order("created_at", desc=True)
-            .limit(questionnaire_limit_per_persona)
-            .execute()
-        )
+        except Exception as exc:
+            if not _is_missing_change_explanations_error(exc):
+                raise
+            q_resp = (
+                client.table("questionnaires")
+                .select(
+                    "id, biography_id, persona_id, model_used, "
+                    "answers, reasonings, created_at"
+                )
+                .eq("persona_id", persona["persona_id"])
+                .order("created_at", desc=True)
+                .limit(questionnaire_limit_per_persona)
+                .execute()
+            )
         simulations = q_resp.data or []
         for simulation in simulations:
             simulation["biography"] = revisions_by_id.get(
@@ -376,18 +407,33 @@ def fetch_latest_questionnaire_for_biography(
     biography_id: str,
 ) -> dict[str, Any] | None:
     """Return the latest questionnaire run for one biography revision."""
-    resp = (
-        get_client()
-        .table("questionnaires")
-        .select(
-            "id, biography_id, persona_id, model_used, "
-            "answers, reasonings, change_explanations, created_at"
+    client = get_client()
+    try:
+        resp = (
+            client.table("questionnaires")
+            .select(
+                "id, biography_id, persona_id, model_used, "
+                "answers, reasonings, change_explanations, created_at"
+            )
+            .eq("biography_id", biography_id)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
         )
-        .eq("biography_id", biography_id)
-        .order("created_at", desc=True)
-        .limit(1)
-        .execute()
-    )
+    except Exception as exc:
+        if not _is_missing_change_explanations_error(exc):
+            raise
+        resp = (
+            client.table("questionnaires")
+            .select(
+                "id, biography_id, persona_id, model_used, "
+                "answers, reasonings, created_at"
+            )
+            .eq("biography_id", biography_id)
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
     rows = resp.data or []
     return rows[0] if rows else None
 
@@ -407,17 +453,31 @@ def fetch_previous_questionnaire_for_persona(
     diffs together.
     """
     client = get_client()
-    q_resp = (
-        client.table("questionnaires")
-        .select(
-            "id, biography_id, model_used, answers, reasonings, "
-            "change_explanations, created_at"
+    try:
+        q_resp = (
+            client.table("questionnaires")
+            .select(
+                "id, biography_id, model_used, answers, reasonings, "
+                "change_explanations, created_at"
+            )
+            .eq("persona_id", persona_id)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
         )
-        .eq("persona_id", persona_id)
-        .order("created_at", desc=True)
-        .limit(limit)
-        .execute()
-    )
+    except Exception as exc:
+        if not _is_missing_change_explanations_error(exc):
+            raise
+        q_resp = (
+            client.table("questionnaires")
+            .select(
+                "id, biography_id, model_used, answers, reasonings, created_at"
+            )
+            .eq("persona_id", persona_id)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
 
     for row in q_resp.data or []:
         previous_bio_id = row.get("biography_id")
