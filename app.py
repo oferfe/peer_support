@@ -797,14 +797,13 @@ def _render_saved_personas_page(
                     [
                         t(
                             "saved_persona_simulation_tab",
-                            i=index,
                             n=(
                                 (simulation.get("biography") or {}).get(
                                     "revision_number", "?"
                                 )
                             ),
                         )
-                        for index, simulation in enumerate(simulations, start=1)
+                        for simulation in simulations
                     ]
                 )
                 for index, (tab, simulation) in enumerate(
