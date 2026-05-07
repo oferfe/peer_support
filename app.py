@@ -793,59 +793,35 @@ def _render_saved_personas_page(
                     st.info(t("saved_persona_no_simulations"))
                     continue
 
-                if is_current_persona_view:
-                    _render_saved_simulation(
-                        simulations[0],
-                        simulations[1] if len(simulations) > 1 else None,
-                        persona_id,
-                        latest_bio,
-                    )
-                    previous_simulations = simulations[1:]
-                    if previous_simulations:
-                        st.divider()
-                        st.markdown(f"### {t('saved_persona_previous_versions')}")
-                        tabs = st.tabs(
-                            [
-                                t(
-                                    "saved_persona_previous_tab",
-                                    n=(
-                                        (simulation.get("biography") or {}).get(
-                                            "revision_number", "?"
-                                        )
-                                    ),
+                simulation_tabs = st.tabs(
+                    [
+                        t(
+                            "saved_persona_simulation_tab",
+                            i=index,
+                            n=(
+                                (simulation.get("biography") or {}).get(
+                                    "revision_number", "?"
                                 )
-                                for simulation in previous_simulations
-                            ]
+                            ),
                         )
-                        for tab, simulation in zip(tabs, previous_simulations):
-                            with tab:
-                                index = simulations.index(simulation)
-                                previous_simulation = (
-                                    simulations[index + 1]
-                                    if index + 1 < len(simulations)
-                                    else None
-                                )
-                                _render_saved_simulation(
-                                    simulation,
-                                    previous_simulation,
-                                    persona_id,
-                                    latest_bio,
-                                )
-                    continue
-
-                for index, simulation in enumerate(simulations):
-                    previous_simulation = (
-                        simulations[index + 1]
-                        if index + 1 < len(simulations)
-                        else None
-                    )
-                    st.divider()
-                    _render_saved_simulation(
-                        simulation,
-                        previous_simulation,
-                        persona_id=persona_id,
-                        latest_bio=latest_bio,
-                    )
+                        for index, simulation in enumerate(simulations, start=1)
+                    ]
+                )
+                for index, (tab, simulation) in enumerate(
+                    zip(simulation_tabs, simulations)
+                ):
+                    with tab:
+                        previous_simulation = (
+                            simulations[index + 1]
+                            if index + 1 < len(simulations)
+                            else None
+                        )
+                        _render_saved_simulation(
+                            simulation,
+                            previous_simulation,
+                            persona_id=persona_id,
+                            latest_bio=latest_bio,
+                        )
 
 
 def _finish_current_persona() -> None:
