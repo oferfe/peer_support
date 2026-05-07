@@ -32,6 +32,7 @@ from .questionnaire import (
     build_character_system_prompt,
     build_explanation_prompt,
     build_json_prompt,
+    build_simulation_biography_prompt,
 )
 
 
@@ -219,6 +220,7 @@ def _openai_questionnaire(
     biography_text: str,
     questionnaire: dict[str, Any],
     language: str,
+    explanation_biography_text: str | None = None,
 ) -> dict[str, Any]:
     character_system_prompt = build_character_system_prompt(
         biography_text,
@@ -239,7 +241,7 @@ def _openai_questionnaire(
     answers = _parse_json(resp.choices[0].message.content or "{}")
 
     explanation_prompt = build_explanation_prompt(
-        biography_text,
+        explanation_biography_text or biography_text,
         questionnaire,
         answers,
         language,
@@ -348,6 +350,7 @@ def _gemma_questionnaire(
     biography_text: str,
     questionnaire: dict[str, Any],
     language: str,
+    explanation_biography_text: str | None = None,
 ) -> dict[str, Any]:
     character_system_prompt = build_character_system_prompt(
         biography_text,
@@ -368,7 +371,7 @@ def _gemma_questionnaire(
             f"{snippet!r}"
         ) from exc
     explanation_prompt = build_explanation_prompt(
-        biography_text,
+        explanation_biography_text or biography_text,
         questionnaire,
         answers,
         language,
@@ -459,6 +462,7 @@ def _ollama_questionnaire(
     biography_text: str,
     questionnaire: dict[str, Any],
     language: str,
+    explanation_biography_text: str | None = None,
 ) -> dict[str, Any]:
     answer_system_content = build_character_system_prompt(
         biography_text,
@@ -475,7 +479,7 @@ def _ollama_questionnaire(
             f"{snippet!r}"
         ) from exc
     explanation_prompt = build_explanation_prompt(
-        biography_text,
+        explanation_biography_text or biography_text,
         questionnaire,
         answers,
         language,
@@ -547,6 +551,8 @@ def answer_questionnaire(
     biography_text: str,
     questionnaire: dict[str, Any],
     language: str = LANG_EN,
+    *,
+    explanation_biography_text: str | None = None,
 ) -> dict[str, Any]:
     """Ask the model to answer the full questionnaire in character.
 
@@ -554,11 +560,48 @@ def answer_questionnaire(
     verbatim labels drawn from each section's scale.
     """
     if model_label == CHATGPT:
-        return _openai_questionnaire(biography_text, questionnaire, language)
+        return _openai_questionnaire(
+            biography_text,
+            questionnaire,
+            language,
+            explanation_biography_text,
+        )
     if model_label == OLLAMA:
-        return _ollama_questionnaire(biography_text, questionnaire, language)
+        return _ollama_questionnaire(
+            biography_text,
+            questionnaire,
+            language,
+            explanation_biography_text,
+        )
     if model_label == GEMMA:
-        return _gemma_questionnaire(biography_text, questionnaire, language)
+        return _gemma_questionnaire(
+            biography_text,
+            questionnaire,
+            language,
+            explanation_biography_text,
+        )
+    raise ValueError(f"Unknown model_label: {model_label!r}")
+
+
+def convert_biography_for_simulation(
+    model_label: str,
+    biography_text: str,
+    language: str = LANG_EN,
+) -> str:
+    """Convert a saved biography into a direct persona system prompt.
+
+    This is an internal simulation-preparation step. The returned prompt is
+    used as the character system prompt for questionnaire answering, while the
+    original saved biography remains unchanged in the database and is still
+    used by the explanation LLM.
+    """
+    prompt = build_simulation_biography_prompt(biography_text, language)
+    if model_label == CHATGPT:
+        return _openai_biography(prompt)
+    if model_label == OLLAMA:
+        return _ollama_biography(prompt)
+    if model_label == GEMMA:
+        return _gemma_biography(prompt)
     raise ValueError(f"Unknown model_label: {model_label!r}")
 
 

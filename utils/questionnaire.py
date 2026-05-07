@@ -12,6 +12,9 @@ Public API mirrors `utils.intake` so the app can treat both forms alike:
 - `build_character_system_prompt()`
                                  builds the system prompt that defines the
                                  character from the biography.
+- `build_simulation_biography_prompt()`
+                                 builds the conversion prompt that turns the
+                                 saved biography into a direct persona prompt.
 - `build_json_prompt()`          builds the first LLM prompt: answer as the
                                  character with ratings/labels only.
 - `build_explanation_prompt()`   builds the second LLM prompt: explain the
@@ -173,13 +176,37 @@ def build_character_system_prompt(
     language: str = LANG_EN,
 ) -> str:
     """Build the system prompt that defines the answering character."""
-    language_instruction = _LANGUAGE_INSTRUCTIONS.get(
-        language, _LANGUAGE_INSTRUCTIONS[LANG_EN]
-    )
-    return (
-        "You are:\n"
-        f"{biography_text.strip()}\n\n"
-    )
+    return biography_text.strip()
+
+
+def build_simulation_biography_prompt(
+    biography_text: str,
+    language: str = LANG_EN,
+) -> str:
+    """Build the prompt that prepares a biography for persona simulation."""
+    lang = language if language in (LANG_EN, LANG_HE) else LANG_EN
+    if lang == LANG_HE:
+        instruction = (
+            "המר/י את הביוגרפיה הבאה לפרומפט מערכת ישיר בגוף שני עבור "
+            "סימולציה של פרסונה. הפרומפט צריך להישמע כמו: "
+            "\"אתה אלון. נולדת...\" או \"את יעל. נולדת...\" בהתאם לטקסט. "
+            "שמר/י את כל הפרטים העובדתיים, אל תוסיף/י עובדות חדשות, אל "
+            "תסיר/י פרטים חשובים, ואל תסביר/י את ההמרה. החזר/י רק את "
+            "פרומפט הפרסונה המומר בעברית."
+        )
+        header = "## ביוגרפיה לשימור ולהמרה"
+    else:
+        instruction = (
+            "Convert the following biography into a direct second-person "
+            "persona system prompt for simulation. The result should read "
+            "like: \"You are Alon. You were born...\" Preserve every factual "
+            "detail, do not add new facts, do not remove important details, "
+            "and do not explain the conversion. Return only the converted "
+            "persona prompt text in English."
+        )
+        header = "## Biography to preserve and convert"
+
+    return f"{instruction}\n\n{header}\n{biography_text.strip()}"
 
 
 def build_json_prompt(
@@ -228,7 +255,7 @@ def build_json_prompt(
 
     return (
         "You are a survey respondent. For each statement, pick\n"
-        "the rating on that section's scale that best reflects you."
+        "the rating on that section's scale that best reflects you.\n"
         f"{language_instruction}\n"
         "\n"
         "## Questionnaire\n"
@@ -290,7 +317,8 @@ def build_explanation_prompt(
         "For each answer, write an explanation why this\n"
         "answer is plausible. Base the explanation on: (1) the biography,\n"
         "(2) your professional knowledge of peer support and mental health services,\n"
-        "and (3) the academic context below from persona_guidelines.json. If you use an iformation from a paper, cite the paper by its citation."
+        "and (3) the academic context below from persona_guidelines.json. If "
+        "you use information from a paper, cite the paper by its citation. "
         "Do not change the answer, only explain why it is plausible.\n"
         "## Biography\n"
         f"{biography_text.strip()}\n\n"

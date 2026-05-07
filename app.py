@@ -928,11 +928,18 @@ def _run_current_simulation(
                 st.session_state.persona_id,
                 current_biography_id=st.session_state.biography_id,
             )
+            saved_biography = st.session_state.latest_saved_biography_text
+            simulation_biography = llm.convert_biography_for_simulation(
+                model_label,
+                saved_biography,
+                language,
+            )
             answers = llm.answer_questionnaire(
                 model_label,
-                st.session_state.latest_saved_biography_text,
+                simulation_biography,
                 questionnaire,
                 language,
+                explanation_biography_text=saved_biography,
             )
             structured_answers: dict[str, Any] = {}
             reasonings: dict[str, str] = {}
