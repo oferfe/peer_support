@@ -507,37 +507,41 @@ def _render_questionnaire_results(
             )
             changed = bool(previous_text and previous_text != current_text)
 
-            st.markdown(f"**{q['question']}**")
-            if changed:
-                st.markdown(
-                    f":orange[{t('simulation_answer_changed')}] "
-                    f"**{current_text}**"
-                )
-                st.caption(
-                    t(
-                        "simulation_previous_answer",
-                        answer=previous_text,
+            expander_title = (
+                f"{q['question']} - "
+                f"{t('simulation_answer_changed') if changed else current_text}"
+            )
+            with st.expander(expander_title, expanded=changed):
+                if changed:
+                    st.markdown(
+                        f":orange[{t('simulation_answer_changed')}] "
+                        f"**{current_text}**"
                     )
-                )
-                change_explanation = change_explanations.get(qid)
-                if change_explanation:
                     st.caption(
-                        f"{t('simulation_change_explanation_prefix')} "
-                        f"{change_explanation}"
+                        t(
+                            "simulation_previous_answer",
+                            answer=previous_text,
+                        )
                     )
-            else:
-                st.markdown(f"**{current_text}**")
+                    change_explanation = change_explanations.get(qid)
+                    if change_explanation:
+                        st.caption(
+                            f"{t('simulation_change_explanation_prefix')} "
+                            f"{change_explanation}"
+                        )
+                else:
+                    st.markdown(f"**{current_text}**")
 
-            reasoning = _answer_reasoning(answer)
-            if reasoning:
-                st.caption(f"{t('answer_explanation_prefix')} {reasoning}")
-            if questionnaire_id:
-                st.text_area(
-                    t("answer_comment_label"),
-                    key=_answer_comment_key(questionnaire_id, qid),
-                    height=80,
-                    placeholder=t("answer_comment_placeholder"),
-                )
+                reasoning = _answer_reasoning(answer)
+                if reasoning:
+                    st.caption(f"{t('answer_explanation_prefix')} {reasoning}")
+                if questionnaire_id:
+                    st.text_area(
+                        t("answer_comment_label"),
+                        key=_answer_comment_key(questionnaire_id, qid),
+                        height=80,
+                        placeholder=t("answer_comment_placeholder"),
+                    )
         st.divider()
 
     if not questionnaire_id:
