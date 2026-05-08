@@ -456,6 +456,404 @@
           }
         ]
       },
+      {
+        "id": "12",
+        "paper_citation": "Ibrahim, N., Thompson, D., Nixdorf, R., Kalha, J., Moran, G., Mueller-Stierlin, A., Ryan, G., Mahlke, C., Puschner, B., Repper, J., Slade, M., Mpango, R., & Shamba, D. (2020). A systematic review of influences on implementation of peer support work for adults with mental health problems. Social Psychiatry and Psychiatric Epidemiology, 55, 285-293. https://doi.org/10.1007/s00127-019-01739-1",
+        "paper_summary": "Overview: This systematic review aimed to identify the facilitators and barriers to implementing formal, face-to-face peer support work for adults with mental health problems. Methodology: Researchers screened 5,813 publications and included 53 relevant studies, analyzing the data to group implementation barriers and facilitators into overarching themes called influences. They also created an Implementation Measure that was tested across six international sites. Key Findings: The review identified 14 distinct influences that impact the implementation of peer support work. The most frequently reported influences include Organisational Culture (53% of papers), PSW Training (42%), and PSW Role Definition (40%). Implementation is facilitated by clear recovery-oriented goals, trusting staff relationships, and ongoing training. Conversely, a risk-averse culture, role ambiguity, hostility from staff, and co-optation into medical models act as major barriers. Conclusion: To successfully embed a peer support service, organizations must prioritize changing their culture, addressing staff attitudes, and providing comprehensive role support.",
+        "criteria": [
+          {
+            "id": "Workplace Culture & Staff Dynamics",
+            "criterion": "How is the character received by non-peer clinical staff, and do they face systemic workplace friction?",
+            "explanation": "The biography should depict the reality of the character's workplace relationships and cultural environment. It must explore whether they experience trusting relationships and acceptance, or if they have to navigate a risk-averse culture, traditional hierarchies, stigma, and hostility from non-peer staff.",
+            "citations_from_the_paper": [
+              "There is a risk-averse culture focussed on traditional clinical risk and peer-patient risk, with a lack of recovery orientation and coproduction.",
+              "PSWs perceive that stigma exists about the PSW role, and PSWs are seen as outsiders.",
+              "Staff hold fears about, or express hostility towards, PSWs. There is discrimination towards PSWs by staff."
+            ]
+          },
+          {
+            "id": "Role Definition & Identity (Co-optation)",
+            "criterion": "Does the character face an identity conflict between being a patient and a worker, and are their professional boundaries clearly defined?",
+            "explanation": "A major psychological barrier to implementation is co-optation, where peer workers are forced into standard medical ways of working, diluting their lived-experience value. The story must address how the character navigates role ambiguity, self-disclosure, and the tension of blending personal lived experience with clinical expectations.",
+            "citations_from_the_paper": [
+              "Co-optation occurs by incorporating PSWs into medical ways of working, leading to identity conflict between being a patient and being a worker",
+              "There is role ambiguity and uncertainty regarding the level of self-disclosure and boundaries.",
+              "There is a mismatch between staff and PSW role expectations"
+            ]
+          },
+          {
+            "id": "Training & Professional Confidence",
+            "criterion": "Does the character feel adequately prepared and supported by ongoing supervision to perform their role?",
+            "explanation": "Successful implementation heavily depends on whether the peer worker feels competent. The biography should reflect whether the character's confidence stems from ongoing training and shadowing, or if they struggle and feel unready due to inadequate, rigid training and a lack of proper supervision.",
+            "citations_from_the_paper": [
+              "There is an emphasis on skill building, with ongoing training and shadowing. PSWs are knowledgeable and skilled.",
+              "Training is not reflective of PSW practice, or has a fixed structure. Training is inaccessible or non-existent.",
+              "PSWs do not feel ready or have a sense of competence or confidence"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "13",
+        "paper_citation": "Anneliese de Wet, Charlene Sunkel & Chrisma Pretorius (2022). Opportunities and challenges: a case for formal peer support work in mental health in a South African context. Advances in Mental Health, 20:1, 15-25. https://doi.org/10.1080/18387357.2022.2032776",
+        "paper_summary": "Objective: This study examines the facilitator of support in mental health recovery within the South African context, specifically exploring the potential for formalizing Peer Support Work (PSW-MH). Methodology: Qualitative data were gathered through 37 semi-structured interviews and 3 focus groups with service users, providers, and carers at three psychiatric hospitals in the Western Cape. Results: While formal PSW-MH was not present at the sites, participants identified significant benefits from informal peer support, including decreased isolation, increased mutuality, empowerment, and hope. Discussion: The authors introduce the 'mental wealth' paradigm, suggesting that people with lived experience are an untapped resource that can address the treatment gap in under-resourced systems. The paper highlights that for successful formalization, peer workers must be appropriately trained, remunerated, and respected as a professional mental health worker class. Key challenges include role ambiguity, systemic discrimination by clinical staff, and the need for standardized implementation that honors lived expertise.",
+        "criteria": [
+          {
+            "id": "Mental Wealth Paradigm",
+            "criterion": "Does the character's biography emphasize their 'latent resources' and lived experience as a form of expertise rather than a deficit?",
+            "explanation": "The paper argues that mental health systems should seek out and unearth 'mental wealth'—the unexplored resources within service users—rather than focusing purely on resource limitations or clinical deficits."
+          },
+          {
+            "id": "Formal Professional Status",
+            "criterion": "Is the character's transition from a service user to a 'professional mental health worker' clearly defined and validated by formal training?",
+            "explanation": "A core theme is the need for peer specialists to be recognized as a distinct 'professional class' within the healthcare system, requiring clear job descriptions and professional respect from clinical colleagues."
+          },
+          {
+            "id": "Contextual Stressors",
+            "criterion": "How does the biography reflect the specific impact of systemic poverty, inequality, or violence on the character's work and recovery?",
+            "explanation": "South African peer support must navigate unique environmental challenges, including the legacy of segregation and high levels of violence, which influence the supporter's ability to model recovery in socially difficult circumstances."
+          },
+          {
+            "id": "Human Rights and Advocacy",
+            "criterion": "Does the character actively assist service users in navigating the healthcare system and protecting them from uninformed or coerced decisions?",
+            "explanation": "Formal peer workers are positioned as advocates who protect service users' human rights by validating their experiences and helping them navigate overwhelming or daunting clinical systems."
+          },
+          {
+            "id": "Mutuality of Experience",
+            "criterion": "Does the biography show the character using their shared history—particularly regarding medication side effects and treatment—to build trust?",
+            "explanation": "The study notes that clinical staff lack the direct experience of psychiatric treatment; therefore, a peer worker's unique ability to share 'in the same boat' experiences regarding medication and its effects is a primary tool for fostering connectedness."
+          }
+        ]
+      },
+      {
+        "id": "14",
+        "paper_citation": "Goldfarb, Y., Grayzman, A., Meir, L. G., Grundman, S. H., Rabinian, M., Lachman, M., Epstein, P. G., Ben-Dor, I. A., Naaman, A., Puschner, B., & Moran, G. S. (2022). UPSIDES Mental Health Peer Support in Face of the COVID-19 Pandemic: Actions and Insights. Community Mental Health Journal, 60, pages 5 to 13. https://doi.org/10.1007/s10597-022-01030-9",
+        "paper_summary": "The article describes the innovative development and adaptation of the UPSIDES peer support intervention in Israel during the COVID-19 pandemic. UPSIDES is an international project operating across six countries to scale up peer services for individuals with serious mental illness. The Israeli site utilized 'Chevruta,' a culturally adapted group format rooted in Jewish tradition that emphasizes camaraderie and interdependence. During pandemic lockdowns, the project shifted to digital communication to maintain social inclusion and prevent participant dropout. A major insight was that the shared global crisis acted as a 'leveling arena,' reducing power imbalances between supporters and recipients. The study highlights that experiential knowledge gained from personal life-crises is a unique professional asset that buffers both staff and users against psychological distress during national emergencies.",
+        "criteria": [
+          {
+            "id": "Occupational Role Integrity",
+            "criterion": "Does the character distinguish between functional rehabilitation tasks and the explicit use of experiential knowledge?",
+            "explanation": "In Israel, 'consumer-providers' often perform functional roles such as rehabilitation instruction or ADL support, whereas 'Peer Support Workers' (PSWs) are explicitly required to use their recovery stories to provide hope and role-model recovery. The biography should clarify if the peer specialist is acting as a companion focusing on lived experience or a traditional staff member focusing on functional tasks.",
+            "citations_from_the_paper": [
+              "Both Consumer-providers and peer specialist are individuals with a lived experience of having a mental illness who provide services to others with SMI.",
+              "However, consumer-providers work roles are combined within traditional mental health roles (e.g., ADL support worker, or rehabilitation instructor) and may sometimes focus on more functional aspects, while sharing their past histories when they feel it is appropriate to their client.",
+              "As for PSW roles - their job descriptions require the explicit use of experiential knowledge. They mostly support others based on their personal knowledge, and employ their lived experiences (e.g., sharing their recovery story)."
+            ]
+          },
+          {
+            "id": "Cultural Methodology (Chevruta)",
+            "criterion": "Is the character's approach grounded in communal camaraderie rather than clinical hierarchy?",
+            "explanation": "The 'Chevruta' model is a culturally adapted format rooted in traditional Jewish learning that emphasizes interdependence and brotherhood over clinical case management. The biography should reflect a relationship style characterized by 'camaraderie' and a 'non-directive' approach.",
+            "citations_from_the_paper": [
+              "The intervention was implemented in small group formats named 'Chevruta' (literal translation: 'friendship' or 'companionship'), a term borrowed from the traditional learning practice of Jewish scriptures.",
+              "A sense of camaraderie and interdependence is at the core of these discussions, creating a space in which debates and controversies can lead to powerful insights.",
+              "Camaraderie is core to peer support and expresses the sense of closeness that forms from sharing similar experiences, like brothers in arms do.",
+              "Regardless of the content of each session, the main requirement is that all meetings adhere to values of camaraderie and sharing of lived experience, which are at the basis of the intervention."
+            ]
+          },
+          {
+            "id": "Resilience in National Crisis",
+            "criterion": "How does the character utilize their 'pioneer' mindset and history of personal crisis to manage national trauma?",
+            "explanation": "Peer specialists who have survived personal life-crises often possess a 'pioneer' mindset that makes them uniquely competent during national emergencies, such as the pandemic or war. The biography should demonstrate how the character's personal history acts as a buffer against anxiety and provides a sense of mission and strength.",
+            "citations_from_the_paper": [
+              "I feel that I am a pioneer on a mission. For me it is an opportunity to provide strength and meaning to another person...",
+              "when the pandemic broke out, I reminded myself that I know something about life-crisis and that the most important part is support, conversation, not staying alone.",
+              "PSWs also referred to these calls as providing a sense of control, saying that 'specifically on days of lockdown... making use of experiential knowledge gave us a sense of competence... and a feeling we are not alone'.",
+              "In face of the pandemic outbreak, UPSIDES peer intervention served as a powerful and sustainable support buffering sudden and traumatic challenges and further teaching us about the unique value of the peer support MH model."
+            ]
+          },
+          {
+            "id": "Leveling the Power Arena",
+            "criterion": "Does the character acknowledge the 'leveling' effect of shared vulnerability during a crisis?",
+            "explanation": "National crises act as a 'leveling arena' where shared vulnerability between the provider and recipient reduces traditional power imbalances. The biography should show how the shared reality of the crisis facilitated a deeper, more reciprocal empathic connection.",
+            "citations_from_the_paper": [
+              "The sudden pandemic challenges appeared to level out power imbalances and accelerated the formation of reciprocal and supportive relational interactions within the intervention.",
+              "Interestingly, the online platform served as a leveling arena, where space for intimacy was enhanced in face of the pandemic.",
+              "the implementation of UPSIDES during COVID-19 so far was experienced as an event which impacted all stakeholders involved in the UPSIDES project, and helped level more the power imbalance."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "15",
+        "paper_citation": "Kennedy, H., & Mead, S. (2019). Narrative practice and intentional peer support: A conversation between Hamilton Kennedy and Shery Mead. The International Journal of Narrative Therapy and Community Work, (4), 50-55.",
+        "paper_summary": "This article documents a 2019 dialogue between Hamilton Kennedy, a consumer academic, and Shery Mead, the founder of Intentional Peer Support (IPS). The conversation explores the theoretical and practical intersections of narrative therapy and IPS, specifically how they offer alternatives to clinical paradigms. Key themes include the shift from 'illness dialogues' to 'intentional dialogues' that challenge meaning constructs rather than solving problems. The authors discuss 'mutual vulnerability' as an alternative to the traditional concept of equality, where both parties practice 'not knowing' to move beyond established power dynamics. A significant portion of the paper is dedicated to redefining boundaries as 'personal limits' that should be negotiated rather than arbitrarily imposed. Additionally, the text introduces 'double-listening' as a tool for peer specialists to hear both stories of hardship and the 'untold stories' of resistance and protest against injustice. Ultimately, the paper advocates for a 'polyphony of stories' that allows individuals to be seen as more than their trauma or diagnosis.",
+        "criteria": [
+          {
+            "id": "Double-Listening for Resistance",
+            "criterion": "How does the character identify and amplify the client's 'preferred story' or acts of resistance against trauma and injustice?",
+            "explanation": "The biography should move beyond documenting a character's distress to show them practicing 'double-listening'—hearing the hardship while simultaneously looking for ways the person resisted being a 'passive recipient' of trauma. This includes identifying 'unique outcomes' or hidden skills used to defy dominant narratives of illness.",
+            "citations_from_the_paper": [
+              "No-one is a passive recipient of trauma. People always respond. People always protest injustice.",
+              "For me, double-listening is listening for all that is said (and unsaid) in ways that allow us to counter dominant ideas.",
+              "Double-listening is hearing and caring about the traumatic experience while simultaneously being open to the idea that there are other important stories that may be hidden.",
+              "When we double-listen for these moments of resistance, we can begin to develop double-storied accounts of existence."
+            ]
+          },
+          {
+            "id": "Practicing Mutual Vulnerability",
+            "criterion": "Does the character's interaction with others prioritize shared vulnerability and 'not knowing' over a simplified goal of equality?",
+            "explanation": "True IPS practice, as defined in the paper, involves more than just being 'equal.' It requires the peer supporter to intentionally step into a space of vulnerability and an awareness of power. The biography should reflect a character who is willing to be 'both vulnerable and strong' to facilitate new ways of making sense of experience.",
+            "citations_from_the_paper": [
+              "My hope is that when we practice being both vulnerable and strong, we stand to gain new ways of knowing and new ways of making sense of our experiences.",
+              "I'm not sure I would describe it as equality, rather that people practice not knowing and an awareness of power, and then use the conversation to go beyond the current dynamics.",
+              "Practicing mutual vulnerability: Peter and Paul come together knowing that they have very different histories but also an awareness that they've both been labelled with depression.",
+              "They will bring a willingness to challenge each other while at the same time respecting each other's worldview."
+            ]
+          },
+          {
+            "id": "Negotiated Personal Limits",
+            "criterion": "How does the character define their professional boundaries through personal limits and authentic negotiation rather than arbitrary agency policy?",
+            "explanation": "The biography must show the character navigating the 'uncomfortable edges' of sharing personal information. Instead of using clinical boundaries as a shield or a form of power, the character should engage in 'co-reflection' to negotiate limits that allow for a real, non-'othered' relationship.",
+            "citations_from_the_paper": [
+              "He thought in terms of personal limits rather than firm boundaries.",
+              "We collectively decided that we didn't like them being stated arbitrarily, but rather wanted them to be negotiated.",
+              "Negotiating boundaries is one way to avoid 'othering' people. It's more honest and forces the clinician to sit with their discomfort about sharing personal information.",
+              "When a clinician says, 'we don't share personal experiences here, it's a policy', they're hiding behind their power and can set up an assumption-based relationship."
+            ]
+          },
+          {
+            "id": "Relational Externalizing and Social Change",
+            "criterion": "Does the character's work focus on changing relational dynamics and challenging the 'illness narratives' imposed by society?",
+            "explanation": "The character's biography should demonstrate an intent to create 'social change' by transforming how conversations happen in their community. They should use 'relational externalizing' to look at what emerges from dialogue rather than focusing solely on individual internal narratives.",
+            "citations_from_the_paper": [
+              "I have always thought that IPS had the ability to change conversations and therefore relational dynamics.",
+              "I always liked the idea of externalising the 'problem', but particularly felt drawn to Johnella Bird's ideas about relational externalising.",
+              "This grew out of my frustration around 'illness narratives' and consequently 'illness dialogues'.",
+              "If we use that set of assumptions as our starting place then we get into problem-solving based on a clinical paradigm rather than challenging each other's meaning constructs."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "16",
+        "paper_citation": "Moran, G. S., Russinova, Z., Yim, J. Y., & Sprague, C. (2013). Motivations of Persons with Psychiatric Disabilities to Work in Mental Health Peer Services: A Qualitative Study Using Self-Determination Theory. Journal of Occupational Rehabilitation, 23, 351-361. https://doi.org/10.1007/s10926-013-9440-2",
+        "paper_summary": "Overview\nThe document presents a qualitative study investigating the work motivations of individuals with psychiatric disabilities who are employed as mental health peer providers. Utilizing Self-Determination Theory (SDT), the study explores both external drivers and the internal psychological needs (autonomy, competence, relatedness) that fuel these workers.\n\nBackground and Challenges\nWhile individuals with psychiatric disabilities historically face low employment rates and numerous barriers to returning to the workforce, mental health peer services have emerged as a promising new occupational path. However, peer workers experience multiple challenges, such as ongoing mental health symptoms and structural barriers within organizations, which can threaten their work motivation and job success. Understanding their motivations is crucial for creating supportive environments.\n\nMethodology\nResearchers conducted semi-structured interviews with 31 employed peer providers. Data was analyzed using a combination of inductive grounded theory to identify emerging motivational themes, and deductive analysis to map these themes to SDT concepts.\n\nKey Findings\nExternal Motivations: Around 39% of participants reported external drivers, such as the instrumental need for income or the desire to escape negative experiences (e.g., boredom, conflict, burnout) from previous conventional jobs.\nInternal Motivations (SDT Needs): Intrinsic motivations were highly prevalent. Autonomy (74%) was satisfied by the freedom to self-disclose and finding work that aligned with personal values (e.g., a 'mission' or 'calling'). Competence (61%) was fulfilled by workers feeling like 'natural experts' who could effectively use their lived experience as a resource to help others better than traditional professionals. Relatedness (65%) was uniquely salient, with workers drawn to the opportunity to break out of social isolation and form mutual, non-hierarchical relationships.\n\nConclusion\nPersonal experience and peer contact are major motivational tenets of mental health peer work. The study suggests that designing autonomy-supportive environments that encourage self-disclosure and peer networking can enhance work engagement and help sustain peer providers in their roles.",
+        "criteria": [
+          {
+            "id": "Overcoming Isolation: Relatedness",
+            "criterion": "How does the character's role as a peer provider help them combat personal social isolation and fulfill their need for mutual connection?",
+            "explanation": "The biography must reflect that unlike traditional employment, peer work provides an 'emotional home' and authentic relationships that combat the loneliness commonly experienced by people with serious mental illnesses. This relates to the demographic survey questions regarding living arrangements and social contexts.",
+            "citations_from_the_paper": [
+              "About two-thirds (n=20, 65%) were drawn to peer work and/or training because of the opportunity to connect with other peers and consumers.",
+              "This enabled the establishment of unique, reciprocal and mutual relationships, where 'no one is neither above or below' and rendered a sense of 'an emotional home'.",
+              "For a few of the peer workers in the sample, connecting with consumers and other mental health peers allowed to 'break out of social isolation'",
+              "relatedness motivations may be salient because loneliness is a common experience for people with serious mental illness."
+            ]
+          },
+          {
+            "id": "The Transformation: Autonomy and Self-Disclosure",
+            "criterion": "How does the character utilize their psychiatric diagnosis as a positive asset through self-disclosure, moving away from secrecy?",
+            "explanation": "The character's background should show a transition from hiding their illness in conventional jobs to embracing it in peer work. This satisfies their autonomy needs by aligning their work with personal values and giving them freedom to be themselves, directly linking to the survey questions about choosing to share their diagnosis with managers, colleagues, and recipients.",
+            "citations_from_the_paper": [
+              "Another autonomy driven motivation was having the freedom to disclose one's lived experience as a mental health peer provider.",
+              "In previous jobs, participants felt they needed to hide mental illness.",
+              "Thus the use of one's lived experience as a source of knowledge transforms that which was most stigmatized into an asset.",
+              "This allows mental health peer workers to shift from feeling shame and concealment about their past experiences to carrying-out positive dialogues about the illness that generate new meaning and identity."
+            ]
+          },
+          {
+            "id": "Demonstrating Expertise: Competence",
+            "criterion": "In what ways does the character draw confidence and a sense of professional competence specifically from their past suffering and lived experience?",
+            "explanation": "The narrative should ground their professional confidence (competence) in their lived experience, showing how it gives them a unique advantage over traditional professionals in connecting with consumers. This connects to their occupational background and feelings of meaningfulness, particularly when tested by external stressors like the Swords of Iron war.",
+            "citations_from_the_paper": [
+              "Nineteen participants (61%) were attracted to peer work because they felt confident and capable to use personal experience and help others.",
+              "Some participants noted they felt they had advantage over mental health professionals because they 'better relate to people with those symptoms'",
+              "Participants felt like natural experts: 'I've got a lot of lived experiences so although I can be very insecure in some areas, I feel very secure and adequate'.",
+              "Additionally, peer workers could observe positive outcomes... which provided positive feedback to their sense of competence."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "17",
+        "paper_citation": "Moran, G. S., Russinova, Z., Gidugu, V., Yim, J. Y., & Sprague, C. (2011). Benefits and Mechanisms of Recovery Among Peer Providers With Psychiatric Illnesses. Qualitative Health Research, XX(X), 1-16. DOI: 10.1177/1049732311420578",
+        "paper_summary": "Overview: The study explores how working as a mental health peer provider enhances the personal recovery of the provider themselves. Key Findings: Working as a peer provider yields a wide range of recovery benefits spanning five wellness domains: foundational, emotional, spiritual, social, and occupational. Mechanisms: The study identifies specific mechanisms through which these benefits accrue, divided into role-related mechanisms (such as helping others and sharing one's personal story) and work-environment mechanisms (such as a person-centered culture, peer networking, and a supportive work environment). Ultimately, using one's lived experience professionally transforms a heavily stigmatized past into a profound source of competence, meaning, and positive identity.",
+        "criteria": [
+          {
+            "id": "Reauthoring the Self-Narrative",
+            "criterion": "Does the character's internal narrative undergo a profound shift from telling an 'illness story' characterized by victimhood to owning a 'recovery story' defined by empowerment and choice?",
+            "explanation": "The biography must reflect a deep psychological transformation where the character uses their trauma professionally, shifting their identity from a stigmatized patient to an empowered individual who integrates their illness into a meaningful life.",
+            "citations_from_the_paper": [
+              "The role of sharing one's personal story is highlighted as contributing to positively reauthoring one's self-narrative.",
+              "As they got better at sharing their stories with recipients, they progressed from telling an 'illness story' to a 'recovery story', because 'when you share your recovery you're kind of owning it in a new way.'",
+              "This involved a transformation in identity, from owning an identity that emphasized victimhood and patient characteristics to owning an identity of a person engaged in a full life, with choice and opportunity.",
+              "The use of one's lived experience as a source of knowledge transforms that which is most stigmatized into an asset."
+            ]
+          },
+          {
+            "id": "Multidimensional Wellness",
+            "criterion": "How does the character exhibit growth across the five identified wellness domains (foundational, emotional, spiritual, social, and occupational) as a direct result of their peer provider role?",
+            "explanation": "The character's biography should not merely focus on standard vocational rehabilitation (e.g., getting a job or increasing hours), but must demonstrate holistic psychological recovery, such as finding profound spiritual meaning in past suffering, developing new self-esteem, and building a highly supportive social network.",
+            "citations_from_the_paper": [
+              "Qualitative analysis revealed a wide range of recovery benefits for the peer providers. The benefits span across five wellness domains: foundational, emotional, spiritual, social, and occupational.",
+              "Participants noted that they became more 'compassionate' toward themselves and others, 'being less judgmental,' having 'gratitude' and 'appreciating life'...",
+              "The present study expands current knowledge by identifying additional benefit themes and by organizing the benefits into wellness domains that highlight the multidimensional impact being a peer provider has on personal lives.",
+              "Participants referred to their job as 'a calling' and 'a mission,' and noted that being a peer provider made their lives more 'complete' and 'fulfilling.'"
+            ]
+          },
+          {
+            "id": "Interpersonal and Environmental Mechanisms",
+            "criterion": "How does the character actively utilize their work environment—specifically peer networking, role-modeling, and the act of helping others—to manage crises and sustain their own recovery?",
+            "explanation": "The biography needs to show the job itself acting as a therapeutic intervention. The character should rely on other peers for a 'reality check' during distress, use the responsibility of role-modeling to maintain their own self-care routines, and use the act of helping clients to step outside their own depression or trauma.",
+            "citations_from_the_paper": [
+              "By having more than one peer provider in an agency... participants could process difficulties in their roles and work, receive support, and share advice with others...",
+              "Role modeling served as a motivating force that enhanced commitment and sense of responsibility related to work... 'to live up to that expectation, to take care of myself.'",
+              "In addition, participants noted that having to shift focus from themselves to others was helpful: 'It distances me because I'm really concentrating on helping them, rather than focusing on my own stuff.'",
+              "I was joking with him about how many times, you know, I would use him as a reality check... 'Is this me? Is this like it might be, that I am looking at this in totally a distorted way?'"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "18",
+        "paper_citation": "Moran, G. S., Russinova, Z., & Stepas, K. (2012). Toward Understanding the Impact of Occupational Characteristics on the Recovery and Growth Processes of Peer Providers. Psychiatric Rehabilitation Journal, 35(5), 376-380. https://doi.org/10.1037/410094496",
+        "paper_summary": "The study investigates how the occupational characteristics of peer providers affect their own recovery and personal growth. It evaluated outcomes using recovery, empowerment, and positive psychology measures such as psychological well-being, posttraumatic growth, and generativity. The researchers found that past participation in self-help/peer-support groups and prior work in a helping profession were significantly associated with participants' generativity. Notably, present job characteristics like hours worked, years of employment, and job satisfaction were not significantly associated with recovery or growth outcomes. The findings suggest that past exposure to peer groups has a strong relationship with a peer provider's generativity, driven by a tendency for reciprocation of help received earlier in their recovery.",
+        "criteria": [
+          {
+            "id": "Past Peer-Support Engagement",
+            "criterion": "Does the biography emphasize the individual's past participation in peer-support groups as a catalyst for their current generativity?",
+            "explanation": "The paper uniquely found that past exposure to peer groups has a stronger relationship with a peer provider's generativity than the intensity or characteristics of their current job. It fosters a desire to reciprocate past help.",
+            "citations_from_the_paper": [
+              "Participating in self-help/peer-support groups prior to one's current job was significantly associated with higher levels of generative concerns...",
+              "Perhaps, in a similar manner, involvement with peer support characterizes peer providers tendency for reciprocation of help that they received in earlier stages of their recovery.",
+              "Our findings, although preliminary in nature, also suggest that past exposure to self-help/peer-support groups may have a stronger relationship with peer providers' generativity than the intensity of their current occupational involvement..."
+            ]
+          },
+          {
+            "id": "Prior Helping Occupations",
+            "criterion": "Does the character have a background involving a previous job in a helping profession before becoming a peer provider?",
+            "explanation": "The study established an association showing that previous work in a helping profession is positively correlated with generative behaviors, specifically providing emotional support.",
+            "citations_from_the_paper": [
+              "Generative behavior was also associated with previously working in a helping profession.",
+              "...having a previous job in a helping profession is positively associated with peer providers generative behaviors as expressed through the provision of emotional support to others."
+            ]
+          },
+          {
+            "id": "Generativity and Reciprocity",
+            "criterion": "Is the character's professional motivation driven by 'generativity'—specifically a desire to give back and provide emotional support to others due to gratitude for their own past help?",
+            "explanation": "The study views generativity as a commitment to activities larger than oneself. It found that peer work enhances humanistic growth specifically through the provision of emotional support to others, born from a feeling of gratitude.",
+            "citations_from_the_paper": [
+              "Only participants' generative concerns and behaviors were associated with some of the characteristics of peer-providing that we examined.",
+              "This hypothesis has been corroborated by the qualitative interviews conducted with this sample when several participants reported feeling grateful for the help and support they have received, and feeling the need to give back in return.",
+              "Working as a peer provider may not only foster recovery, but may also enhance the humanistic growth of the individual vis-à-vis support and care for others."
+            ]
+          },
+          {
+            "id": "Disconnect from Present Job Logistics",
+            "criterion": "Does the narrative correctly avoid tying the character's deepest psychological growth directly to their current job's logistical characteristics?",
+            "explanation": "The study uniquely found no significant association between the present logistical characteristics of the peer provider's job, such as hours, agency type, or years working, and their recovery or posttraumatic growth processes.",
+            "citations_from_the_paper": [
+              "No associations were found between the characteristics of participants' present peer jobs and the examined recovery and growth processes.",
+              "...none of the characteristics of the peer providers' current jobs (i.e., type of agency, years working, hours worked per week, number of roles, and job satisfaction) were associated with recovery and growth outcomes...",
+              "No significant associations were found for recovery, post traumatic growth, or psychological well being."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "19",
+        "paper_citation": "Moran, G. S., Russinova, Z., & Stepas, K. (2012). Toward Understanding the Impact of Occupational Characteristics on the Recovery and Growth Processes of Peer Providers. Psychiatric Rehabilitation Journal, 35(5), 376-380. https://doi.org/10.1037/410094496",
+        "paper_summary": "The study investigates how the occupational characteristics of peer providers affect their own recovery and personal growth. It evaluated outcomes using recovery, empowerment, and positive psychology measures such as psychological well-being, posttraumatic growth, and generativity. The researchers found that past participation in self-help/peer-support groups and prior work in a helping profession were significantly associated with participants' generativity. Notably, present job characteristics like hours worked, years of employment, and job satisfaction were not significantly associated with recovery or growth outcomes. The findings suggest that past exposure to peer groups has a strong relationship with a peer provider's generativity, driven by a tendency for reciprocation of help received earlier in their recovery.",
+        "criteria": [
+          {
+            "id": "Past Peer-Support Engagement",
+            "criterion": "Does the biography emphasize the individual's past participation in peer-support groups as a catalyst for their current generativity?",
+            "explanation": "The paper uniquely found that past exposure to peer groups has a stronger relationship with a peer provider's generativity than the intensity or characteristics of their current job. It fosters a desire to reciprocate past help.",
+            "citations_from_the_paper": [
+              "Participating in self-help/peer-support groups prior to one's current job was significantly associated with higher levels of generative concerns...",
+              "Perhaps, in a similar manner, involvement with peer support characterizes peer providers tendency for reciprocation of help that they received in earlier stages of their recovery.",
+              "Our findings, although preliminary in nature, also suggest that past exposure to self-help/peer-support groups may have a stronger relationship with peer providers' generativity than the intensity of their current occupational involvement..."
+            ]
+          },
+          {
+            "id": "Prior Helping Occupations",
+            "criterion": "Does the character have a background involving a previous job in a helping profession before becoming a peer provider?",
+            "explanation": "The study established an association showing that previous work in a helping profession is positively correlated with generative behaviors, specifically providing emotional support.",
+            "citations_from_the_paper": [
+              "Generative behavior was also associated with previously working in a helping profession.",
+              "...having a previous job in a helping profession is positively associated with peer providers generative behaviors as expressed through the provision of emotional support to others."
+            ]
+          },
+          {
+            "id": "Generativity and Reciprocity",
+            "criterion": "Is the character's professional motivation driven by 'generativity'—specifically a desire to give back and provide emotional support to others due to gratitude for their own past help?",
+            "explanation": "The study views generativity as a commitment to activities larger than oneself. It found that peer work enhances humanistic growth specifically through the provision of emotional support to others, born from a feeling of gratitude.",
+            "citations_from_the_paper": [
+              "Only participants' generative concerns and behaviors were associated with some of the characteristics of peer-providing that we examined.",
+              "This hypothesis has been corroborated by the qualitative interviews conducted with this sample when several participants reported feeling grateful for the help and support they have received, and feeling the need to give back in return.",
+              "Working as a peer provider may not only foster recovery, but may also enhance the humanistic growth of the individual vis-à-vis support and care for others."
+            ]
+          },
+          {
+            "id": "Disconnect from Present Job Logistics",
+            "criterion": "Does the narrative correctly avoid tying the character's deepest psychological growth directly to their current job's logistical characteristics?",
+            "explanation": "The study uniquely found no significant association between the present logistical characteristics of the peer provider's job, such as hours, agency type, or years working, and their recovery or posttraumatic growth processes.",
+            "citations_from_the_paper": [
+              "No associations were found between the characteristics of participants' present peer jobs and the examined recovery and growth processes.",
+              "...none of the characteristics of the peer providers' current jobs (i.e., type of agency, years working, hours worked per week, number of roles, and job satisfaction) were associated with recovery and growth outcomes...",
+              "No significant associations were found for recovery, post traumatic growth, or psychological well being."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "20",
+        "paper_citation": "Halperin, G., Bandas-Jacob, O., & Aryeh, Y. (2021). Expert Peers in Psychiatric Hospitals (Special Projects 176). National Insurance Institute, Funds Department. Jerusalem, Israel.",
+        "paper_summary": "Overview: This research report evaluates a five-year pilot program (2014–2019) that integrated 'Expert Peers'—individuals with lived experience of mental health recovery—into the professional teams of Israeli psychiatric hospitals (Be'er Sheva and Mazor). The study assesses the impact on patients, families, and the professional medical staff. \n\nKey Findings: \n1. Impact on Patients: The presence of peers significantly increased hope and served as a 'living example' of recovery. 95% of patients recommended the service.\n2. Staff Transformation: While initially met with skepticism and paternalism, medical staff eventually shifted toward a more positive view of recovery and highly valued the peers' unique insights.\n3. Role Complexity: Peers faced a 'dual-status' challenge, needing to balance their personal history with professional boundaries. They often felt 'flooded' by the hospital environment, highlighting a critical need for professional supervision (Hadracha).\n4. Structural Barriers: Despite success, the role is plagued by low pay, part-time positions, and a lack of clear organizational definitions, which creates professional instability.\n5. Family Support: Families reported that peers acted as a vital 'bridge,' providing empathy and practical hope that clinical staff could not offer.",
+        "criteria": [
+          {
+            "id": "The Professional Identity Transition",
+            "criterion": "Does the character move from a 'patient identity' to a 'provider identity' through formalized training?",
+            "explanation": "The biography must reflect that being an expert peer is a professional skill set, not just having a diagnosis. It should mention the transition from receiving services to providing them, specifically through the lens of professionalizing their lived experience.",
+            "citations_from_the_paper": [
+              "העמיתים המומחים רואים בעצמם קבוצה בעלת הגדרה וזהות מקצועית ייחודית בתוך המערכת הפסיכיאטרית.",
+              "הכשרה כזו מאפשרת לעמיתים להפוך את ניסיון חייהם לכלי עבודה מקצועי.",
+              "מורכבות המעמד הכפול (Dual Status) של העמיתים כנותני שירות שהם גם צרכני שירות לשעבר."
+            ]
+          },
+          {
+            "id": "Organizational Integration & Friction",
+            "criterion": "How does the character navigate the arc from being viewed 'paternalistically' by doctors to becoming a valued team member?",
+            "explanation": "The story should ground the peer in the hospital hierarchy. It must include the friction of early integration—where staff might have treated them like a patient—and the eventual recognition of their unique expertise in clinical meetings.",
+            "citations_from_the_paper": [
+              "אנשי צוות רבים דיווחו על התנגדות ראשונית ליוזמה... אך העמיתים התקבלו היטב לאחר כניסתם לבתי החולים.",
+              "העמיתים הביאו נקודת מבט ייחודית שהעשירה את הדיונים בצוות הרב-מקצועי.",
+              "הקושי המקצועי המרכזי הוא שכר נמוך והיקף תעסוקה חלקי המקשה על תחושת שייכות מלאה לצוות."
+            ]
+          },
+          {
+            "id": "Strategic Disclosure & Boundaries",
+            "criterion": "How does the character use 'intentional sharing' without falling into 'over-exposure'?",
+            "explanation": "A key finding is the skill of 'controlled disclosure.' The biography should show the character deciding exactly which part of their story to tell to a patient to inspire hope, while maintaining boundaries to avoid 'exposing their guts' (לחשוף את הקרביים).",
+            "citations_from_the_paper": [
+              "תהליך ההתמקצעות כלל למידה של חשיפה מבוקרת ותלוית סיטואציה.",
+              "היה חשוב למנוע מצב של חשיפת יתר ('לחשוף את הקרביים') אל מול המטופלים.",
+              "העמית משתמש בסיפורו האישי באופן מודע ומכוון לטובת המטופל."
+            ]
+          },
+          {
+            "id": "Psychological Maintenance & Fragility",
+            "criterion": "How does the character manage the emotional toll of the psychiatric ward environment?",
+            "explanation": "The biography must address the person's vulnerability. Working in a hospital can be a 'trigger.' The story should include their need for supervision (Hadracha) and their fear of secondary traumatization or relapse.",
+            "citations_from_the_paper": [
+              "העמיתים עלולים להיות חשופים למתח חריג שעשוי לגרום להופעה מחודשת של תסמיני מחלתם.",
+              "היה חשש עמוק שהסבל והמצוקה שאליהם ייחשפו ילוו אותם גם לאחר שעות העבודה.",
+              "הדרכה מקצועית (Supervision) היא הגורם הקריטי ביותר לשמירה על יציבות העמית והצלחתו בתפקיד."
+            ]
+          },
+          {
+            "id": "The Family Bridge",
+            "criterion": "Does the character act as a unique mediator for the patient’s family?",
+            "explanation": "The paper found that families connect with peers differently than with doctors. The biography should feature the character providing a sense of 'shared destiny' and hope to families who are often in a state of grief or confusion.",
+            "citations_from_the_paper": [
+              "בני משפחה דיווחו על קשר משמעותי המאופיין בהבנה ואמפתיה שאינם קיימים מול הצוות הרפואי.",
+              "98% מבני המשפחה המליצו על המשך שילוב עמיתים.",
+              "הקשר עזר להפחית סטיגמה והגביר את התקווה של המשפחה לגבי סיכויי ההחלמה של יקירם."
+            ]
+          }
+        ]
+      }
       
     ]
 }
