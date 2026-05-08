@@ -547,35 +547,54 @@ def _render_questionnaire_results(
     if not questionnaire_id:
         st.caption(t("answer_comments_unavailable"))
         return
+    comment_contexts = st.session_state.setdefault("_comment_contexts", {})
+    comment_contexts[questionnaire_id] = {
+        "questionnaire_id": questionnaire_id,
+        "biography_id": biography_id or "",
+        "persona_id": persona_id,
+        "question_ids": rendered_question_ids,
+    }
 
-    if st.button(
-        t("save_answer_comments_button"),
-        use_container_width=True,
-        key=f"save_answer_comments_{questionnaire_id}",
-    ):
-        comments = {
-            qid: st.session_state.get(
-                _answer_comment_key(questionnaire_id, qid), ""
-            )
-            for qid in rendered_question_ids
-        }
-        try:
-            saved_count = db.save_answer_comments(
+
+def _save_active_answer_comments(researcher_name: str) -> None:
+    """Save comments for simulation questionnaires rendered in the UI."""
+    contexts = st.session_state.get("_comment_contexts")
+    if not isinstance(contexts, dict) or not contexts:
+        st.caption(t("answer_comments_unavailable"))
+        return
+
+    total_saved = 0
+    try:
+        for context in contexts.values():
+            if not isinstance(context, dict):
+                continue
+            questionnaire_id = context.get("questionnaire_id")
+            question_ids = context.get("question_ids") or []
+            if not isinstance(questionnaire_id, str) or not isinstance(
+                question_ids, list
+            ):
+                continue
+            comments = {
+                qid: st.session_state.get(
+                    _answer_comment_key(questionnaire_id, qid), ""
+                )
+                for qid in question_ids
+                if isinstance(qid, str)
+            }
+            total_saved += db.save_answer_comments(
                 questionnaire_id=questionnaire_id,
-                biography_id=biography_id or "",
-                persona_id=persona_id,
+                biography_id=str(context.get("biography_id") or ""),
+                persona_id=context.get("persona_id"),
                 researcher_name=researcher_name,
                 comments=comments,
             )
-        except Exception as exc:  # noqa: BLE001
-            st.error(t("answer_comments_save_failed", error=exc))
+    except Exception as exc:  # noqa: BLE001
+        st.error(t("answer_comments_save_failed", error=exc))
+    else:
+        if total_saved:
+            st.toast(t("answer_comments_saved", count=total_saved), icon="💬")
         else:
-            if saved_count:
-                st.toast(
-                    t("answer_comments_saved", count=saved_count), icon="💬"
-                )
-            else:
-                st.info(t("answer_comments_none_to_save"))
+            st.info(t("answer_comments_none_to_save"))
 
 
 def _render_saved_personas_page(
@@ -1307,6 +1326,7 @@ _DEFAULT_STATE: dict[str, object] = {
     "active_persona_loaded_for": None,
     "app_view": "intake",
     "saved_personas_focus_questionnaire_id": None,
+    "_comment_contexts": {},
 }
 for _key, _value in _DEFAULT_STATE.items():
     st.session_state.setdefault(_key, _value)
@@ -1536,6 +1556,7 @@ if st.session_state.get("app_view") in (
     "saved_personas",
     "current_persona_results",
 ):
+    st.session_state["_comment_contexts"] = {}
     _render_saved_personas_page(
         questionnaire,
         language,
@@ -1546,6 +1567,14 @@ if st.session_state.get("app_view") in (
             else None
         ),
     )
+    if st.session_state.get("_comment_contexts"):
+        with st.sidebar:
+            if st.button(
+                t("save_answer_comments_button"),
+                use_container_width=True,
+                key="sidebar_save_answer_comments_btn",
+            ):
+                _save_active_answer_comments(researcher_name)
     st.stop()
 
 
