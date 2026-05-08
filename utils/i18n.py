@@ -55,10 +55,9 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
         "gate_login_info": "Log in from the sidebar to begin.",
 
         # Left panel — Persona setup
-        "persona_setup": "Persona Setup",
+        "persona_setup": "",
         "persona_caption": (
-            "Paste or edit the biography, pick the model in the sidebar, "
-            "then click the button below."
+            ""
         ),
         "bio_label": "Biography / System Prompt",
         "bio_placeholder": (
