@@ -105,10 +105,10 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
             "save your changes when needed, or press Finish persona when "
             "you are done."
         ),
-        "intake_open_ended_missing": (
-            "Please answer every open-ended question before drafting — "
-            "type an answer or click Randomize to have the LLM fill them. "
-            "Missing: {ids}."
+        "intake_open_ended_missing": ( ""
+            # "Please answer every open-ended question before drafting — "
+            # "type an answer or click Randomize to have the LLM fill them. "
+            # "Missing: {ids}."
         ),
         "intake_locked_caption": (
             "These intake answers are locked from the first saved version of "
