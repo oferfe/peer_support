@@ -884,6 +884,7 @@ def _start_edit_current_biography() -> None:
     st.session_state.biography_text = st.session_state.latest_saved_biography_text
     st.session_state.pop("bio_edit_area", None)
     st.session_state.pop("bio_readonly_area", None)
+    st.session_state.pop("_intake_seeded_for", None)
     st.session_state.app_view = "intake"
     st.rerun()
 
@@ -896,6 +897,7 @@ def _cancel_current_biography_edit() -> None:
     )
     st.session_state.pop("bio_edit_area", None)
     st.session_state.pop("bio_readonly_area", None)
+    st.session_state.pop("_intake_seeded_for", None)
     st.rerun()
 
 
@@ -918,7 +920,10 @@ def _draft_biography_from_current_intake(
         st.error(t("intake_draft_failed", error=exc))
     else:
         st.session_state.biography_text = drafted
-        st.session_state.pop("bio_unsaved_area", None)
+        if st.session_state.get("biography_edit_mode"):
+            st.session_state.bio_edit_area = drafted
+        else:
+            st.session_state.bio_unsaved_area = drafted
         st.toast(t("intake_draft_success"), icon="✅")
         st.rerun()
 
@@ -971,25 +976,36 @@ def _save_initial_biography(
         st.rerun()
 
 
-def _save_biography_changes(researcher_name: str) -> None:
+def _save_biography_changes(
+    researcher_name: str,
+    intake_data: dict[str, object] | None,
+    language: str,
+) -> None:
     """Persist the edited biography as a new revision."""
     bio = (
         st.session_state.get("bio_edit_area")
         or st.session_state.biography_text
         or ""
     )
-    if bio.strip() == st.session_state.latest_saved_biography_text.strip():
+    intake_payload = (
+        _collect_intake_answers(intake_data, language) if intake_data else {}
+    )
+    previous_intake_payload = st.session_state.initial_intake_answers
+    if (
+        bio.strip() == st.session_state.latest_saved_biography_text.strip()
+        and intake_payload == previous_intake_payload
+    ):
         st.session_state.update(
             biography_edit_mode=False,
             biography_text=st.session_state.latest_saved_biography_text,
         )
         st.session_state.pop("bio_edit_area", None)
         st.session_state.pop("bio_readonly_area", None)
+        st.session_state.pop("_intake_seeded_for", None)
         st.toast(t("save_changes_noop_toast"), icon="ℹ️")
         st.rerun()
 
     next_rev = st.session_state.biography_revision_number + 1
-    intake_payload = st.session_state.initial_intake_answers
     try:
         with st.spinner(t("save_changes_spinner")):
             revision_id, _ = db.insert_biography(
@@ -1007,6 +1023,7 @@ def _save_biography_changes(researcher_name: str) -> None:
             biography_revision_number=next_rev,
             biography_text=bio,
             latest_saved_biography_text=bio,
+            initial_intake_answers=intake_payload or {},
             biography_edit_mode=False,
             questionnaire_answers=None,
             current_questionnaire_id=None,
@@ -1014,6 +1031,7 @@ def _save_biography_changes(researcher_name: str) -> None:
         )
         st.session_state.pop("bio_edit_area", None)
         st.session_state.pop("bio_readonly_area", None)
+        st.session_state.pop("_intake_seeded_for", None)
         st.toast(t("save_changes_success_toast", n=next_rev), icon="✅")
         st.rerun()
 
@@ -1327,6 +1345,7 @@ _DEFAULT_STATE: dict[str, object] = {
     "app_view": "intake",
     "saved_personas_focus_questionnaire_id": None,
     "_comment_contexts": {},
+    "_intake_seeded_for": None,
 }
 for _key, _value in _DEFAULT_STATE.items():
     st.session_state.setdefault(_key, _value)
@@ -1498,14 +1517,28 @@ with st.sidebar:
                 or st.session_state.biography_text
                 or ""
             )
+            missing_open_ended = (
+                _missing_open_ended_ids(intake_data) if intake_data else []
+            )
+            if intake_data:
+                if st.button(
+                    t("intake_draft_button"),
+                    use_container_width=True,
+                    type="secondary",
+                    key="sidebar_edit_intake_draft_btn",
+                    disabled=bool(missing_open_ended),
+                ):
+                    _draft_biography_from_current_intake(
+                        intake_data, model_label, language
+                    )
             if st.button(
                 t("save_changes_button"),
                 type="primary",
-                disabled=not edited_bio.strip(),
+                disabled=not edited_bio.strip() or bool(missing_open_ended),
                 use_container_width=True,
                 key="sidebar_save_changes_btn",
             ):
-                _save_biography_changes(researcher_name)
+                _save_biography_changes(researcher_name, intake_data, language)
             if st.button(
                 t("cancel_edit_button"),
                 use_container_width=True,
@@ -1600,23 +1633,35 @@ with intake_col:
         )
 
     # --- Intake form -------------------------------------------------------
-    # After a simulation has been generated, hide the intake form so this page
-    # stays focused on the current saved biography. Saving a new biography
-    # revision clears `questionnaire_answers`, which brings the locked intake
-    # snapshot back until the next simulation run.
-    show_intake_form = st.session_state.questionnaire_answers is None
+    # After a simulation has been generated, hide the intake form unless the
+    # researcher is actively editing the persona. Edit mode reopens the intake
+    # answers so the next biography revision can document both intake and prose
+    # changes together.
+    edit_mode = bool(st.session_state.biography_edit_mode)
+    show_intake_form = (
+        st.session_state.questionnaire_answers is None or edit_mode
+    )
     if intake_load_error:
         st.warning(t("intake_load_failed", error=intake_load_error))
 
     if intake_data and show_intake_form:
         st.subheader(t("intake_form_header"))
         if persona_exists:
-            st.caption(t("intake_locked_caption"))
+            st.caption(
+                t("intake_form_caption") if edit_mode else t("intake_locked_caption")
+            )
             saved_intake_answers = st.session_state.initial_intake_answers
             if isinstance(saved_intake_answers, dict):
-                _seed_intake_widget_state_from_answers(
-                    intake_data, saved_intake_answers, language
+                seed_key = (
+                    f"{st.session_state.persona_id}:"
+                    f"{st.session_state.biography_revision_number}:"
+                    f"{'edit' if edit_mode else 'locked'}"
                 )
+                if st.session_state.get("_intake_seeded_for") != seed_key:
+                    _seed_intake_widget_state_from_answers(
+                        intake_data, saved_intake_answers, language
+                    )
+                    st.session_state["_intake_seeded_for"] = seed_key
         else:
             st.caption(t("intake_form_caption"))
 
@@ -1626,7 +1671,7 @@ with intake_col:
                 _render_intake_question(
                     question,
                     section["scale"],
-                    disabled=persona_exists,
+                    disabled=persona_exists and not edit_mode,
                 )
             st.divider()
 
@@ -1634,7 +1679,7 @@ with intake_col:
         # typed by the researcher or generated by Randomize. The banner
         # lists which question ids are still missing so the researcher
         # doesn't have to hunt for them.
-        if not persona_exists:
+        if not persona_exists or edit_mode:
             missing_open_ended = _missing_open_ended_ids(intake_data)
             if missing_open_ended:
                 missing_questions = _open_ended_question_labels(
@@ -1661,8 +1706,6 @@ with intake_col:
     # Each "save" in states 1 and 3 inserts a new row in `biographies`
     # sharing the same `persona_id`, with `revision_number` monotonically
     # increasing. See docs/persona_lifecycle_redesign.md.
-    edit_mode = bool(st.session_state.biography_edit_mode)
-
     if not persona_exists:
         # --- State 1: initial draft, not yet saved ------------------------
         if "bio_unsaved_area" not in st.session_state:
