@@ -3,7 +3,6 @@
 All calls go through a single cached client; each helper is a thin wrapper
 around one `.insert()` or `.select()` that returns plain Python types so the
 Streamlit UI never touches the Supabase SDK directly.
-
 UUIDs are generated client-side with `uuid.uuid4()` so that inserts can return
 the new row's id without an extra round-trip.
 """
