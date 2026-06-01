@@ -64,6 +64,12 @@ create index if not exists chat_logs_session_idx
 alter table biographies
     add column if not exists intake_answers jsonb;
 
+-- Version of the intake schema that produced the saved intake_answers.
+-- Existing rows default to v1 so older personas continue to load against the
+-- legacy/current intake file.
+alter table biographies
+    add column if not exists intake_version text not null default 'v1';
+
 -- Step 13 — Per-statement reasoning for questionnaire answers.
 -- `answers`     keeps only the structured choice ({rating, label}) per statement.
 -- `reasonings`  is a sibling jsonb mapping statement_id -> short rationale text

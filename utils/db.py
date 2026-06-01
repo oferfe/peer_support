@@ -44,6 +44,12 @@ def _is_missing_change_explanations_error(exc: Exception) -> bool:
     return "change_explanations" in message
 
 
+def _is_missing_intake_version_error(exc: Exception) -> bool:
+    """True when Supabase has not yet been migrated for intake versions."""
+    message = str(exc)
+    return "intake_version" in message
+
+
 # ---------------------------------------------------------------------------
 # Inserts
 # ---------------------------------------------------------------------------
@@ -55,6 +61,7 @@ def insert_biography(
     persona_id: str | None = None,
     revision_number: int = 1,
     intake_answers: dict[str, Any] | None = None,
+    intake_version: str | None = None,
 ) -> tuple[str, str]:
     """Insert a biography revision. Returns `(revision_id, persona_id)`.
 
@@ -81,7 +88,16 @@ def insert_biography(
     }
     if intake_answers is not None:
         row["intake_answers"] = intake_answers
-    get_client().table("biographies").insert(row).execute()
+    if intake_version is not None:
+        row["intake_version"] = intake_version
+    try:
+        get_client().table("biographies").insert(row).execute()
+    except Exception as exc:
+        if "intake_version" in row and _is_missing_intake_version_error(exc):
+            row.pop("intake_version", None)
+            get_client().table("biographies").insert(row).execute()
+        else:
+            raise
     return revision_id, resolved_persona_id
 
 
@@ -252,18 +268,33 @@ def fetch_active_persona_for_researcher(
     that persona's latest revision), and return the newest persona whose latest
     revision is still unfinished.
     """
-    resp = (
-        get_client()
-        .table("biographies")
-        .select(
-            "id, persona_id, revision_number, is_final, intake_answers, "
-            "researcher_name, biography_text, created_at"
+    client = get_client()
+    try:
+        resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, intake_answers, "
+                "intake_version, researcher_name, biography_text, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
         )
-        .eq("researcher_name", researcher_name)
-        .order("created_at", desc=True)
-        .limit(limit)
-        .execute()
-    )
+    except Exception as exc:
+        if not _is_missing_intake_version_error(exc):
+            raise
+        resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, intake_answers, "
+                "researcher_name, biography_text, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
 
     seen_personas: set[str] = set()
     for row in resp.data or []:
@@ -272,19 +303,33 @@ def fetch_active_persona_for_researcher(
             continue
         seen_personas.add(persona_id)
         if not row.get("is_final"):
-            initial = (
-                get_client()
-                .table("biographies")
-                .select("intake_answers")
-                .eq("persona_id", persona_id)
-                .order("revision_number", desc=False)
-                .limit(1)
-                .execute()
-            )
+            try:
+                initial = (
+                    client.table("biographies")
+                    .select("intake_answers, intake_version")
+                    .eq("persona_id", persona_id)
+                    .order("revision_number", desc=False)
+                    .limit(1)
+                    .execute()
+                )
+            except Exception as exc:
+                if not _is_missing_intake_version_error(exc):
+                    raise
+                initial = (
+                    client.table("biographies")
+                    .select("intake_answers")
+                    .eq("persona_id", persona_id)
+                    .order("revision_number", desc=False)
+                    .limit(1)
+                    .execute()
+                )
             initial_rows = initial.data or []
             if initial_rows:
                 row["initial_intake_answers"] = initial_rows[0].get(
                     "intake_answers"
+                )
+                row["initial_intake_version"] = initial_rows[0].get(
+                    "intake_version"
                 )
             return row
     return None
@@ -295,18 +340,33 @@ def fetch_recent_biographies(
     limit: int = 10,
 ) -> list[dict[str, Any]]:
     """Return the most recent biographies created by this researcher."""
-    resp = (
-        get_client()
-        .table("biographies")
-        .select(
-            "id, persona_id, revision_number, is_final, "
-            "researcher_name, biography_text, created_at"
+    client = get_client()
+    try:
+        resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, intake_version, "
+                "researcher_name, biography_text, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
         )
-        .eq("researcher_name", researcher_name)
-        .order("created_at", desc=True)
-        .limit(limit)
-        .execute()
-    )
+    except Exception as exc:
+        if not _is_missing_intake_version_error(exc):
+            raise
+        resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, "
+                "researcher_name, biography_text, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(limit)
+            .execute()
+        )
     return resp.data or []
 
 
@@ -325,17 +385,33 @@ def fetch_saved_personas_for_researcher(
     together without doing joins in Streamlit.
     """
     client = get_client()
-    bio_resp = (
-        client.table("biographies")
-        .select(
-            "id, persona_id, revision_number, is_final, finalized_at, "
-            "researcher_name, biography_text, intake_answers, created_at"
+    try:
+        bio_resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, finalized_at, "
+                "researcher_name, biography_text, intake_answers, "
+                "intake_version, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(biography_limit)
+            .execute()
         )
-        .eq("researcher_name", researcher_name)
-        .order("created_at", desc=True)
-        .limit(biography_limit)
-        .execute()
-    )
+    except Exception as exc:
+        if not _is_missing_intake_version_error(exc):
+            raise
+        bio_resp = (
+            client.table("biographies")
+            .select(
+                "id, persona_id, revision_number, is_final, finalized_at, "
+                "researcher_name, biography_text, intake_answers, created_at"
+            )
+            .eq("researcher_name", researcher_name)
+            .order("created_at", desc=True)
+            .limit(biography_limit)
+            .execute()
+        )
 
     personas_by_id: dict[str, dict[str, Any]] = {}
     for row in bio_resp.data or []:
@@ -483,13 +559,27 @@ def fetch_previous_questionnaire_for_persona(
         if not previous_bio_id or previous_bio_id == current_biography_id:
             continue
 
-        bio_resp = (
-            client.table("biographies")
-            .select("id, persona_id, revision_number, biography_text, created_at")
-            .eq("id", previous_bio_id)
-            .limit(1)
-            .execute()
-        )
+        try:
+            bio_resp = (
+                client.table("biographies")
+                .select(
+                    "id, persona_id, revision_number, biography_text, "
+                    "intake_version, created_at"
+                )
+                .eq("id", previous_bio_id)
+                .limit(1)
+                .execute()
+            )
+        except Exception as exc:
+            if not _is_missing_intake_version_error(exc):
+                raise
+            bio_resp = (
+                client.table("biographies")
+                .select("id, persona_id, revision_number, biography_text, created_at")
+                .eq("id", previous_bio_id)
+                .limit(1)
+                .execute()
+            )
         bio_rows = bio_resp.data or []
         if not bio_rows:
             continue

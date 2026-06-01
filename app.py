@@ -27,6 +27,7 @@ from utils.i18n import (
     t,
 )
 from utils.intake import (
+    DEFAULT_INTAKE_VERSION,
     get_localized_sections,
     list_open_ended_question_ids,
     load_intake,
@@ -51,6 +52,10 @@ def _choice_key(qid: str) -> str:
     return f"intake_choice_{qid}"
 
 
+def _multi_key(qid: str) -> str:
+    return f"intake_multi_{qid}"
+
+
 def _text_key(qid: str) -> str:
     return f"intake_text_{qid}"
 
@@ -65,6 +70,11 @@ def _rating_key(qid: str) -> str:
 
 def _answer_comment_key(questionnaire_id: str, qid: str) -> str:
     return f"answer_comment_{questionnaire_id}_{qid}"
+
+
+def _is_other_option(option: str) -> bool:
+    """Return true for localized "Other" answer labels."""
+    return option.strip().lower() in {"other", "אחר"}
 
 
 def _render_intake_question(
@@ -98,6 +108,34 @@ def _render_intake_question(
                     max_chars=2,
                     disabled=disabled,
                 )
+        selected_idx = st.session_state.get(_choice_key(qid))
+        if (
+            qtype == "multiple_choice"
+            and isinstance(selected_idx, int)
+            and 0 <= selected_idx < len(options)
+            and _is_other_option(options[selected_idx])
+        ):
+            st.text_area(
+                t("intake_details_label"),
+                key=_text_key(qid),
+                height=120,
+                disabled=disabled,
+            )
+    elif qtype == "multiple_select_with_other":
+        selected = st.multiselect(
+            label,
+            options=list(range(len(options))),
+            format_func=lambda i: options[i],
+            key=_multi_key(qid),
+            disabled=disabled,
+        )
+        if any(0 <= idx < len(options) and _is_other_option(options[idx]) for idx in selected):
+            st.text_area(
+                t("intake_details_label"),
+                key=_text_key(qid),
+                height=120,
+                disabled=disabled,
+            )
     elif qtype == "boolean_with_text":
         st.radio(
             label,
@@ -117,7 +155,7 @@ def _render_intake_question(
                 height=160,
                 disabled=disabled,
             )
-    elif qtype == "likert_with_open_elaboration":
+    elif qtype in ("likert", "likert_with_open_elaboration"):
         if scale_labels:
             st.radio(
                 label,
@@ -128,12 +166,13 @@ def _render_intake_question(
                 key=_rating_key(qid),
                 disabled=disabled,
             )
-        st.text_area(
-            t("intake_elaborate_label"),
-            key=_text_key(qid),
-            height=160,
-            disabled=disabled,
-        )
+        if qtype == "likert_with_open_elaboration":
+            st.text_area(
+                t("intake_elaborate_label"),
+                key=_text_key(qid),
+                height=160,
+                disabled=disabled,
+            )
     elif qtype == "open_ended":
         st.text_area(
             label,
@@ -177,6 +216,9 @@ def _apply_random_intake_answers(
         elif isinstance(value, dict) and "choice" in value:
             st.session_state[_choice_key(qid)] = value["choice"]
             st.session_state[_text_key(qid)] = value.get("elaboration", "")
+        elif isinstance(value, dict) and "choices" in value:
+            st.session_state[_multi_key(qid)] = value.get("choices", [])
+            st.session_state[_text_key(qid)] = value.get("other", "")
 
     # Collect the intake answers *as they stand after* the structured
     # randomization so the LLM prompt sees the full context when it
@@ -244,6 +286,7 @@ def _seed_intake_widget_state_from_answers(
         for q in section["questions"]:
             qid = q["id"]
             st.session_state.pop(_choice_key(qid), None)
+            st.session_state.pop(_multi_key(qid), None)
             st.session_state.pop(_text_key(qid), None)
             st.session_state.pop(_rating_key(qid), None)
             if qid == _CHILDREN_QID:
@@ -262,14 +305,26 @@ def _seed_intake_widget_state_from_answers(
             if qtype in ("boolean", "multiple_choice"):
                 if isinstance(value, str) and value in options:
                     st.session_state[_choice_key(qid)] = options.index(value)
-                elif qid == _CHILDREN_QID and isinstance(value, dict):
+                elif isinstance(value, dict):
                     choice = value.get("choice")
                     if isinstance(choice, str) and choice in options:
                         st.session_state[_choice_key(qid)] = options.index(choice)
-                    number = value.get("number")
-                    st.session_state[_children_count_key()] = (
-                        str(number) if number is not None else ""
-                    )
+                    if qid == _CHILDREN_QID:
+                        number = value.get("number")
+                        st.session_state[_children_count_key()] = (
+                            str(number) if number is not None else ""
+                        )
+                    else:
+                        st.session_state[_text_key(qid)] = value.get("other") or ""
+            elif qtype == "multiple_select_with_other" and isinstance(value, dict):
+                choices = value.get("choices") or []
+                if isinstance(choices, list):
+                    st.session_state[_multi_key(qid)] = [
+                        options.index(choice)
+                        for choice in choices
+                        if isinstance(choice, str) and choice in options
+                    ]
+                st.session_state[_text_key(qid)] = value.get("other") or ""
             elif qtype == "boolean_with_text" and isinstance(value, dict):
                 choice = value.get("choice")
                 if isinstance(choice, str) and choice in options:
@@ -277,18 +332,18 @@ def _seed_intake_widget_state_from_answers(
                 st.session_state[_text_key(qid)] = (
                     value.get("elaboration") or ""
                 )
-            elif (
-                qtype == "likert_with_open_elaboration"
-                and isinstance(value, dict)
+            elif qtype in ("likert", "likert_with_open_elaboration") and isinstance(
+                value, dict
             ):
                 rating = value.get("rating")
                 if isinstance(rating, str) and scale and rating in scale:
                     st.session_state[_rating_key(qid)] = (
                         scale.index(rating) + 1
                     )
-                st.session_state[_text_key(qid)] = (
-                    value.get("elaboration") or ""
-                )
+                if qtype == "likert_with_open_elaboration":
+                    st.session_state[_text_key(qid)] = (
+                        value.get("elaboration") or ""
+                    )
             elif qtype == "open_ended" and isinstance(value, str):
                 st.session_state[_text_key(qid)] = value
 
@@ -304,7 +359,9 @@ def _collect_intake_answers(
 
         open_ended                      -> str
         boolean / multiple_choice       -> str (the selected option label)
+        multiple_select_with_other      -> {"choices": list[str], "other": str}
         boolean_with_text               -> {"choice": str, "elaboration": str}
+        likert                          -> {"rating": str}
         likert_with_open_elaboration    -> {"rating": str, "elaboration": str}
 
     Questions the researcher never touched are omitted.
@@ -327,8 +384,26 @@ def _collect_intake_answers(
                             )
                             or "",
                         }
+                    elif qtype == "multiple_choice" and _is_other_option(options[idx]):
+                        out[qid] = {
+                            "choice": options[idx],
+                            "other": st.session_state.get(_text_key(qid), "") or "",
+                        }
                     else:
                         out[qid] = options[idx]
+            elif qtype == "multiple_select_with_other":
+                selected = st.session_state.get(_multi_key(qid), []) or []
+                if isinstance(selected, list):
+                    choices = [
+                        options[idx]
+                        for idx in selected
+                        if isinstance(idx, int) and 0 <= idx < len(options)
+                    ]
+                    if choices:
+                        out[qid] = {
+                            "choices": choices,
+                            "other": st.session_state.get(_text_key(qid), "") or "",
+                        }
             elif qtype == "boolean_with_text":
                 idx = st.session_state.get(_choice_key(qid))
                 if isinstance(idx, int) and 0 <= idx < len(options):
@@ -336,17 +411,18 @@ def _collect_intake_answers(
                         "choice": options[idx],
                         "elaboration": st.session_state.get(_text_key(qid), "") or "",
                     }
-            elif qtype == "likert_with_open_elaboration":
+            elif qtype in ("likert", "likert_with_open_elaboration"):
                 rating = st.session_state.get(_rating_key(qid))
                 if (
                     isinstance(rating, int)
                     and scale
                     and 1 <= rating <= len(scale)
                 ):
-                    out[qid] = {
-                        "rating": scale[rating - 1],
-                        "elaboration": st.session_state.get(_text_key(qid), "") or "",
-                    }
+                    out[qid] = {"rating": scale[rating - 1]}
+                    if qtype == "likert_with_open_elaboration":
+                        out[qid]["elaboration"] = (
+                            st.session_state.get(_text_key(qid), "") or ""
+                        )
             elif qtype == "open_ended":
                 text = st.session_state.get(_text_key(qid), "") or ""
                 if text.strip():
@@ -675,6 +751,11 @@ def _render_saved_personas_page(
                 or revision.get("intake_answers")
                 or {}
             ),
+            current_intake_version=(
+                initial_revision.get("intake_version")
+                or revision.get("intake_version")
+                or DEFAULT_INTAKE_VERSION
+            ),
             biography_edit_mode=False,
             persona_is_final=bool(
                 (persona.get("latest_biography") or {}).get("is_final")
@@ -861,6 +942,7 @@ def _finish_current_persona() -> None:
             biography_text="",
             latest_saved_biography_text="",
             initial_intake_answers={},
+            current_intake_version=_configured_intake_version(),
             biography_edit_mode=False,
             persona_is_final=False,
             questionnaire_answers=None,
@@ -942,6 +1024,11 @@ def _save_initial_biography(
     intake_payload = (
         _collect_intake_answers(intake_data, language) if intake_data else {}
     )
+    intake_version = (
+        str(intake_data.get("version") or DEFAULT_INTAKE_VERSION)
+        if intake_data
+        else DEFAULT_INTAKE_VERSION
+    )
     try:
         with st.spinner(t("save_bio_spinner")):
             revision_id, new_persona_id = db.insert_biography(
@@ -950,6 +1037,7 @@ def _save_initial_biography(
                 persona_id=None,
                 revision_number=1,
                 intake_answers=intake_payload or None,
+                intake_version=intake_version,
             )
     except Exception as exc:  # noqa: BLE001
         st.error(t("save_bio_failed", error=exc))
@@ -961,6 +1049,7 @@ def _save_initial_biography(
             biography_text=bio,
             latest_saved_biography_text=bio,
             initial_intake_answers=intake_payload or {},
+            current_intake_version=intake_version,
             biography_edit_mode=False,
             persona_is_final=False,
             questionnaire_answers=None,
@@ -990,6 +1079,14 @@ def _save_biography_changes(
     intake_payload = (
         _collect_intake_answers(intake_data, language) if intake_data else {}
     )
+    intake_version = (
+        str(intake_data.get("version") or DEFAULT_INTAKE_VERSION)
+        if intake_data
+        else str(
+            st.session_state.get("current_intake_version")
+            or DEFAULT_INTAKE_VERSION
+        )
+    )
     previous_intake_payload = st.session_state.initial_intake_answers
     if (
         bio.strip() == st.session_state.latest_saved_biography_text.strip()
@@ -1014,6 +1111,7 @@ def _save_biography_changes(
                 persona_id=st.session_state.persona_id,
                 revision_number=next_rev,
                 intake_answers=intake_payload or None,
+                intake_version=intake_version,
             )
     except Exception as exc:  # noqa: BLE001
         st.error(t("save_changes_failed", error=exc))
@@ -1024,6 +1122,7 @@ def _save_biography_changes(
             biography_text=bio,
             latest_saved_biography_text=bio,
             initial_intake_answers=intake_payload or {},
+            current_intake_version=intake_version,
             biography_edit_mode=False,
             questionnaire_answers=None,
             current_questionnaire_id=None,
@@ -1136,6 +1235,13 @@ def _secret_bool(key: str, default: bool = False) -> bool:
     return bool(value)
 
 
+def _configured_intake_version() -> str:
+    """Return the intake version new personas should use."""
+    return str(st.secrets.get("INTAKE_VERSION", DEFAULT_INTAKE_VERSION)).strip() or (
+        DEFAULT_INTAKE_VERSION
+    )
+
+
 # Language must be resolved before we call `t("page_title")`, so initialize it
 # in session state first. In deployment mode the researcher-facing UI is locked
 # to Hebrew only; local development keeps the language switch.
@@ -1201,6 +1307,7 @@ def _clear_persona_session_state() -> None:
         biography_text="",
         latest_saved_biography_text="",
         initial_intake_answers={},
+        current_intake_version=_configured_intake_version(),
         biography_edit_mode=False,
         persona_is_final=False,
         questionnaire_answers=None,
@@ -1334,6 +1441,7 @@ _DEFAULT_STATE: dict[str, object] = {
     "biography_text": "",
     "latest_saved_biography_text": "",
     "initial_intake_answers": {},
+    "current_intake_version": DEFAULT_INTAKE_VERSION,
     "biography_edit_mode": False,
     "persona_is_final": False,
     "questionnaire_answers": None,
@@ -1363,6 +1471,7 @@ if st.session_state.active_persona_loaded_for != researcher_name:
         biography_text="",
         latest_saved_biography_text="",
         initial_intake_answers={},
+        current_intake_version=_configured_intake_version(),
         biography_edit_mode=False,
         persona_is_final=False,
         questionnaire_answers=None,
@@ -1414,6 +1523,9 @@ if st.session_state.active_persona_loaded_for != researcher_name:
             )
             or active_persona.get("intake_answers")
             or {},
+            current_intake_version=active_persona.get("initial_intake_version")
+            or active_persona.get("intake_version")
+            or DEFAULT_INTAKE_VERSION,
             biography_edit_mode=False,
             persona_is_final=bool(active_persona.get("is_final")),
             questionnaire_answers=(
@@ -1447,8 +1559,13 @@ if (
 
 language = st.session_state.language
 questionnaire = load_questionnaire()
+if st.session_state.persona_id is None:
+    st.session_state.current_intake_version = _configured_intake_version()
+current_intake_version = str(
+    st.session_state.get("current_intake_version") or DEFAULT_INTAKE_VERSION
+)
 try:
-    intake_data = load_intake()
+    intake_data = load_intake(current_intake_version)
 except (FileNotFoundError, ValueError) as exc:
     intake_data = None
     intake_load_error = exc
@@ -1654,6 +1771,7 @@ with intake_col:
             if isinstance(saved_intake_answers, dict):
                 seed_key = (
                     f"{st.session_state.persona_id}:"
+                    f"{st.session_state.current_intake_version}:"
                     f"{st.session_state.biography_revision_number}:"
                     f"{'edit' if edit_mode else 'locked'}"
                 )

@@ -1,8 +1,9 @@
 """Structured intake form: load, localize, randomize, and prompt-build.
 
-The raw intake content lives in `data/intake.json` as a bilingual (en/he)
-dictionary. This module exposes four responsibilities used by the Streamlit
-app:
+The raw intake content lives in versioned JSON files (`data/intake.json` for
+legacy v1, or `data/intake_v2.json`, `data/intake_v3.json`, ...). Each file is
+a bilingual (en/he) dictionary. This module exposes four responsibilities used
+by the Streamlit app:
 
 - `load_intake()`           reads the JSON from disk (cached).
 - `get_localized_sections()` flattens it into a UI-friendly shape with all
@@ -18,8 +19,10 @@ human-readable without cross-referencing `intake.json`:
 
     open_ended                      -> str
     multiple_choice, boolean        -> str   (the selected option label)
+    multiple_select_with_other      -> {"choices": list[str], "other": str}
         demo_q4 / children may also store {"choice": str, "number": str}
     boolean_with_text               -> {"choice": str, "elaboration": str}
+    likert                          -> {"rating": str}
     likert_with_open_elaboration    -> {"rating": str, "elaboration": str}
 
 Note: `randomize_answers()` still returns *int-shaped* values because it
@@ -46,13 +49,17 @@ from .i18n import LANG_EN, LANG_HE
 # Constants
 # ---------------------------------------------------------------------------
 
-_INTAKE_PATH = Path(__file__).resolve().parent.parent / "data" / "intake.json"
+_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+_LEGACY_INTAKE_PATH = _DATA_DIR / "intake.json"
+DEFAULT_INTAKE_VERSION = "v1"
 
 QUESTION_TYPES = (
     "boolean",
     "multiple_choice",
+    "multiple_select_with_other",
     "open_ended",
     "boolean_with_text",
+    "likert",
     "likert_with_open_elaboration",
 )
 
@@ -65,20 +72,45 @@ LIKERT_MAX = 5
 # ---------------------------------------------------------------------------
 
 
+def _normalize_intake_version(version: str | None) -> str:
+    """Return a safe intake version identifier for file lookup."""
+    cleaned = (version or DEFAULT_INTAKE_VERSION).strip()
+    if not cleaned:
+        return DEFAULT_INTAKE_VERSION
+    allowed = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-")
+    if any(char not in allowed for char in cleaned):
+        raise ValueError(
+            "intake version may contain only letters, numbers, underscores, "
+            f"and hyphens: {cleaned!r}"
+        )
+    return cleaned
+
+
+def _intake_path_for_version(version: str) -> Path:
+    """Resolve the JSON path for an intake version."""
+    if version == DEFAULT_INTAKE_VERSION:
+        versioned_path = _DATA_DIR / f"intake_{version}.json"
+        return versioned_path if versioned_path.exists() else _LEGACY_INTAKE_PATH
+    return _DATA_DIR / f"intake_{version}.json"
+
+
 @st.cache_data(show_spinner=False)
-def load_intake() -> dict[str, Any]:
-    """Read and cache the raw intake JSON from disk.
+def load_intake(version: str | None = None) -> dict[str, Any]:
+    """Read and cache the raw intake JSON for a specific version.
 
     Raises `FileNotFoundError` if the file is missing, and `ValueError` if the
     top-level `sections` key is absent (fail loudly rather than silently
     skipping the form).
     """
-    if not _INTAKE_PATH.exists():
-        raise FileNotFoundError(f"Intake file not found: {_INTAKE_PATH}")
-    with _INTAKE_PATH.open("r", encoding="utf-8") as f:
+    resolved_version = _normalize_intake_version(version)
+    intake_path = _intake_path_for_version(resolved_version)
+    if not intake_path.exists():
+        raise FileNotFoundError(f"Intake file not found: {intake_path}")
+    with intake_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
     if not isinstance(data, dict) or "sections" not in data:
-        raise ValueError("intake.json must be an object with a 'sections' key")
+        raise ValueError(f"{intake_path.name} must be an object with a 'sections' key")
+    data["version"] = str(data.get("version") or resolved_version)
     return data
 
 
@@ -191,7 +223,8 @@ def randomize_answers(
     """Return a randomized answer set keyed by `question_id`.
 
     - boolean / multiple_choice           -> uniform random index into options
-    - likert_with_open_elaboration        -> uniform int in [LIKERT_MIN, LIKERT_MAX]
+    - multiple_select_with_other          -> one or two random option indexes
+    - likert / likert_with_open_elaboration -> uniform int in [LIKERT_MIN, LIKERT_MAX]
     - open_ended                          -> "" (LLM fills during drafting)
     - boolean_with_text                   -> random choice + "" elaboration
 
@@ -200,6 +233,8 @@ def randomize_answers(
     r = rng or random
     answers: dict[str, Any] = {}
     for section in intake.get("sections", []):
+        scale = section.get("scale") or []
+        scale_max = len(scale) if isinstance(scale, list) and scale else LIKERT_MAX
         for q in section.get("questions", []):
             qid = q["id"]
             qtype = q.get("type")
@@ -207,15 +242,24 @@ def randomize_answers(
             if qtype in ("boolean", "multiple_choice"):
                 if opts:
                     answers[qid] = r.randrange(len(opts))
+            elif qtype == "multiple_select_with_other":
+                if opts:
+                    choice_count = 1 if len(opts) == 1 else r.randint(1, 2)
+                    answers[qid] = {
+                        "choices": r.sample(range(len(opts)), k=choice_count),
+                        "other": "",
+                    }
             elif qtype == "boolean_with_text":
                 if opts:
                     answers[qid] = {
                         "choice": r.randrange(len(opts)),
                         "elaboration": "",
                     }
+            elif qtype == "likert":
+                answers[qid] = {"rating": r.randint(LIKERT_MIN, scale_max)}
             elif qtype == "likert_with_open_elaboration":
                 answers[qid] = {
-                    "rating": r.randint(LIKERT_MIN, LIKERT_MAX),
+                    "rating": r.randint(LIKERT_MIN, scale_max),
                     "elaboration": "",
                 }
             elif qtype == "open_ended":
@@ -272,16 +316,38 @@ def _format_answer_line(
         if isinstance(answer, dict):
             choice = answer.get("choice")
             number = str(answer.get("number") or "").strip()
+            other = str(answer.get("other") or "").strip()
             if not isinstance(choice, str) or not choice.strip():
                 return None
             line = f"- {qtext} {choice.strip()}"
             if number:
                 line += f" — {number}"
+            if other:
+                line += f" — {other}"
             return line
         label = _resolve_choice(answer)
         if label is None:
             return None
         return f"- {qtext} {label}"
+
+    if qtype == "multiple_select_with_other":
+        if not isinstance(answer, dict):
+            return None
+        raw_choices = answer.get("choices") or []
+        if not isinstance(raw_choices, list):
+            return None
+        choices = [
+            str(choice).strip()
+            for choice in raw_choices
+            if str(choice).strip()
+        ]
+        if not choices:
+            return None
+        other = str(answer.get("other") or "").strip()
+        line = f"- {qtext} {', '.join(choices)}"
+        if other:
+            line += f" — {other}"
+        return line
 
     if qtype == "boolean_with_text":
         if not isinstance(answer, dict):
@@ -294,6 +360,14 @@ def _format_answer_line(
         if elab:
             line += f" — {elab}"
         return line
+
+    if qtype == "likert":
+        if not isinstance(answer, dict):
+            return None
+        label = _resolve_rating(answer.get("rating"))
+        if label is None:
+            return None
+        return f"- {qtext} {label}"
 
     if qtype == "likert_with_open_elaboration":
         if not isinstance(answer, dict):

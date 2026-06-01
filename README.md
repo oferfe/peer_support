@@ -61,6 +61,11 @@ OPENAI_MODEL   = "gpt-4o"
 # language/model/system-status controls. Use this in Streamlit Cloud.
 # DEPLOYMENT_MODE = true
 
+# Intake form version for new personas. Existing personas keep their saved
+# intake version. Use data/intake_v2.json with INTAKE_VERSION = "v2" when you
+# add a new form.
+INTAKE_VERSION = "v1"
+
 # Ollama: reads OLLAMA_BASE_URL (default http://localhost:11434/v1),
 # OLLAMA_MODEL (default gemma3:12b), and OLLAMA_API_KEY (default "ollama").
 OLLAMA_MODEL   = "gemma3:12b"
@@ -78,6 +83,15 @@ password = "replace-with-a-private-password"
 ```
 
 The real `secrets.toml` is gitignored and must never be committed.
+
+### Intake form versions
+
+The default intake form is `data/intake.json`, treated as version `v1`.
+To create a new version, add a file such as `data/intake_v2.json` with the same
+JSON structure and set `INTAKE_VERSION = "v2"` in Streamlit secrets. New
+personas will use the new form, while existing personas continue loading the
+version saved with their biography revisions. Re-run `supabase/schema.sql` once
+so the `biographies.intake_version` column exists.
 
 ### Running Ollama locally
 

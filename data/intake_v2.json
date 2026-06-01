@@ -1,0 +1,966 @@
+{
+  "version": "v2",
+  "sections": [
+    {
+      "id": "occupational",
+      "title": {
+        "en": "Occupational background",
+        "he": "רקע תעסוקתי"
+      },
+      "scale": null,
+      "questions": [
+        {
+          "id": "occ_q1",
+          "question": {
+            "en": "What is your current role as a peer worker at your workplace?",
+            "he": "מהו התפקיד הנוכחי שלך כעמית/ה במקום העבודה?"
+          },
+          "type": "open_ended"
+        },
+        {
+          "id": "occ_q2",
+          "question": {
+            "en": "My type of role as a peer worker:",
+            "he": "סוג התפקיד שלי כעמית/ה:"
+          },
+          "type": "multiple_select_with_other",
+          "options": [
+            {
+              "en": "In a unique role for workers with lived-experience knowledge, for example: peer specialist in a hospital or health fund",
+              "he": "בתפקיד ייחודי לעובדים עם ידע מניסיון - למשל: עמית מומחה בבית חולים או בקופת חולים"
+            },
+            {
+              "en": "In a traditional role, similar to workers without lived-experience knowledge, for example: mentor/support worker/rehabilitation guide",
+              "he": "בתפקיד מסורתי, בדומה לעובדים שאין להם ידע מניסיון - למשל: חונך/סומך/מדריך שיקום"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "occ_q3",
+          "question": {
+            "en": "Have you completed training as a peer worker?",
+            "he": "האם עברת הכשרה כעמית/ה?"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Yes, training through course(s) designated for peers with lived-experience knowledge",
+              "he": "כן, הכשרה במסגרת קורס/ים המיועדים עבור עמיתים עם ידע מניסיון"
+            },
+            {
+              "en": "Yes, training through an individual mentoring process",
+              "he": "כן, הכשרה במסגרת תהליך ליווי אישי"
+            },
+            {
+              "en": "Both designated course(s) and an individual mentoring process",
+              "he": "גם קורס/ים ייעודיים וגם תהליך ליווי אישי"
+            },
+            {
+              "en": "No, I have not completed formal training",
+              "he": "לא, לא עברתי הכשרה פורמלית"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_hospital",
+          "question": {
+            "en": "Main setting where you currently work: psychiatric hospital",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: בית חולים פסיכיאטרי"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_hmo",
+          "question": {
+            "en": "Main setting where you currently work: health fund",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: קופת חולים"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_clinic",
+          "question": {
+            "en": "Main setting where you currently work: mental health clinic",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: מרפאה לבריאות הנפש"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_rehab",
+          "question": {
+            "en": "Main setting where you currently work: community rehabilitation services (housing/employment/leisure)",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: שירותי שיקום בקהילה (דיור/תעסוקה/פנאי)"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_social",
+          "question": {
+            "en": "Main setting where you currently work: NGOs and social organizations",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: עמותות וארגונים חברתיים"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_research",
+          "question": {
+            "en": "Main setting where you currently work: survey institute/research body (such as quality surveyors)",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: מכוני סקרים/גוף מחקר (כגון סוקרי איכות)"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_project",
+          "question": {
+            "en": "Main setting where you currently work: community initiative or social project that trains or employs peers",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: מיזם קהילתי או פרויקט חברתי המכשיר או מפעיל עמיתים"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q4_other",
+          "question": {
+            "en": "Main setting where you currently work: other",
+            "he": "המסגרת העיקרית שבה את/ה עובד/ת כיום: אחר"
+          },
+          "type": "boolean_with_text",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q5_individual",
+          "question": {
+            "en": "Type of work by form of support: individual work",
+            "he": "סוג העבודה מבחינת אופן הליווי: עבודה פרטנית"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q5_group",
+          "question": {
+            "en": "Type of work by form of support: group work",
+            "he": "סוג העבודה מבחינת אופן הליווי: עבודה קבוצתית"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q5_combined",
+          "question": {
+            "en": "Type of work by form of support: combined work (individual + group)",
+            "he": "סוג העבודה מבחינת אופן הליווי: עבודה משולבת (פרטני+קבוצתי)"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q5_other",
+          "question": {
+            "en": "Type of work by form of support: other",
+            "he": "סוג העבודה מבחינת אופן הליווי: אחר"
+          },
+          "type": "boolean_with_text",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q6",
+          "question": {
+            "en": "How many years have you worked as a peer worker?",
+            "he": "כמה שנים את/ה עובד/ת כעמית/ה?"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Less than one year",
+              "he": "פחות משנה"
+            },
+            {
+              "en": "1-2 years",
+              "he": "1-2 שנים"
+            },
+            {
+              "en": "3-5 years",
+              "he": "3-5 שנים"
+            },
+            {
+              "en": "More than 5 years",
+              "he": "מעל 5 שנים"
+            }
+          ]
+        },
+        {
+          "id": "occ_q7",
+          "question": {
+            "en": "What is your current position scope as a peer worker? (If this refers to several positions, choose other and elaborate)",
+            "he": "מה היקף המשרה הנוכחית שלך כעמית/ה? (במידה ומדובר בכמה משרות, נא לבחור אחר ולפרט)"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Up to a quarter position (up to 10 hours per week)",
+              "he": "עד רבע משרה (עד 10 שעות בשבוע)"
+            },
+            {
+              "en": "Quarter to half position (10-20 hours per week)",
+              "he": "רבע עד חצי משרה (בין 10 ל-20 שעות בשבוע)"
+            },
+            {
+              "en": "Half to 75% position (21-30 hours per week)",
+              "he": "חצי משרה עד 75% (בין 21-30 שעות בשבוע)"
+            },
+            {
+              "en": "Three-quarter to full-time position (over 30 weekly hours)",
+              "he": "שלושת-רבעי עד משרה מלאה (מעל 30 שעות שבועיות)"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "occ_q8",
+          "question": {
+            "en": "Seniority in the current organization",
+            "he": "ותק בארגון הנוכחי"
+          },
+          "type": "open_ended"
+        },
+        {
+          "id": "occ_q9",
+          "question": {
+            "en": "Seniority in the current role",
+            "he": "ותק בתפקיד הנוכחי"
+          },
+          "type": "open_ended"
+        },
+        {
+          "id": "occ_q10",
+          "question": {
+            "en": "Pay arrangement:",
+            "he": "תנאי שכר:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Hourly",
+              "he": "שעתי"
+            },
+            {
+              "en": "Monthly",
+              "he": "חודשי"
+            },
+            {
+              "en": "Output-based/freelance work",
+              "he": "עבודה על פי תפוקה/פרילנס"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "occ_q11",
+          "question": {
+            "en": "What is your monthly income from your work as a peer worker (net)?",
+            "he": "מהי ההכנסה החודשית שלך מעבודתך כעמית/ה (נטו)?"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Up to NIS 1,500",
+              "he": "עד 1,500 ש״ח"
+            },
+            {
+              "en": "NIS 1,501-3,000",
+              "he": "1,501-3,000 ש״ח"
+            },
+            {
+              "en": "NIS 3,001-4,500",
+              "he": "3,001-4,500 ש״ח"
+            },
+            {
+              "en": "NIS 4,501-6,000",
+              "he": "4,501-6,000 ש״ח"
+            },
+            {
+              "en": "NIS 6,001-7,500",
+              "he": "6,001-7,500 ש״ח"
+            },
+            {
+              "en": "NIS 7,501-9,000",
+              "he": "7,501-9,000 ש״ח"
+            },
+            {
+              "en": "Over NIS 9,000",
+              "he": "מעל 9,000 ש״ח"
+            },
+            {
+              "en": "Prefer not to answer",
+              "he": "מעדיף/ה לא להשיב"
+            }
+          ]
+        },
+        {
+          "id": "occ_q12_manager",
+          "question": {
+            "en": "Have you chosen to share your psychiatric diagnosis with your manager(s)?",
+            "he": "בחרת לשתף את האבחנה הפסיכיאטרית שלך עם המנהל/ים שלי"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q12_colleagues",
+          "question": {
+            "en": "Have you chosen to share your psychiatric diagnosis with colleagues/peers at work?",
+            "he": "בחרת לשתף את האבחנה הפסיכיאטרית שלך עם קולגות/עמיתים לעבודה"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "occ_q12_recipients",
+          "question": {
+            "en": "Have you chosen to share your psychiatric diagnosis with service recipients?",
+            "he": "בחרת לשתף את האבחנה הפסיכיאטרית שלך עם מקבלי/ות השירות"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "demographics",
+      "title": {
+        "en": "Socio-demographic background and diagnosis",
+        "he": "רקע סוציו-דמוגרפי ואבחנה"
+      },
+      "scale": null,
+      "questions": [
+        {
+          "id": "demo_q1",
+          "question": {
+            "en": "What is your psychiatric diagnosis?",
+            "he": "מהי האבחנה הפסיכיאטרית שלך?"
+          },
+          "type": "multiple_select_with_other",
+          "options": [
+            {
+              "en": "Schizophrenia",
+              "he": "סכיזופרניה"
+            },
+            {
+              "en": "Major depressive disorder",
+              "he": "הפרעת דיכאון מג'ורי"
+            },
+            {
+              "en": "Bipolar disorder",
+              "he": "הפרעה דו-קוטבית"
+            },
+            {
+              "en": "Schizoaffective disorder",
+              "he": "הפרעה סכיזואפקטיבית"
+            },
+            {
+              "en": "Post-traumatic stress disorder (PTSD)",
+              "he": "הפרעת דחק פוסט-טראומטית (PTSD)"
+            },
+            {
+              "en": "Obsessive-compulsive disorder (OCD)",
+              "he": "הפרעה אובססיבית-קומפולסיבית (OCD)"
+            },
+            {
+              "en": "Borderline personality disorder",
+              "he": "הפרעת אישיות גבולית"
+            },
+            {
+              "en": "Severe anxiety condition",
+              "he": "מצב חרדה קשה"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "sub_demo_q1",
+          "question": {
+            "en": "Describe your psychiatric diagnosis in a few sentences. For example, include the age at which you were diagnosed, how many hospitalizations you have had, whether you have experienced a suicide attempt or the loss of a close person during your life, how you function alongside the illness, and any other relevant details.",
+            "he": "ספר/י בכמה משפטים על האבחנה הפסיכיאטרית איתה את/ה מתמודד/ת בחייך, למשל: באיזה גיל אובחנת, כמה אשפוזים עברת, האם במהלך חייך חווית ניסיון התאבדות או אובדן של אדם קרוב, כיצד את/ה מתפקד/ת לצד המחלה ופרטים נוספים רלוונטיים."
+          },
+          "type": "open_ended"
+        },
+        {
+          "id": "demo_q2",
+          "question": {
+            "en": "Gender:",
+            "he": "מגדר:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Man",
+              "he": "גבר"
+            },
+            {
+              "en": "Woman",
+              "he": "אישה"
+            },
+            {
+              "en": "LGBTQ+",
+              "he": "להטב״ק"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "demo_q3",
+          "question": {
+            "en": "Marital status:",
+            "he": "מצב משפחתי:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Single",
+              "he": "רווק/ה"
+            },
+            {
+              "en": "In a relationship",
+              "he": "בזוגיות"
+            },
+            {
+              "en": "Married",
+              "he": "נשוי/אה"
+            },
+            {
+              "en": "Divorced",
+              "he": "גרוש/ה"
+            },
+            {
+              "en": "Widowed",
+              "he": "אלמן/ה"
+            }
+          ]
+        },
+        {
+          "id": "demo_q4",
+          "question": {
+            "en": "Children:",
+            "he": "ילדים:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "None",
+              "he": "אין"
+            },
+            {
+              "en": "Number of children",
+              "he": "מספר ילדים"
+            }
+          ]
+        },
+        {
+          "id": "demo_q5",
+          "question": {
+            "en": "Living arrangement:",
+            "he": "מסגרת דיור:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Independent",
+              "he": "עצמאי/ת"
+            },
+            {
+              "en": "With nuclear family (parents and siblings)",
+              "he": "עם משפחה גרעינית (הורים ואחים)"
+            },
+            {
+              "en": "Supported housing/hostel",
+              "he": "מסגרת דיור מוגן/הוסטל"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "demo_q6",
+          "question": {
+            "en": "Secondary education:",
+            "he": "השכלה תיכונית:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Less than 12 years of schooling",
+              "he": "פחות מ-12 שנות לימוד"
+            },
+            {
+              "en": "12 years of schooling in special education",
+              "he": "12 שנות לימוד בחינוך מיוחד"
+            },
+            {
+              "en": "12 years of schooling in regular education",
+              "he": "12 שנות לימוד בחינוך רגיל"
+            },
+            {
+              "en": "Full matriculation certificate",
+              "he": "תעודת בגרות מלאה"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "demo_q7",
+          "question": {
+            "en": "Post-secondary education:",
+            "he": "השכלה על-תיכונית:"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Professional courses/certificate studies",
+              "he": "קורסים מקצועיים/לימודי תעודה"
+            },
+            {
+              "en": "Practical engineering studies",
+              "he": "לימודי הנדסאי"
+            },
+            {
+              "en": "Bachelor's degree",
+              "he": "תואר ראשון"
+            },
+            {
+              "en": "Master's degree or higher",
+              "he": "תואר שני ומעלה"
+            }
+          ]
+        },
+        {
+          "id": "demo_q8",
+          "question": {
+            "en": "In which region of the country do you currently live?",
+            "he": "באיזה אזור בארץ את/ה מתגורר/ת כיום?"
+          },
+          "type": "multiple_choice",
+          "options": [
+            {
+              "en": "Gaza envelope and nearby south",
+              "he": "עוטף עזה והדרום הקרוב"
+            },
+            {
+              "en": "South",
+              "he": "דרום"
+            },
+            {
+              "en": "Center and Shfela",
+              "he": "מרכז ושפלה"
+            },
+            {
+              "en": "Gush Dan",
+              "he": "גוש דן"
+            },
+            {
+              "en": "Sharon",
+              "he": "השרון"
+            },
+            {
+              "en": "Haifa and the Krayot",
+              "he": "חיפה והקריות"
+            },
+            {
+              "en": "Galilee and valleys",
+              "he": "גליל ועמקים"
+            },
+            {
+              "en": "Golan Heights",
+              "he": "רמת הגולן"
+            },
+            {
+              "en": "Jerusalem and surroundings",
+              "he": "ירושלים והסביבה"
+            },
+            {
+              "en": "Judea and Samaria",
+              "he": "יהודה ושומרון"
+            },
+            {
+              "en": "Other",
+              "he": "אחר"
+            }
+          ]
+        },
+        {
+          "id": "demo_q9",
+          "question": {
+            "en": "Place of residence",
+            "he": "מקום מגורים"
+          },
+          "type": "open_ended"
+        }
+      ]
+    },
+    {
+      "id": "war_factual",
+      "title": {
+        "en": "Swords of Iron war — factual context",
+        "he": "מלחמת חרבות ברזל — הקשר עובדתי"
+      },
+      "scale": null,
+      "questions": [
+        {
+          "id": "war_q5_evacuation",
+          "question": {
+            "en": "Did you experience evacuation from home because of the war?",
+            "he": "חווית פינוי מהבית בעקבות המלחמה?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_safe_room",
+          "question": {
+            "en": "Did you experience repeated stays in a protected space due to sirens?",
+            "he": "חווית שהות חוזרת ונשנית במרחב מוגן בעקבות אזעקות?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_loss",
+          "question": {
+            "en": "Did you experience the loss of a close person in war-related circumstances?",
+            "he": "חווית אובדן של אדם קרוב בנסיבות הקשורות למלחמה?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_reserve_self",
+          "question": {
+            "en": "Did you serve in reserve duty during the war?",
+            "he": "האם היה לך שירות מילואים בתקופת המלחמה?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_reserve_family",
+          "question": {
+            "en": "Did a first-degree family member serve in reserve duty during the war?",
+            "he": "האם בן/בת משפחה מדרגה ראשונה שירת/ה במילואים בתקופת המלחמה?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_regular_family",
+          "question": {
+            "en": "Did a first- or second-degree family member serve in regular military service during the war?",
+            "he": "האם בן משפחה מדרגה ראשונה או שנייה שירת בשירות סדיר בתקופת המלחמה?"
+          },
+          "type": "boolean",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        },
+        {
+          "id": "war_q5_other",
+          "question": {
+            "en": "Did you experience another significant event during this period in the context of the war?",
+            "he": "האם חווית אירוע משמעותי אחר בתקופה זו בהקשר של המלחמה?"
+          },
+          "type": "boolean_with_text",
+          "options": [
+            {
+              "en": "Yes",
+              "he": "כן"
+            },
+            {
+              "en": "No",
+              "he": "לא"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "war_subjective",
+      "title": {
+        "en": "Swords of Iron war — subjective impact",
+        "he": "מלחמת חרבות ברזל — השפעה סובייקטיבית"
+      },
+      "scale": [
+        {
+          "en": "Not at all",
+          "he": "כלל לא"
+        },
+        {
+          "en": "To a small extent",
+          "he": "במידה מועטה"
+        },
+        {
+          "en": "To a moderate extent",
+          "he": "במידה בינונית"
+        },
+        {
+          "en": "To a large extent",
+          "he": "במידה רבה"
+        },
+        {
+          "en": "To a very large extent",
+          "he": "במידה רבה מאוד"
+        }
+      ],
+      "questions": [
+        {
+          "id": "war_q1",
+          "question": {
+            "en": "The security situation affected my work as a peer worker.",
+            "he": "המצב הביטחוני השפיע על עבודתי כעמית/ה."
+          },
+          "type": "likert_with_open_elaboration"
+        },
+        {
+          "id": "war_q2",
+          "question": {
+            "en": "Since the beginning of the war, my workload has increased.",
+            "he": "מאז תחילת המלחמה העומס בעבודתי עלה."
+          },
+          "type": "likert_with_open_elaboration"
+        },
+        {
+          "id": "war_q3",
+          "question": {
+            "en": "Since the beginning of the war, my role feels meaningful.",
+            "he": "מאז תחילת המלחמה התפקיד שלי מרגיש משמעותי."
+          },
+          "type": "likert_with_open_elaboration"
+        },
+        {
+          "id": "war_q4",
+          "question": {
+            "en": "Since the beginning of the war, my mental distress has intensified.",
+            "he": "מאז תחילת המלחמה הקושי הנפשי שלי התעצם."
+          },
+          "type": "likert_with_open_elaboration"
+        }
+      ]
+    }
+  ]
+}
